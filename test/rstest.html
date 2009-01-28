@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Global Member Test</title>
+<script type="text/RubyScript">
+def test_constantiate
+  Window.alert('hello by the constant')
+end
+def test_instance_var
+  @window.alert('hello by the instance var')
+end
+def test_globalmember
+  alert('hello by the global member')
+end
+</script>
+</head>
+
+<body>
+<h1></h1>
+<input type="button" value="global member" onclick="test_globalmember();"/>
+<br/>
+<input type="button" value="constantiate" onclick="test_constantiate();"/>
+<br/>
+<input type="button" value="instance_var" onclick="test_instance_var();"/>
+
+<hr/>
+<address></address>
+<!-- hhmts start --> Last modified: Sat Nov 04 22:45:40 +0900 2006 <!-- hhmts end -->
+</body> </html>

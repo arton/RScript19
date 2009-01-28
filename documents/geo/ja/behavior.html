@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<title>Behavior meets Ruby</title>
+</head>
+
+<body><DIV ALIGN=CENTER><!--#geoguide--></DIV>
+<h1 ALIGN="CENTER">DHTMLオブジェクトの振る舞いを変えよう</h1>
+<h2>ActiveScriptRuby meets Scriptlet</h2>
+　『Rubyを256+倍使うための本』で書いたけど、現在のActiveScriptRubyはWSCという拡張子で示されるWindowsスクリプトコントロールに対応している。『Ruby256倍邪道編』だと、「存在意義がわからん」とか言って無視してたやつだ。
+<br>
+　これをサポートしたために、いろいろ不思議なものが使えるようになった。ここでは、そのうちDHTMLビヘイビアとか呼ばれてるものについて説明しよう。
+<h2>DHTMLビヘイビアとは</h2>
+　例によってIEの謎機能に、DHTMLビヘイビアというのがある。
+<br>
+　一言で言えば、再利用可能なDHTML要素の拡張スクリプトということになる。
+<br>
+　例えば、次のDHTMLを考えて見よう。
+<pre>
+&lt;script language="RubyScript"&gt;
+def changeColor(elm)
+  elm.style.color = "blue"
+end
+&lt;/script&gt;
+&lt;span id="d1" onmouseover="changeColor(Window.d1)" language="RubyScript"&gt;マウスを上に置いてね&lt;/span&gt;
+&lt;br&gt;
+&lt;span id="d2" onmouseover="changeColor(Window.d2)" language="RubyScript"&gt;マウスを上に置いてね&lt;/span&gt;
+</pre>
+　このHTMLだかHTAだかでは、"マウスを上に置いてね"と書いた部分にマウスが来ると、色が青く変る。これは、onmouseoverイベントに対してchangeColorメソッドが呼び出されているからだ（しかし、カスのような例だな）。
+<br>
+　この記述は次の2点がいやらしい。
+<ul>
+ <li>イベントの通知元を引数に記述している。もし記述しなければ、d1とd2の2種類の区別をつけるためには、あのかったるいイベントオブジェクトを弄繰り回さなければならないからだ。
+ <li>再利用性が考えられてない。
+</ul>
+　後者については説明が必要だろう。
+<br>
+　この例はカスだからシナリオ的には無理があるわけだが、それでもchangeColorというメソッドが複数の要素の同一イベントに対する共通処理だということから、このページ以外でも使用する可能性があるということは想像できるだろう。このような共通処理はリファクタリングの原則に従いアプリケーション内で一箇所に持ちたいものだ。すなわち、サイトを1つの巨大なアプリケーションと考えた場合、各ページはそれぞれが実行プログラムなりライブラリなりコンポーネントなりと考えられる。それらすべてで共用可能な処理は当然、また１つのコンポーネントであるほうが良いということだ。
+<br>
+　あるいはC/C++流に、サイト内の各ページをそれぞれスタティックなスコープを持つソースファイルであると考えても良い。こう考えると問題点があからさまになる。Cのソースファイル毎にstatic int strlen(char*)といった関数が記述してあったらそれを作ったやつには仕事を任せたくないというものだ。結局、各ページに全ページに共通なメソッド定義を持つということは良くて車輪の再発明、悪くすればコピー＆ペーストウィザード地獄ということだ。
+<br>
+　CIが変ればデザインも変る。変化すべき色は青ではなくティールにしたいとか言い出したら全ページの修正が必要だ。
+<br>
+　というような点に対してDHTMLビヘイビアがMSの出して来た解答だ。
+<h2>DHTMLビヘイビアの意義</h2>
+　まず最初の点についてだが、ビヘイビアと呼ばれるスクリプトレット内では該当ビヘイビア（振る舞い）を持つ要素が@scriptletまたはScriptletで示されるオブジェクトとしてあらかじめ移入されている。
+<br>
+　次に2番目の点だが（順番が逆だったな）、共通処理をスクリプトレットと呼ばれる1つのWindowsスクリプトコンポーネントに記述しておくことが可能だ。
+<br>
+　では、上の役に立たないサンプルをビヘイビアを使用して書き直してみよう。
+<br>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;?component error="true" debug="true"?&gt;
+&lt;component&gt;
+   &lt;implements type="Behavior"&gt;
+   &lt;/implements&gt;
+   &lt;script language="RubyScript"&gt;
+&lt;![CDATA[
+  @scriptlet.attachEvent("onmouseover", 
+   Proc.new {
+     @scriptlet.style.color = "blue"
+   })
+]]&gt;
+   &lt;/script&gt;
+&lt;/component&gt;
+</pre>
+　このファイルをchangeColor.sctという名称でセーブする。sctは多分、スクリプトレット（スクリプト片というような意味だろう）の略だ。
+<br>
+　なお、スクリプトレットについては、レジストリへの登録は不要だ。使用元がurlで指定するからだ。
+<br>
+　次にHTML側だ。
+<pre>
+&lt;STYLE&gt;
+   .changeColor {behavior:url(changeColor.sct)}
+&lt;/STYLE&gt;
+&lt;span class="changeColor"&gt;マウスを上に置いてね&lt;/span&gt;
+&lt;br&gt;
+&lt;span class="changeColor"&gt;マウスを上に置いてね&lt;/span&gt;
+&lt;br&gt;
+&lt;span class="changeColor"&gt;マウスを上に置いてね&lt;/span&gt;
+</pre>
+　こいつをchangeColor.html（いい加減なHTMLなので拡張子HTAで保存すると相手にされないので注意）という名称でchangeColor.sctをセーブしたのと同じディレクトリに保存してみよう。
+<br>
+　で、changeColor.htmlをIEに読み込んで見るわけだ。エクスプローラからのダブルクリックで十分だ。
+<br>
+　っていうわけで
+<ul>
+  <li>共通処理をsctというファイルに記述できる。このファイルは、HTML（HTA）内のSTYLEのbehavior属性でurlを指定できる。もちろん、クロスサイトスクリプティングチェック対象のはずなのでそこは注意。
+  <li>sct内では@scriptletまたはScriptletを使用して結合された要素オブジェクトを直接参照できる
+</ul>
+という具合に、最初に上げた問題点が解決しているってことだ。
+<br>
+<DL>
+<DT>@scriptlet.attachEvent(イベント名文字列, ブロック)
+<DD>ブロックはもちろん、見てのとおりのブロックだ。この記述により、CLASSで指定されたSTYLEを持つを要素の指定イベントの処理にブロックで記述したスクリプトが追加されることになる。
+</DL>
+<h2>さらに先へ</h2>
+　さらにスクリプトレット内でpublicなメソッドを定義すると該当要素にメソッドが追加できるし、他にもいろいろ応用できるはずだ。
+<br>
+　おそらく、この機能はXMLを使用したスクリプトがMSの思惑通りにははやらなかったし、.NETのサーバ指向とも合致しないので、それほど声高には喧伝されることはこの先ないだろう。でも、HTAでアプリケーショングループを構築してくには使用価値が高いので、MSDNを紐解く価値ありだ。しかし、最新のMSDN日本語版だとInternet SDK（旧Web Workshop）が出てない（英語版のほうにはあるようだ）ので、調べるのはちと大変だが。
+
+<h2>情報</h2>　
+　ActiveScriptRuby 1.6.5.6以降に組み込まれたRScript1.0.8.10以降でサポート。
+<h2>更新履歴</h2>　
+<ul>
+<li>Dec 15 2001: 初版。鴫谷さんのサジェスチョンによる。</li>
+<li>Mar 11 2003: 2版。snowさんからの御指摘（だと思う）で、changeColorとcolorChangeが渾然としていたのをchangeColorに統一。</li>
+</ul>
+<hr>
+<address></address>
+<!-- hhmts start --> Last modified: Tue Mar 11 22:38:11 LMT 2003 <!-- hhmts end -->
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2001,2003 <a href="mailto:artonx@yahoo.co.jp">arton</a>, Under GPL
+</body> </html>

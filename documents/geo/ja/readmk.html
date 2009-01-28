@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>ActiveRubyScript Security Check Page</title>
+ <script language="RubyScript">
+  def read_file
+   s = ""
+   Dir.foreach("C:\\") do |file|
+     s = s + file + "\n"
+   end
+   p = @window.document.createElement("PRE")
+   @window.disp.appendChild p
+   p.innerText = s
+  end
+
+  def make_dir
+   Dir.mkdir "c:\\rubytest"
+  end
+ </script>
+</head>
+<body><DIV ALIGN=CENTER><!--#geoguide--></DIV>
+  <div style="text-align: center">
+  file:<input type="text" name="fname" value="c:\autoexec.bat">
+  <br>
+  <input type="button" name="goButton" value="read" onclick="read_file" language="RubyScript">
+  <br>
+  <input type="button" name="mkButton" value="make" onclick="make_dir" language="RubyScript">
+  <br>
+  </div>
+  <div style="color: blue" id="disp">
+  </div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!--Created by MaedowNT-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc_JIS">
+<TITLE>VB Meets Ruby</TITLE>
+</HEAD>
+
+<!--COLOR-->
+<BODY BGCOLOR="#FFFFFF">
+<!-- 
+
+お願い：
+  ここにGeoGuideのタグをつけ、以下のページでGeoGuideを有効にしてください。
+  http://www.geocities.co.jp/members/tools/geoguide_manager.html 
+
+-->
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<!--HEAD1-->
+<h1></h1>
+<p>
+<!--HEAD2-->
+<h3></h3>
+<p>
+<!--LINE1-->
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<p>
+<!--BODY-->
+
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<center>
+<h2>VBとRubyを組み合わせる</h2>
+<h3>前口上</h3>
+</center>
+VBは、嫌いなんだが（好きな奴いるか？−もっともVBScriptは好きなんだけど−つーかActiveScriptが好きなだけで、実際はJScriptのほうが好きだし、さらに言うとMSの応用技術は嫌いなんでRubyを使いたくて、こんなことやっているわけだが−COMは基礎技術なんで好きなのね−こじつけてるな−COMは好きなんだよね、結局）、確かにわかりやすい言語ではある。
+<br>
+というと、誤解を招くな。例えば、長いこと文字列の操作はLenとMid,Left,Rightしか知らなかった。
+<br>
+もし、Cだったら? - string.hを見るな。grep str /usr/include/*.hでもいいけど。
+<br>
+もし、Javaだったら? - Stringクラスを調べる。別にJavaじゃなくてもオブジェクト指向言語だったら、文字列クラスを調べるな。
+<br>
+というわけで、実際はVBは最低なわけだ。とっかかりが、全くないわけで、何か調べたければブックスオンラインを頭から読んでいく必要があるわけだ。馬鹿みたい。つーか、非オブジェクト指向言語っていうのは、そういう無駄な仕組みなのだ。Cの場合、コンパイラの型チェックの方法論がたまたまリファレンスになっているというだけで例外だ。
+<br>
+問題は、この正しい認識が少しもアルファでもオメガでもないことにある。
+<br>
+が、政治問題には立ち入ってもしょうがないので、VBの悪口はこのくらいにしておく。現実にLen,Mid,Left,Rightしか知らなくても、とりあえず動くプログラムが作れてしまう言語−それがVBなわけだ。
+<br>
+ちなみに、メモリー管理は意外なほどしっかりやってくれるので、その点は買えないわけではない。
+<p>
+<center>
+<h3>ScriptControl</h3>
+</center>
+どうも、どっかのサードパーティの製品のお試し版のような感じ(昔、Leadの3DコントロールがそんなかたちでVB4にバンドルされてた)だが、ActiveScriptのホスト機能を持たないプログラム環境でもActiveXControlをサポートしていればスクリプトエンジンをホストできる便利なコントロールがScriptControlだ。
+<br>
+VB6にバンドルされているし、MSのスクリプト関係のサイトからダウンロードできる。
+<br>
+で、VBからActiveScriptエンジンを呼ぶにはこれが必要。
+<br>
+いい加減なバンドル方法なので、まともなヘルプも付いてこないが、おおざっぱには以下のように使用する。
+<br>
+<ul>デザインモードでの設定
+ <li>コンテナに貼り付ける(ActiveXControlなので、まあ、当然)
+ <li>Languageプロパティに使用したいScriptEngineのProgIDを書く。普通はVBScriptかJScriptとなるわけだが、インストールしてあればPerlScript(ActivePerlを入れていれば)とかが書ける。もちろん、この場合、RubyScriptと書く。(GlobalRubyScriptと書いては駄目。組み込み用はRubyScript)
+ <li>AllowUIプロパティはエンジンに対してウィンドウを提供するかを示し、VBScriptのMsgBox関数用と考えれば良い。早い話しどうでも良いのでTrueにしておいて良い。
+ <li>Timeoutは、スクリプトに自信が無ければ設定するが、RubyScriptエンジンは割り込みにちゃんと対応していないので、タイムアウトしないようにしたほうが良い。
+ <li>UseSafeSubsetは、IEのようにセキュリティの設定を行ないたい場合にTrueにする。現在のRubyScriptエンジンは実装しきれていないので、どっちにしても動作に影響はほとんど無い。
+</ul>
+<ul>プログラムでの呼び出し
+ <li>AddObjectメソッドは、ホスト側のオブジェクトをスクリプトへ移出するために使用する。
+ <li>AddCodeは、スクリプトの静的な評価（戻り値なし）
+ <li>Evalも、スクリプトの動的な評価（戻り値あり）
+ <li>RubyScriptエンジンだと、どっちも同じことになってしまうので、好みになるかも知れない。
+ <li>CodeObjectプロパティはエンジンに対して指定したメソッドを呼び出す機構。AddCodeが静的なのでそれに対応している機構だ。
+ <li>他にも幾つか、ActiveScriptインターフェイスをフル機能サポート可能なようにいろいろメソッドやプロパティを持つが、VBScript,JScriptどれにしても、言語モデル的に、上の4つで制御可能。もちろん、RubyScriptも。
+</ul>
+<br>
+だいたい、上の通りだ。もしかすると、この文書が公開されている日本語になった唯一のScriptControlの使用方法かも知れない。
+<p>
+<center>
+<h3>サンプルソースの説明</h3>
+</center>
+<a href="sample/RubyLife.zip">ソース</a>は、VBのプロジェクトとRubyのスクリプトをZIPしてある。
+<DL>ファイルの内容
+ <DT>RubyLife.vbw　−VBのワークスペース情報ファイル
+     <DD>なんだか、わからん、VBワールドのファイル。
+ <DT>RubyLife.vbp - VBのプロジェクト情報ファイル
+     <DD>ActiveXExeというタイプにしている。これは、Ruby側に渡すオブジェクトにIDispatchインターフェイスを付与するため。ただの実行プログラムにしてしまうとclsファイルで作成してもIDispatchインターフェイスは持たないことに注意。
+ <DT>LifeDef.bas - 定数の定義とプログラムの開始点
+     <DD>ActiveXExeというタイプにした場合、Sub Main()というエントリーポイントが必須となる。ここではフォームをいきなり表示する。定数は見ての通りキャンバスの定数を決めている。
+ <DT>LifeCanvas.frm - フォーム
+     <DD>
+       <ul>_Load() - フォームのロード時に呼ばれる。ここで、ScriptControlに必要な処理を行なっている。
+         <li>定数をもとにボタンなどの位置決め
+         <li>スクリプトファイルの読み込み。
+	 <li>読んだファイルをScriptControlに評価させる。
+       </ul>
+       <ul>GoButton_Click()
+         <li>GOボタンの処理。Stop兼用なので、キャプションを変えたりもする。
+       </ul>
+       <ul>Timer1_Timer()
+         <li>次の世代への移行にはタイマーを使用している。これは、ボタンクリックを受け取るために、メッセージポンプが必要なので。DoEventsは嫌い。というか、VBはわけわかんないので、自然に動かすのが吉。
+       </ul>
+ <DT>LifeCanvas.frx - フォームのリソース
+     <DD>コントロールのパーシステント。
+ <DT>vbCanvas.cls - COMのオブジェクト
+     <DD>Ruby側から画面表示のために呼び出されるメソッドを定義してある。
+     ちなみに、Instancingの設定は重要。PublicにしないとIDispatchのGetIDsOfNamesで取得可能なメソッド/プロパティは生成されない。またNotCreatableにしないと、意味なく外部参照可能になってしまう。このプログラムの場合、Rubyには使用させるのでPublic、しかし一般的に外部参照させてもしょうがないのでNotCreatableに設定する。
+  <br>
+     setrect,setgeomとresetrect,resetgeomという双子のメソッドは、Ruby側からの呼び出し引数をスカラー(この場合Long)と、オブジェクト(この場合Geometry)で試すためのもの。VBLife.rb側のコメントを切り替えて試してみることが出来ます。一般論としてはオブジェクトを渡すほうが気持ちはいいものの、オーバーヘッドは大きくなります。具体的にはGeomertyの場合、x,yそれぞれを別個に呼び出すため、都度、スレッド間マーシャリングが発生し、また、Ruby側からVB側呼び出しの都度、テンポラリーなオブジェクトが生成／削除されます。ループ内で動くため、呼び出し回数の増加によってオーバーヘッドもどんどん大きくなります。もっとも、このサンプルの場合、描画のオーバーヘッドが圧倒的なため、ほとんどわかりません。(CPUにも依存。僕のP3-450だと気にならないですが、P5-100程度だとスレッド間マーシャリングコストは馬鹿にならないものがあります。−大体往復で2ミリ秒−
+ <DT>RubyLife.ico - アイコン
+     <DD>グライダー砲
+ <DT>geometry.rb - Ruby本のCDから転載(座標の処理)
+     <DD>読んでね。
+ <DT>lifegame.rb - Ruby本のCDから転載(ライフゲームのコア)
+     <DD>読んでね。
+ <DT>VBLife.rb - Ruby本のTk版を修正してVBとインターフェイスするようにしたもの
+     <DD>説明は不要だと思いますが、コメントの形で異なる呼び出し方法の例も記述。
+         <br>おまけに、initnewという1からやり直しのメソッドを追加。
+     
+ <DT>RubyLife.exe - コンパイル後の実行プログラム
+     <DD>こんな感じになります。
+</DL>
+<p>
+<center>
+<h3>補足</h3>
+</center>
+ソースを見るとAddObjectが無駄なことに気づくと思います。createlifeメソッドを通してRuby側にcanvasクラスのインスタンスを渡しているので。
+<br>
+元々はRuby側のクラスのインスタンスの取得をサポートしていなかったので、createlifeの代わりにnext,displayといったメソッド(ActiveScriptRubyの仕様で無名モジュールのメソッドとなる)を呼び出していたため、Ruby側にAddObjectしておく必要があった頃の名残。AddObjectメソッドの使用例として残しておいた。
+<br>
+VBのLifeCanvas.frmのコードでコメントになっているSet life = Ruby.Eval(StrConv(stext, vbUnicode))は、VBLife.rbの最後にコメントで残している行に対応した呼び出し方法。要するに評価させて戻ったオブジェクトを取得するという方法もあるという例。この場合、VBLife.rb内のcreatelifeメソッドは呼ぶ必要なし。
+<br>
+ただし、キャンバスサイズなどを渡すことを考えると現在の方法が良さそう。一発勝負のスクリプト(単純に上から下へ流れるようなもの)はともかく、きちんと形があるものの場合は、現在の姿のようにファクトリメソッドを(暗黙の)モジュールに作って、オブジェクト連携させるほうが良いと思います。その場合、すべてがメソッドの形になるので、AddCodeとCodeObjectの組み合わせとなります。
+<br>
+10 Apr. 2000
+</center>
+<br>
+<center>
+<h3>サンプル</h3>
+</center>
+<a href="sample/RubyLife.zip">VB6のサンプル</a>(Ruby本のlifegameのRuby/Tkの代わりにVBを使用したもの)
+
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2000 arton, Under GPL
+</BODY>
+</HTML>
+

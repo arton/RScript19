@@ -1,0 +1,40 @@
+<html>
+<head>
+ <title>How to program RubyScript in C++</title>
+</head>
+<body><DIV ALIGN=CENTER><!--#geoguide--></DIV>
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<center><h2>
+ActiveScript Host Meets Ruby
+</h2></center>
+<br>
+C++ならば、ruby.hをインクリュードしてRubyのライブラリとリンクすれば呼び出しが可能なわけだから、なんらかのベネフィットが無ければしょうがない。
+<br>
+ざっと思い付くところは以下のような点だ。
+<ul>
+ <li>プログラム拡張にスクリプトを用い、かつスクリプト言語をユーザー選択可能にする。(黙っていてもJScript, VBScript,仕込めばPerlScriptあと、通なら4thScriptとHaskelが使用可能)
+ <li>マルチスレッディングアプリケーションのどのスレッドからでも特別な考慮抜きにRubyを呼びたい。(ActiveScriptHostを作るっていう特別な考慮は必要だけど)
+</ul>
+
+<p>
+<a href="sample/c.zip">ソース</a>は同じことを行なうRuby, JavaScript, VBScriptのテキストをそれぞれのエンジンに食わせるだけの単純なもの。操作対象のオブジェクトと、ActiveScirptSiteインターフェイスは通常のC++のオブジェクトとして実装。
+<br>
+とりたてて特別なことはしていないので(イベント処理とか)、読めばわかると思います。
+<p>
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<br>
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2000 arton, Under GPL
+</body>
+</html>
+

@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+<body bgcolor="#FFFFFF">
+
+<address>5 Nov. 2006, 02:10:18 JST</address>
+
+<center><h1>ActiveScriptRuby</h1></center>
+<br>
+ <center><a href="http://arton.hp.infoseek.co.jp/index.html">Download from here</a>!</center>
+
+<h3>Update Information</h3>
+<ul>
+  <li>ruby 1.8.5 with rjb-1.0.2, and ASR 1.2.0</li>
+</ul>
+<br>
+<a href="history.en.html">Update History</a>
+
+<h2>NETRuby</h2>
+ <a href="nrb.html">NETRuby</a> is ruby for .NET Framework.<br>
+ Now, I'm working (but currently frozen) with it on <a href="http://sourceforge.jp/projects/netruby/">sourceforge.jp</a>.<br><a href="http://sourceforge.jp"><img src="http://sourceforge.jp/sflogo.php?group_id=44" width="96" height="31" border="0" alt="SourceForge.jp"></a>
+ <br>
+
+<h2>Ruby: A gem of a programming language</h2>
+
+The Programming Language Ruby(<a href="#resources1">#</a>) is a powerful pure Object Oriented language first developed by Matz and rapidly grown-up in Japanese (and later International) Ruby community, and ported to many environment (many UNIX based platform, Be, Mac, Next, Win32).
+<br>
+It's not only a simple scripting language, but a powerful full furtured environment like Java, also it loads and parses the program at first time, and stores compiled intermediate language in it, then starts to run. The only difference is Ruby doesn't ouput its intermediate language to the storage, always uses raw programming code itself.
+<br>
+You can learn more deeply about Ruby at <a href="http://www.ruby-lang.org/en/">official Ruby Home Page</a>.
+<h2>ActiveScript</h2>
+
+Active Script Technology(<a href="#resources2">#</a>) was first introduced for Internet Explorer 3.0 to support both JavaScript and VisualBASIC Scripting Edition based on COM (Component Object Model). Active Script Technology rapidly grew to be Windows standard glue environments supported by IIS(Active Server Page), Visual Studio, Windows Scripting Host, Outlook etc. And there are some third party supplied engines, for example Perl, Haskell etc.
+<br>
+You can learn more deeply about Active Script Technology at <a href="http://msdn.microsoft.com/scripting/">Microsoft's Scripting Site</a>.
+
+<h2>ActiveScriptRuby</h2>
+
+ActiveScriptRuby is a bridge component to interface Ruby with Active Script Host applications and vice versa.
+<br>
+It stands on both COM, and Win32 porting of Ruby.
+
+<h3>Running Environment</h3>
+
+Required Win32 and DCOM (later, I described the reason).
+<ul>
+ <li>WindowsNT SP3 or later (I tested with SP6A)
+ <li>Windows98
+ <li>Windows95 with DCOM1.1 or later (I didn't tested, and not planned)
+ <li>Windows2000 (my main environment)
+ <li>Windows XP (sometime, I run with it)
+</ul>
+
+<h3>Required additional libary</h3>
+
+If you use Windows95, then you need DCOM1.1 or later (I suppose maybe necessary updates was already included in IE5 distribution, and Windows98).
+<br>
+You are hardly recommended to get or upgrade to Internet Explorer 5.01 (I've never checked in 3.x and 4.x), whether you like or not, whether you navigate in Internet with it or not (indeed, I never navigate in Internet with IE, sorry).
+<br>
+IE5.0 now suppoert &lt;style="display:none;"&gt;, every elements, great!
+
+<h3>Recommanded additional applications</h3>
+
+If you use WindowsNT or Windows95, get Windows Script Host(WScript.exe and CScript.exe) from Microsoft's Scripting Site.
+<br>
+<em>But, BEAWARE !, You Never DobleClick the attachments in Outlook !! Before you do so, you must check what will be happened with them !!
+</em>
+
+<h3>Installation</h3>
+<!--<center>
+<em>I've never checked with Outlook ! You are hardly recommand to disable all scripting capability in Outlook and Outlook Express !</em><br>
+</center>-->
+ Go to <a href="http://arton.hp.infoseek.co.jp/index.html">Installation page</a>.
+
+<h3>Samples</h3>
+ Go to <a href="rscript.html">sample page</a>.
+ <br>
+ <a href="wsc.html">How to write WSC ?</a>.
+
+<h3>Design Issue</h3>
+
+Because Ruby itself is a monolithic language engine/environment, usually runs in its own process / main thread, makes variables's life-time management with stack based schemes, I decided to put Ruby itself into separate/isolate single thread apartment (STA), access it through COM proxy/stub marshalling.
+<br>
+At contrast, the object that export IActiveScript and IActiveScriptParse interfaces is a free-threading object, can run any thread.
+<br>
+Naturally, the objects that came from Scripting Host through AddNamedItem method, may or may not stand on the apartment threading model, so I force to handle them within correct thread context.
+To avoid complexities, I decide to use Global Interface Table introduced by NT4SP3 and DCOM9x 1.1 to store Host and AddNamed interfaces in it.
+<br>
+That's the reason to need DCOM1.x for 9x or NT4SP3 or later to run ActiveScriptRuby.
+<p>
+
+<h3>Distribution Condition</h3>
+
+ ActiveScriptRuby is freely redistributal product under <a href="http://www.gnu.org/copyleft/gpl.html">GPL</a>.
+
+<h3>Disclaimer Notice</h3>
+
+ THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE.
+
+<h2>Resousrces</h2>
+
+<h3>Sources</h3>
+<a href="http://svn.arton.no-ip.info/RScript18/1.2.0.0/">ActiveScriptRruby18(1.1.2.0) sources for Ruby1.8 (Subversion repositry)</a>
+<br>
+<a href="RScriptSrc.zip">ActiveScriptRuby(1.0.0.7) Sources for Ruby1.4</a>
+<br>
+<a href="RScript16Src.zip">ActiveScriptRuby(1.0.9.1) Sources for Ruby1.6</a>
+<br>
+require VC++6.0SP5 with Windows2000SDK (Aug.2000 Edition)
+<br>
+<em>Caution</em> In MS Japanese version of Visual Studio inserts Japanese comments and code page informations, so, I doubt to build it easily. (I deleted thescde lines, if I looked to, but not completed)
+<br><br>
+You may found Ruby's sources in Ruby Home Page (see below).
+
+<h3>LINKS</h3>
+
+<a name="resources1"></a>
+<a href="http://www.ruby-lang.org/en/">Ruby Home Page (English)</a>
+<br>
+<a href="http://www.ruby-lang.org/ja/">Ruby Home Page (Japanese)</a>
+<br>
+<a name="resources2"></a>
+<a href="http://msdn.microsoft.com/scripting/">Microsoft&#174; Windows Script Technologies Page</a>
+<br>
+<a href="http://homepage1.nifty.com/markey/index_e.html">Mr. Suketa' Zakki-Cho</a><br>He is famous Win32OLE extended library developer in Ruby community. I thanks his works.
+<br>
+<a href="http://www.osk.3web.ne.jp/~nyasu/software/rubyonwin.html">Mr. Nyasu's =Japanese page only=</a><br>His VisualuRuby project is very interresting for Windows people!
+<br>
+<a href="http://www2.pos.to/~tosh/ruby/rdtool/en/index.html">Mr. Tosh's (not Peter Tosh who onece was stepping razor.) RD site.</a>
+<br>
+<a href="http://www.loveruby.net/">Mr. Aoki Minerou's L.R.N</a><br>He's a young master of Ruby.
+<br>
+<a href="http://www-4.ibm.com/software/developer/library/ruby.html">IBM developerWork introduced Ruby</a>.
+
+<h3>THANKS</h3>
+
+<address>Matsumoto, Yukihiro</address> who creates Ruby.
+<br>
+<address>Suketa, Masaki</address> who creates <a href="http://homepage1.nifty.com/markey/ruby/win32ole/index_e.html">WIN32OLE</a>.
+<br>
+<address>Nakada, Nobu</address> who suggested me to use anonymous modules to create isolate environment.
+<br>
+<address><!-- Peter Torr and -->Microsoft Windows Script team</address> who described the need and some detail of ActiveScriptEngine's own IServiceProvider interface implementation for IE to me.
+<p>
+
+<h3>COPYRIGHT NOTICE.</h3>
+<address>copyright &#169; 2000-2006 <a href="mailto:artonx@yahoo.co.jp">arton</a> under GPL</address>
+<br>
+<address><a href="http://www.geocities.co.jp/SiliconValley-PaloAlto/9251/ruby/index.html">ActiveScriptRuby Japanese Page</a></address>
+<br>
+<h3>TRADEMARKS.</h3> 
+The names of actual companies and products mentioned herein may be the trademarks of their respective owners. The example companies, organizations, products, people and events depicted herein are fictitious. No association with any real company, organization, product, person, or event is intended or should be inferred. 
+<br>
+Any rights not expressly granted herein are reserved
+</p>
+<center><ISML TYPE="counter"></center>
+</body>
+</html>
+

@@ -1,0 +1,28 @@
+<html>
+<head>
+<HTA:APPLICATION ID="hta"  
+  SCROLL="no"
+/>
+<script language="RubyScript">
+def selchange
+  file = @window.document.all("fl").value
+  if FileTest.exist?(file)
+    @window.document.all("vfrm").src = file
+  else
+    @window.document.all("vfrm").src = "about:no such file"
+  end
+end
+</script>
+</head>
+<body>
+<center>
+<input type="file" id="fl"
+  onpropertychange="selchange" language="RubyScript">
+<br>
+<iframe id="vfrm" width=90% height=80% application="yes"></iframe>
+<hr>
+<input type="button" id="qt" value="END"
+  onclick="@window.close" language="RubyScript">
+</center>
+</body>
+</html>

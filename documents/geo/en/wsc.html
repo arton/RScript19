@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>How to write WSC</title>
+</head>
+
+<body>
+<h1>ASR and Windows Scripting Control</h1>
+
+ASR has some restrictions comparing with VBScript and JScript.<br>
+The most important thing is that you always need to explicitly write the object name. For example in JScript you can write HTML client-side script as
+<pre>
+alert("Hi!");
+</pre>
+, but with ASR, you need explicitly write Window (or @window, with your preferable way) object as
+<pre>
+Window.alert('Hi!')
+</pre>
+
+<p/>
+
+If you would like to write some WSCs with ASR, the same restriction waits you.<br>
+The one you need to live is named Scriptlet (or @scriptlet), the global sciprt object.
+<br>
+Here are examples.<br>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;package&gt;
+&lt;component id="myComponent"&gt;
+&lt;registration
+ progid="test.rbs"
+ version="1.0"
+ clsid="{2D252042-7107-4e3c-89A9-0CCDF2852A2E}"
+/&gt;
+&lt;public&gt;
+ &lt;method name="mymethod"/&gt;
+ &lt;event name="myevent"/&gt;
+&lt;/public&gt;
+
+&lt;script language="RubyScript"&gt;
+&lt;![CDATA[
+def mymethod(s)
+ # if you'd like to fire an event,
+ # you need to delegate the event to Scriptlet object.
+ @scriptlet.fireEvent("myevent") 
+end
+]]&gt;
+&lt;/script&gt;
+&lt;/component&gt; 
+&lt;/package&gt;
+</pre>
+In contrast, in VBS you can write the script without global object.<br>
+<pre>
+&lt;?xml version="1.0"?&gt;
+&lt;package&gt;
+&lt;component id="myComponent"&gt;
+&lt;registration
+ progid="test.vbs"
+ version="1.0"
+ clsid="{2D252043-7107-4e3c-89A9-0CCDF2852A2E}"
+/&gt;
+&lt;public&gt;
+ &lt;method name="mymethod"/&gt;
+ &lt;event name="myevent"/&gt;
+&lt;/public&gt;
+
+&lt;script language="VBScript"&gt;
+&lt;![CDATA[
+Sub mymethod(s)
+    fireEvent("myevent")
+end sub
+]]&gt;
+&lt;/script&gt;
+&lt;/component&gt; 
+&lt;/package&gt;
+</pre>
+And, this is a client script.
+<pre>
+sub vbtest_myevent()
+  MsgBox "gotcha!"
+end sub
+
+sub meth()
+  msgbox "start"
+  set x = wscript.createObject("test.vbs", "vbtest_")
+  x.mymethod "abc"
+  MsgBox "bye"
+end sub
+
+sub rbtest_myevent()
+  MsgBox "gotcha by ruby!"
+end sub
+
+sub rmeth()
+  msgbox "ruby start"
+  set x = wscript.createObject("test.rbs", "rbtest_")
+  x.mymethod "abc"
+  MsgBox "ruby bye"
+end sub
+
+meth    ' call VBS wsc
+rmeth   ' call ASR wsc
+</pre>
+
+Enjoy.
+
+<br>
+Thanks Oleg, I've forgotten to maintenace the pages.
+<hr>
+<p>
+<a href="main.html">Top</a>
+<p>
+<address>Copyright &#169; 2003 <a href="mailto:artonx@yahoo.co.jp">arton</a> under GPL2</address>
+<!-- hhmts start --> Last modified: Thu Jul 24 22:42:18 LMT 2003 <!-- hhmts end -->
+</body> </html>

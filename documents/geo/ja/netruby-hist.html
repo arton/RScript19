@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>遠い星への飛行(SCRIABIN 1872-1915 SONATA NO.4 in F Sharp Major, Op.30)</title>
+</head>
+<body>
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<h1>まだまだまだまだまだまだまだまだゴミ</h1>
+欲しいのは、完全にマネージドコードの中で一切のインターオップなしで動くインタープリタとコンパイラだ。とくに、とりあえずはインタープリタだな。
+<br>
+いずれにしろ、Rubyのオブジェクト群じゃなくて、Frameworkのオブジェクト群の操作が可能ならば良いのだ。
+<br>
+ActiveScriptRubyでわかったのは、自前のエンジンがあると、ホストを作る時の動作想定が明確になるってことだ。
+<br>
+とりあえず、パーサは、1.6.1を元に手作業で作った（去年の暮れ）。バカ丸出し。あまりに疲れたので半年もお蔵入りさせてた。やっぱ、パーサジェネレータ作るほうが先ジャン。
+<br>
+で、やっぱ、タイプシステムともっと密結合させなきゃダメだとわかった。
+<br>
+それでも構文木は作れるようになったから、練り直しするっていっても楽ではある。
+<br>
+つーわけで、<a href="netruby.zip">廃棄する方法論</a>を公開。興味があれば持ってってくれ。
+<br>
+言っとくけど、何もできないよ。まあ、期待のC#もアドホックにコーディングしてくと、こんなにワケワカにできるということはわかるかも。
+<br>
+ベータ2用は、<a href="netruby-b2.zip">こっちだ。</a>
+
+<br>
+C#：不愉快なのは、βでswitchのフォールダウン動作が変わったことだ。つーか、フォールダウンをデフォルトにするなら、最初からそうすりゃいいじゃん。バカ〜
+<br>
+ちぇ、バカはオレだ。同一switch-sectionはノーフォールスルー（フォールダウンじゃないや）ルールをバイオレートしない。
+<br>
+Invokeの中で例外勝手に拾って、無意味なメッセージを表示する仕掛けになってる……
+<br>
+C#のparams……期待したMethodオブジェクトが生成されない。
+<hr>
+<address></address>
+<!-- hhmts start --> Last modified: Sun Jun 24 18:26:06 LMT 2001 <!-- hhmts end -->
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2001 <a href="mailto:arton@geocities.co.jp">arton</a>, Under GPL
+</body> </html>

@@ -1,0 +1,188 @@
+<!--Created by MaedowNT-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+
+<!--COLOR-->
+<BODY BGCOLOR="#FFFFFF">
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<!--HEAD1-->
+<h1></h1>
+<p>
+<!--HEAD2-->
+<h3></h3>
+<p>
+<!--LINE1-->
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<p>
+<!--BODY-->
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<small>
+Don't you feel like trying something new ?
+</small>
+<p>
+<center>
+<h2>About <a href="manifest.html">ActiveScriptRuby</a></h2>
+<p>
+<h3>リリース1.8.5.2
+</h3>
+<a href="http://arton.hp.infoseek.co.jp/indexj.html">ダウンロードはこちらからどうぞ</a>
+<br>
+遺産：<a href="http://arton.hp.infoseek.co.jp/163/indexj.html">1.6.3</a>
+<br>
+遺産：<a href="index10.html">1.4</a>
+<br><br>
+<small>Ruby256邪道編のサンプルの一部が正しく動かないはずです。<a href="r256.html">ここを見よ</a></small>
+<br>
+</CENTER>
+
+<p>
+<h3>更新情報</h3>
+<address>5 Nov 2006, 02:07:32</address>
+<ul>ActiveScriptRuby 1.8.5.2
+  <li>RScript/GRScript 1.2.0</li>
+  <li>rjb 1.0.2</li>
+  <li>lhalib 0.8.1</li>
+</ul>
+<p>
+<a href="history.html">過去の更新履歴</a>
+<br><small>
+<a href="history.memo.html">過去のメモ(技術情報ではない)</a>
+</small><br>
+<p>
+<h3>NETRuby</h3>
+<a href="netruby.html">こちら</a>でした。<br>
+今は<a href="http://sourceforge.jp"><img src="http://sourceforge.jp/sflogo.php?group_id=44" width="96" height="31" border="0" alt="SourceForge.jp"></a>に置いてあります。<br>つまり
+<a href="http://sourceforge.jp/projects/netruby/">ここ(活発さ0%：冬か春に再開か? - 現時点では再開する意志がほとんど0になってしまったので、凍結)</a>
+<h3>ActiveScriptRubyサンプル</h3>
+<a href="http://www.ascii.co.jp/books/detail/4-7561/4-7561-3603-6.html">Rubyを256倍使うための本-邪道編</a>をお勧めします。とか（とか付けるところに含羞が伺える）。
+<br>
+<a href="vb.html">VB6のサンプル</a>(Ruby本のlifegameのRuby/Tkの代わりにVBを使用したもの)
+<br>
+<a href="iehowto.html">IE5.01のサンプル</a>
+<br>
+<a href="behavior.html">DHTMLビヘイビアについて(IE5.5sp2でテスト)</a>
+<br>
+<a href="c.html">C++サンプル</a>
+<br>
+<a href="../midi/midiCtl.zip">MIDI APIのラッパとRubyサンプルHTMLとplaywin32.rb</a>（要<a href="http://raa.ruby-lang.org/list.rhtml?name=smf">smf</a>）
+<br><a href="../midi/midiCtlSrc.zip">ラッパのソース</a><br>
+<p>
+<h3>出来ること出来ないこと</h3>
+できること
+<ul>
+  <li>WScript, CScriptからのRubyスクリプトの実行
+  <li>wsf対応させた(Jan.10 2001)
+  <li>newモニカとobjrefモニカに対応させた(Dec.12 2001)
+  <li>特定スレッドでのActiveScriptingHostからの呼び出し
+  <li>スクリプトコントロールコンテナからのRuby制御
+  <li>HTMLそのものの制御言語としての記述(IEのみ。)
+  <li>HTA(HTMLアプリケーション)
+  <li>スクリプトコンポーネント(XML使うやつ)
+  <li>DHTMLビヘイビアスクリプトレット
+  <li>一応ASP内でも動く（Windows2000でも-RScript16.DLL 1.0.8.1以降）。が、推奨はしない。（クライアント数が少なければ吉というか、全部、別々のCOM+に入れりゃいいのかな？）
+</ul>
+<a name="notyet">まだやってないこと</a>
+<ul>
+  <li>スクリプトコントロール使用したときのモジュール化(優先度低)
+  <li>ITypeInfoかぁ。今更なぁ……
+  <li>IActiveScriptDebugインターフェイス
+</ul>
+<p>
+当分、できないこと<br>
+基本方針はブリッジなのでRubyそのものにパッチが必要なことはできません。
+<ul>
+  <li>完全にインタラクティブな行情報などの提供（ちょっと緩和）
+  <li>スレッドをいじくること。
+</ul>
+
+<h3>特殊なクラス</h3>
+<pre>
+ActiveScriptRuby&lt;Object: ActiveScriptRuby制御
+ クラスメソッド
+  settrace(bool)        無意味
+  trace                 内部処理用(呼ぶな)
+  rubyize(bool)		trueで呼び出すと、valからVariantへの変換時に1度だけ
+			タイプを無視してオブジェクトとして返送する
+</pre>
+<p>
+<h3>Rubyを256倍使用する本 邪道編の情報</h3>
+移動しました。<a href="r256.html">ココ</a>
+<h3>Rubyを256+倍使用する本 の情報</h3>
+正誤表は<a href="http://www.jin.gr.jp/~nahi/RWiki/?cmd=view;name=256%3A%3Aerrata">ココ</a>
+<h3>Rubyを256倍使用する本 網道編の情報</h3>
+正誤表は<a href="http://www.jin.gr.jp/~nahi/RWiki/?cmd=view;name=256%3A%3Aerrata">ココ</a><br>すぎむしさん、毎度、ご指摘ありがとうございます。
+<br>
+<a href="moudou.html">補遺とか、いろいろ。あおきさんが作ったGTK版とか高速版とか。</a>
+<p>
+<h3>Visual C# .NETプログラミング入門</h3>
+このへんの非Rubyなものについては、<a href="http://hp.vector.co.jp/authors/VA015591/index.html">ベクターのページ</a>で公開します。
+<h3>おまけ</h3>
+VisualuRuby計画（仮称）用<a href="vrtestrunner.zip">TestRunner</a> (ruby 1.8.0以上)
+<p>
+Yet Another <a href="icmpping.zip">(icmp)ping.rb</a>
+<p>
+<h3><a href="netruby.html">NETRuby</a> (or NOTRuby) for .NET</h3>
+<a href="netruby.html">NOTRuby</a>と書くと、RubyにNOを付けたようだが、「じゃないよ」の意味だ。同じものはいらないって。ネイティブで動くのがあるんだから。
+<p>
+<h3>リソースなど</h3>
+ActiveScriptRubyの<a href="http://svn.arton.no-ip.info/RScript18/">ソース(Subversion Repositry)</a>。
+<br>
+1.6用は<a href="RScript16Src.zip">ここ(1.0.9.6)</a>。
+<br>
+ビルドするにはVC++6SP5とWindows2000SDK必須。ActiveScriptとして使用するということは、IE(HTAとしてでも)やWScriptやWindows2000やVBから使うというのが目的になるわけなのでMSテクノロジー(HeHe)完全依存です。特に古いmidl使うと正しいマーシャリングコードが生成されないかも。
+<p>
+<h3>Rubyリンク</h3>
+<a name="links"></a>
+<a href="http://www.ruby-lang.org/ja/">Ruby Home Page</a><br>
+<a href="http://homepage1.nifty.com/markey/index.html">助田さんのページ</a><br>
+<a href="http://www.osk.3web.ne.jp/~nyasu/software/vrproject.html">にゃすさんのページ</a><br>
+<a href="http://www.loveruby.net/">あおきさんのL.R.N.</a><br>
+<a href="http://www2.pos.to/~tosh/ruby/rdtool/ja/index.html">ToshさんのJust Another RD Site</a><br>
+<a href="http://www2a.biglobe.ne.jp/~seki/ruby/">咳さんのI like Ruby</a>−ついにdRuby本が登場<br>
+<a href="http://www.tinyforest.gr.jp/">小林さんのTinyForest.gr.jp</a><br>
+<a href="http://member.nifty.ne.jp/nokada/ruby.html">中田さんのRubyish Archive</a><br>
+<a href="http://www.yoshidam.net/Ruby_ja.html">よしだむさんのRuby</a><br>
+<a href="http://isweb15.infoseek.co.jp/computer/ruby256/">Rubyを256倍使うための本のページ(サンプルのソース、掲示板、他の執筆者の情報など）</a>
+<br><br>
+以下のリンクはActiveScriptRubyパッケージとは直接の関係はないけど（スクリプトだからインストールすれば使えるからパッケージに入れる必要ないから入れてない＝直接の関係はない）、Rubyを存分にWin32で使うには利用したほうがいいでしょう。
+<br>
+<a href="http://www.moonwolf.com/ruby/">MoonWolfさんのライブラリやスクリプト</a>
+<br>
+<a href="http://homepage2.nifty.com/sakazuki/rde.html">sakazukiさんのRDE</a>（GUIデバッガ付き開発環境。C:\Progra~1\ruby\binに突っ込めば動くのは確認）
+<br>
+<h4>Ruby256邪道リンク。道可道、非常道、是邪道</h4>
+<a href="http://www.ascii.co.jp/books/detail/4-7561/4-7561-3603-6.html">Rubyを256倍使うための本-邪道編</a><br>
+<a href="http://homepage3.nifty.com/text/book/seigo/4-7561-3603-6.html">Rubyを256倍使うための本-邪道編の勝手に正誤表(Fe<SUP><SMALL>2+</SMALL></SUP>さんのページ)</a><br>
+<a href="http://homepage3.nifty.com/text/">Fe<SUP><SMALL>2+</SMALL></SUP>さんのページ</a>
+<h4>Ruby256網道リンク</h4>
+勉強しようそうしよう。<a href="http://shigihara.hoops.ne.jp/math_index.htm">鴫原@元予備校講師さんの数学のページ</a><br>
+<a href="http://www.ascii.co.jp/books/detail/4-7561/4-7561-3823-3.html">Rubyを256倍使うための本-網道編</a><br>
+<a href="http://www.spc.gr.jp/sho/norika/">共著者のたださんのページ</a>
+<p>
+<a href="main.html">ActiveScriptRuby English Page</a><br>
+<p>
+
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="../index.html">戻る</a>
+<br>
+copyright(c) 2000-2006 <a href="mailto:artonx@yahoo.co.jp">arton</a>, Under GPL
+</BODY>
+</HTML>
+

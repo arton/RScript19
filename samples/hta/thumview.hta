@@ -1,0 +1,53 @@
+<html>
+<head>
+  <HTA:APPLICATION ID="thumView"
+    ApplicationName="ThumnailViewer"
+  />
+<script language="RubyScript">
+$KCODE = "SJIS"
+
+def changefname
+  div = @window.disp #document.all("disp")
+  s = ""
+  fname = @window.document.all("fl").value
+  dir = File.dirname File.expand_path(fname)
+  Dir.foreach(dir) do |f|
+    f.scan(/\.(\w+)\Z/) do |b|
+      if /bmp|png|gif|jpg|tif/i === b[0]
+        s << "<img src=\"#{dir}/#{f}\" "
+        s << " style=\"margin-top:10; margin-left:10;"
+        s << " width:64; height:48;\" alt=\"#{dir}/#{f}\">"
+      end
+    end
+  end
+  div.innerHTML = s
+end
+
+def showimg
+  evt = @window.event.srcElement
+  return if evt.tagName != "IMG"
+  @wnd = @window.open "about:blank", "_blank", 
+         "toolbar=no,status=no,menubar=no"
+  html = <<-EOP
+    <body LEFTMARGIN=0 TOPMARGIN=0>
+    <img id=\"imga\"
+     src=\"#{evt.src}\"
+     style=\"margin-left:0;margin-top:0\">
+    </body>
+  EOP
+  @wnd.document.write html
+  im = @wnd.document.all("imga")
+  while im.complete == false
+    sleep 1
+  end
+  @wnd.resizeTo im.width + 10, im.height + 28
+end
+</script>
+</head>
+<body onload="@window.resizeTo 600, 300" language="RubyScript">
+<input type="file" id="fl" onpropertychange="changefname"
+ language="RubyScript">
+<br>
+<div id="disp" onclick="showimg" language="RubyScript"></div>
+</body>
+</html>

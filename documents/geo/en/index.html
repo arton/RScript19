@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+<body bgcolor="#FFFFFF">
+<address>29 Dec. 2000, 18:46:44 JST</address>
+<center><h1>ActiveScriptRuby</h1></center>
+
+<h2>Ruby: A gem of a programming language</h2>
+
+The Programming Language Ruby(<a href="#resources1">#</a>) is a powerful pure Object Oriented language first developed by Matz and rapidly grown-up in Japanese (and later International) Ruby community, and ported to many environment (many UNIX based platform, Be, Mac, Next, Win32).
+<br>
+It's not only a simpl scripting language, but a powerful full furtured environment like Java, also it loads program at first time, and store compiled intermediate language in it, then start to run. The only difference is Ruby doesn't ouput its intermediate language to the storage, always using raw programming code itself.
+<br>
+You can learn more deeply about Ruby at <a href="http://www.ruby-lang.org/en/">official Ruby Home Page</a>.
+<h2>ActiveScript</h2>
+
+Active Script Technology(<a href="#resources2">#</a>) was first introduced for Internet Explorer 3.0 to support both JavaScript and VisualBASIC Scripting Edition based on COM (Component Object Model). Active Script Technology rapidly grew to be Windows standard glue environments supported by IIS(Active Server Page), Visual Studio, Windows Scripting Host, Outlook etc. And third party supply some engines for example Perl, Haskell etc.
+<br>
+You can learn more deeply about Active Script Technology at <a href="http://msdn.microsoft.com/scripting/">Microsoft's Scripting Site</a>.
+
+<h2>ActiveScriptRuby</h2>
+
+ActiveScriptRuby is a bridge component to interface Ruby with Active Script Host applications and vice versa.
+<br>
+It stands on both COM, and Win32 porting Ruby.
+<h3>Running Environment</h3>
+Required Win32 and DCOM (later, I described the reason).
+<ul>
+ <li>WindowsNT SP3 or later (I checked with SP6A)
+ <li>Windows98 with DCOM1.1 or later (I checked with DCOM1.3)
+ <li>Windows95 with DCOM1.1 or later (I didn't checked, and not planned)
+ <li>Windows2000 (Currently I didn't checked, after SP1, I'll move to my environtment to Windows2000, so maybe in summer 2000)
+</ul>
+<h3>Required additional libary</h3>
+If you use Windows9x, then you need DCOM1.1 or later (maybe included in IE5 distribution).
+<br>
+I hardly recommanded to get or upgrade to Internet Explorer 5.5sp1 (I never checked in 3.x and 4.x), whether you like or not, whether you navigate in Internet with it or not (indeed, I never navigate in Internet with IE, sorry).
+<br>
+IE5.0 now suppoert &lt;style="display:none;"&gt;, great!
+<h3>Recommanded additional applications</h3>
+If you use WindowsNT or Windows95, get Windows Script Host(WScript.exe and CScript.exe) from Microsoft's Scripting Site.
+<h3>Design Issue</h3>
+Because Ruby itself is a monolithic environment, usually runs own process in the main thread, makes variables's life-time management with stack based management schemes, I decided to put Ruby itself into separate single thread apartment (STA), access it with COM proxy/stub marshalling.
+<br>
+At contrast, the object that export IActiveScript and IActiveScriptParse interfaces is a free-threading object, can run any thread.
+<br>
+Naturally, the object that came from Scripting Host through AddNamedItem method, may or may not stand on the apartment threading model, so I force to handle them within correct thread context.
+To void complexities, I decide to use Global Interface Table introduced by NT4SP3 and DCOM9x 1.1.
+<br>
+That's the reason to need DCOM1.x for 9x or NT4SP3 or later to run ActiveScriptRuby.
+<p>
+<center><h2>Resousrces</h2></center>
+<a name="resources1"></a>
+<a href="http://www.ruby-lang.org/en/">Ruby Home Page (English)</a>
+<br>
+<a href="http://www.ruby-lang.org/ja/">Ruby Home Page (Japanese)</a>
+<br>
+<a name="resources2"></a>
+<a href="http://msdn.microsoft.com/scripting/">Microsoft&#174; Windows Script Technologies Page</a>
+<br>
+<a href="http://www-4.ibm.com/software/developer/library/ruby.html">IBM developerWork introduced Ruby</a>.
+</p>
+<p>
+<h3>COPYRIGHT NOTICE.</h3>
+<address>copyright &#169; 2000 <a href="mailto:arton@geocities.co.jp">arton</a> under GPL</address>
+<br>
+<h3>TRADEMARKS.</h3> 
+The names of actual companies and products mentioned herein may be the trademarks of their respective owners. The example companies, organizations, products, people and events depicted herein are fictitious. No association with any real company, organization, product, person, or event is intended or should be inferred. 
+<br>
+Any rights not expressly granted herein are reserved
+</p>
+</body>
+</html>
+

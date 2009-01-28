@@ -1,0 +1,16 @@
+;*
+;*  Copyright(c) 2000, 2003 arton
+;*
+;*  You may distribute under the terms of either the GNU General Public
+;*  License
+;*
+
+
+
+LIBRARY      "RScript18.DLL"
+
+EXPORTS
+	DllCanUnloadNow     @1 PRIVATE
+	DllGetClassObject   @2 PRIVATE
+	DllRegisterServer   @3 PRIVATE
+	DllUnregisterServer	@4 PRIVATE

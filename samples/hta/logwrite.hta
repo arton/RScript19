@@ -1,0 +1,32 @@
+<html><head>
+  <HTA:APPLICATION ID="logWrite"
+   scroll="no" />
+<script language="RubyScript">
+@shell = WIN32OLE.new("WScript.Shell")
+
+def resize
+  Window.resizeTo 400, 100
+end
+
+def logwrite(tp, msg)
+  @shell.logEvent tp, msg
+end
+</script>
+</head>
+<body onload="resize" language="RubyScript">
+<input type="button" value="ƒGƒ‰[" id="e"
+ onclick="logwrite 1, '‚±‚ê‚ÍƒGƒ‰[‚Å‚·'"
+ langugage="RubyScript">
+<input type="button" value="Œx" id="w"
+ onclick="logwrite 2, '‚±‚ê‚ÍŒx‚Å‚·'"
+ langugage="RubyScript">
+<input type="button" value="î•ñ" id="i"
+ onclick="logwrite 4, '‚±‚ê‚Íî•ñ‚Å‚·'"
+ langugage="RubyScript">
+<input type="button" value="ŠÄ¸‚Ì¬Œ÷" id="s"
+ onclick="logwrite 8, '‚±‚ê‚ÍŠÄ¸‚Ì¬Œ÷‚Å‚·'"
+ langugage="RubyScript">
+<input type="button" value="ŠÄ¸‚ÌŽ¸”s" id="f"
+ onclick="logwrite 16, '‚±‚ê‚ÍŠÄ¸‚ÌŽ¸”s‚Å‚·'"
+ langugage="RubyScript">
+</body></html>

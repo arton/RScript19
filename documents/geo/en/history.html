@@ -1,0 +1,236 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+<body bgcolor="#FFFFFF">
+<address>27 Jul. 2001, 00:22:20 JST</address>
+<ul>ActiveScriptRuby Version 1.6.4.4
+ <li>Ruby 1.6.4
+ <li>SWin and VRuby -> 010725
+ <li>Win32OLE 0.2.8
+ <li>update a link for Mr.Aoki
+</ul>
+<address>6 Jun. 2001, 22:10:23 JST</address>
+<ul>ActiveScriptRuby Version 1.6.4.0
+ <li>Ruby 1.6.4
+ <li>SWin and VRuby -> 010601/010603
+ <li>dRuby 1.3.2
+ <li>If you love MS technology and can read Japanese, please visit my <a href="http://www.geocities.co.jp/SiliconValley-PaloAlto/9251/ruby/netruby.html">NETRuby for .NET page</a>. C# sources are available but pre-alpha level.
+</ul>
+<address>3 May. 2001, 17:12:40 JST</address>
+<ul>ActiveScriptRuby Version 1.6.3.5
+ <li>SWin and VRuby -> 010428
+</ul>
+<address>22 Apr. 2001, 22:46:52 JST</address>
+<ul>ActiveScriptRuby Version 1.6.3.4
+ <li>RScript16, GRScript16 -> 1.0.8.4
+ <li>Change eval scheme with 3 parameters to check line number by Ruby itself.
+</ul>
+<address>18 Apr. 2001, 22:41:47 JST</address>
+<ul>ActiveScriptRuby Version 1.6.3.3 (not changed)
+ <li>fix typo simpl -> simple, thanks Rob !
+</ul>
+<address>15 Apr. 2001, 22:37:44 JST</address>
+<ul>ActiveScriptRuby Version 1.6.3.3
+ <li>Built with VC++SP5
+ <li>RubyWin 0.0.3.1
+ <li>Racc 1.3.9
+ <li>VRuby010409
+</ul>
+<address>28 Mar. 2001, 20:51:28 JST</address>
+<ul>ActiveScriptRuby Version 1.6.3.1
+ <li>add rbconf.rb
+ <li>add BigFloat 1.1.6 by Shigeo Kobayashi.
+</ul>
+<address>20 Mar. 2001, 17:34:28 JST</address>
+<ul>20 Mar. 2001, 17:34:28 JST, ActiveScriptRuby Version 1.6.3.0
+ <li>RScript16/GRScript16 1.0.8.3/1.0.8.3
+  <ul>
+   <li>Now you can get the result of [in,out]VARIANT* from WIN32OLE::ARGV.
+   <li>The component has a method as
+     <pre>
+        HRESULT foo([in,out]VARIANT* pBar);
+     </pre>
+     You can get the result as
+     <pre>
+     comp = WIN32OLE.new("FooBar")
+     comp.foo 128
+     if WIN32OLE::ARGV[0] != 128
+       printf "New Bar = %d\n", WIN32OLE::ARGV[0]
+     end
+     </pre>
+  </ul>
+ <li>Ruby 1.6.3
+</ul>
+<address>14 Mar. 2001, 01:11:21 JST</address>
+<ul>14 Mar. 2001, 01:11:21 JST, ActiveScriptRuby Version 1.6.2.10
+ <li>RScript16/GRScript16 1.0.8.1/1.0.8.0
+  <ul>
+   <li>Correct Engine's reference count for IIS4.5.
+   <li>Check the context of the Ruby thread when InterruptThread was called.
+  </ul>
+ <li>RubyWin 0.0.3.0
+</ul>
+<address>21 Jan. 2001, 00:53:06 JST</address>
+<ul>21 Jan. 2001, 00:53:06 JST, ActiveScriptRuby Version 1.6.2.6
+ <li>RScript16/GRScript16 1.0.8.0
+ <li>Add rubyize sample
+ <li>Win32OLE 0.0.9
+ <li>Racc 1.3.5
+</ul>
+<address>16 Jan. 2001, 00:47:27 JST</address>
+<ul>16 Jan. 2001, 00:47:27 JST, ActiveScriptRuby Version 1.6.2.5
+ <li>Correct Win32OLE Unarray.
+ <li>RubyWin 0.0.2.3
+</ul>
+<address>13 Jan. 2001, 17:40:23 JST</address>
+<ul>13 Jan. 2001, 17:40:23 JST, ActiveScriptRuby Version 1.6.2.4
+ <li>RScript16.dll 1.0.7.6, GRScript16.dll 1.0.7.6
+ <li>I fixed bug caused bad C&amp;P in CRScriptCore::FinalRelease, this bug was found by Mr.Bloem, thanks Berrie !
+ <li>I changed UNTRUSTED_DATA security level. From this version, you can't call system() in Internet Explorer anymore (also at My Computer. You must use HTA).
+ <li>Add some WIN32OLE function. (not general win32ole.so, ActiveScriptRuby's implementation only)
+  <ul>
+   <li>WIN32OLE#__release
+    <ul>
+     <li>with this instance method __release (two underscore), you can explicitly call IUnknown::Release().
+     <li>Beaware, this method makes SEGV easily.
+    </ul>
+    <pre>
+      obj = WIN32OLE.new "foo.bar"
+      obj.foo        # valid WIN32OLE object
+      obj.__release  # after this call, obj is a empty WIN32OLE object
+      obj.bar        # Bang! you got a SEGV
+    </pre>
+   <li>WIN32OLE::connect
+    <ul>
+      <li>I add capability to call New moniker. ("new:" is lower case)
+      <pre>
+        obj = WIN32OLE.connect "new:{812DF40E-XXXX-11D0-XXXX-00XXXXXXXXXX}"
+            or
+        obj = WIN32OLE.connect "new:foo.bar"
+      </pre>
+    </ul>
+  </ul>
+</ul>
+<address>11 Jan. 2001, 20:53:39 JST</address>
+<ul>11 Jan. 2001, 20:53:39 JST, ActiveScriptRuby Version 1.6.2.3
+ <li>RScript16.dll 1.0.7.5
+ <li>I fixed bug that ignores EnabledOption for IObjectSafety::SetIntefaceSafetyOptions.
+ <li>Now you can create any ActiveX control in the context of Microsoft Script Control with UseSafeSubset = False.
+</ul>
+<address>10 Jan. 2001, 02:59:48 JST</address>
+<ul>10 Jan. 2001, 03:01:29 JST, ActiveScriptRuby Version 1.6.2.2
+ <li>RScript16.dll 1.0.7.4
+ <li>Now you can run Windows Script Host using WSF format.
+</ul>
+<address>07 Jan. 2001, 17:18:26 JST</address>
+<ul>07 Jan. 2001, 17:18:26 JST, ActiveScriptRuby Version 1.6.2.1
+ <li>Add amine's Racc
+ <li>Add Tosh's RDtool
+ <li>Ruby is plain 1.6.2
+ <li>RubyWin is 0.0.2.2
+</ul>
+<address>29 Dec. 2000, 18:46:44 JST</address>
+<ul>29 Dec. 2000, 18:46:44 JST, ActiveScriptRuby Version 1.6.2.0
+ <li>Add Mr.Nyasu's VR001229
+ <li>Sub amine's Racc (but, It may return, soon)
+ <li>Sub RubyCRT.DLL
+ <li>Add MSVCRT.DLL and MSVCP60.DLL
+ <li>Ruby is 1.6.2
+ <li>RubyWin is 0.0.2.2
+</ul>
+<address>1 Nov. 2000, 00:26:29 JST</address>
+<ul>31 Oct. 2000 21:18:05 ActiveScriptRuby Version 1.6.0.4
+ <li>Add patch [ruby-dev:11312]
+ <li>Add MR.Nyasu's SWin001022 ext.library
+</ul>
+<address>28 Oct. 2000, 0:58:47 JST</address>
+<ul>ActiveScriptRuby Version 1.6.0.3
+ <li>I implemented IMessageFilter in RScript16.DLL, so LRPC layer check the reentrance.
+ <li>RubyWin is now linked statically.
+ <li>I used Visual Installer update fearture. So, from this release, you never need to uninstall the package before you install newer one.
+</ul>
+<address>22 Oct. 2000, 23:20:32 JST</address>
+<ul>22 Oct. 2000, ActiveScriptRuby Version 1.6.0.2
+ <li>I rewrite sources to using IMessageFilter for nested reentrant cheking.
+ <li>Also, I use -DNT for importing right value.
+</ul>
+<address>9 Oct. 2000, 20:05:41 JST</address>
+<ul>9 Oct. 2000, ActiveScriptRuby Version 1.6.0.1
+ <li>I Moved the download page from geocities.co.jp to graffiti.net
+ <li>ActiveScriptRuby now bundled with Mr.Suketa's great RubyWin !
+ <li>ugly file extension conversion is not required anymore.
+</ul>
+<address>29 Sep. 2000, 23:27:15 JST</address>
+<ul>29 Sep. 2000, ActiveScriptRuby Version 1.6.0.0
+ <li>ActiveScriptRuby itself was changed due to 1.6 naming conversion.
+ <li>Ruby is now 1.6.1 with RubyCRT.DLL version. Due to Windows2000 env.
+ <li>Adding few samples.
+</ul>
+<address>26 Aug. 2000, 09:47:00 JST</address>
+<ul>26 Aug. 2000, ActiveScriptRuby Version 1.0.0.9
+ <li>ActiveScriptRuby itself is not changed in this package.
+ <li>Ruby is now 1.4.6 with RubyCRT.DLL version. Due to Windows2000 env.
+ <li>Adding few samples.
+</ul>
+<address>22 Jun. 2000, 02:01:00 JST</address>
+<ul>22 Jul. 2000, ActiveScriptRuby Version 1.0.0.7
+ <li>ActiveScriptRuby is almost completed.
+ <li>Adding Trace disable future for perfromance reason.
+ <li>You can disable trace by "ActiveScriptRuby.settrace false"
+ <li>But this makes the error information's line number useless.
+</ul>
+<address>17 Jul. 2000, 21:05:10 JST</address>
+<ul>17 Jul. 2000, ActiveScriptRuby Version 1.0.0.6
+ <li>I moved the installation page to geocities.co.jp for FreeServers 500K limit problem.
+ <li>ActiveScriptRuby is almost completed.
+ <li>I just start to investigate to support IActiveScriptDebug, but planed on late summer.
+</ul>
+<address>18 Jun. 2000, 18:35:00 JST</address>
+<ul>18 Jun. 2000, RScript Version 1.0.4.0
+ <li>I rewrote GlobalRubyScript.dll. For example Expanding wild cards, Supporting IActiveScript::InterruptScriptThread, excange objects between host and Ruby, etc.
+ <li>If your ActiveScriptHost is only a Single Threaded Host, then, at this point, GlobalRubyScript is your companion.
+ <li>I just start to investigate to support IActiveScriptDebug, but planed on late summer.
+</ul>
+
+<address>12 Jun. 2000, 03:05:32 JST</address>
+<ul>12 Jun. 2000, RScript Version 1.0.3.2
+ <li>Now ActiveScriptRuby support Internet Explorer's Security Option.<br>
+     Ruby's dangerous operations are now ristricted in IE.
+ <li>IActiveScript::InterruptScriptThread method was just Supported.
+ <li>Now ActiveScriptRuby never overrides existing RUBYLIB environmental variable.
+</ul>
+
+<address>4 Jun. 2000, 00:39:10 JST</address>
+<ul>3 Jun. 2000, RScript Version 1.0.2.5
+ <li>Fix cannot create ActiveX control in HTA bug.<br>
+     summary: typo.
+ <li>Fix the host crush bug after abort by ScriptError.<br>
+     summary: internal event receiver lifetime management problem.
+ <li>Fix Update page bug in IE.<br>
+     summary: Incorrect release for ActiveScriptHost Object's stub pointer.
+</ul>
+
+<p>
+<address>22 Apr. 20000</address>
+<ul>
+ <li>RubyScript Now Checks the ActiveX Control Safety option.
+ <li>Add C++ Sample (inspired by Nakamura, Hiroshi - thanks)
+</ul>
+
+<p>
+<address>15 Apr. 2000</address>
+First English Version<br>
+RScript Version 1.0.2.3
+
+
+<p>
+<hr>
+<p>
+<a href="main.html">Top</a>
+<p>
+<address>copyright &#169; 2000 <a href="mailto:arton@geocities.co.jp">arton</a> under GPL</address>
+<br>
+</body>
+</html>

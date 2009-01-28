@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<title>CLR meets Ruby</title>
+</head>
+<body>
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<h1>NETRuby</h1>
+NETRuby（これは総称。実際のクラス名はNetRuby）は、RubyをC#で再記述する試みだ。
+<h2>心境の変化</h2>
+以前、次の公式を書いていた。
+<em>
+Java : JavaScript = Ruby : NETRuby
+</em>
+要するに、NETRubyは、Rubyに似ているが全くの別物である、と。<br>
+Javaには、JDKがある。JavaScriptにはそんなものは無く、ホスト環境のオブジェクトモデルがあるだけだ。<br>
+NETRubyは、.NET Frameworkを操作するためのRubyモドキ（＝Javaに対するJavaモドキのJavaScript）という位置付けだ。
+<h3>ASRの理由</h3>
+Win32には、ろくな簡易言語が無いと言うのがActiveScriptRubyの開発動機だ。
+VBScriptもJScriptも有体に言えば機能不足だが、かと言って、いちいちC++やJavaでちょろっと書くのは馬鹿げている。コンパイラを通すわけだから、その分手間がかかるし、ちょこちょこ変えながら処理させていくというスタイルには合わない。そもそも「ちょろっ」とUIを書くのは面倒だ。<br>
+だが、インフラとしてIEが存在するわけだから、まともな言語のActiveScriptブリッジがあれば、それでOKじゃないか。C++やJavaを使う必要は無いわけだ。<br>
+ここで、僕はPerlもPythonも触ったことが無かったということが、ASRにつながっていく。同一スタートラインから、Perl、Python、Rubyを見れば、オブジェクトが操作のベースにあるという一点だけで、Rubyが勝利したわけだ（まあ、途中でHaskelとかも見たり（全然、この文脈とは関係ない言語だが、未知なものには興味があるし）、Forthのサンプル実装（があるし、軽いから拡張しやすそうだったし）に傾いたこともあるんだけど、日本語ドキュメントがある3大スクリプト言語の一つってのがやっぱり大きかったのかも）。
+<h3>新たな環境の出現</h3>
+そこに、.NETだ。で、同様な理由から、NETRubyにつながっていくわけだ。ここでは、実はコンパイルは問題では無い（矛盾してるように見えるかも知れないが、一番重要なのはリフレクションの操作だったりするから、「その言語を使って実現したいこと」が、Win32の場合とは異なってるのだ）。<br>
+その試みがここにあった。<br>
+が、<em>やめた</em>。というのは、この目的にはC#で十分だからだ。要するにC#はすごく気に入った。
+<h3>わかっていること</h3>
+なお、ハロウィン文書は熟読してるから、当然、CLRが撒き餌ってことは先刻承知だ。Monoの連中のことは知らんが、僕は、いわゆるMS的なバータリーで、目先の変ったアプローチが好きなんだよ。<br>
+だから、基本的にバータリーなのさ。っていうか、リアルワールドとは正反対のアプローチを取れるってのが楽しいのかも知れないな。
+<h2>現在の方向</h2>
+そもそも、NETRubyをRubyモドキにしようとしていた大きな理由がある。Enumerate
+<ul>
+  <li>仕様が変りつづけているから、バージョンを作っても本家に追随できないだろう。
+  <li>規模デカ過ぎ。
+  <li>上のの詳細として、絶対に僕が使わない（学生の時だったら話は別だし、存在意義は非常に高いと考えているし、それがあるからいいとも言えるんだけど）機能が含まれている。
+</ul>
+わけだから、クソマジメにポーティングしたくは無いと感じるのは当然だ。
+<h3>愚公山を移す</h3>
+おやおや、JRubyとか作ってるよ。つーか、やればできるじゃん？　あっちは、4人がかりみたいだけど、僕の生産性は少なく見積もっても5人分だから（当社比。言うだけならタダだよな）、どうにかなるんじゃないか？　――　もちろん、ここはバカな考えだった。リアルワールドでの生産性を真夜中の油に当てはめちゃいかんよね。
+<br>
+なお、JRubyはソースが分割され過ぎているし、コーディングスタイルがJava過ぎて読む気になれないから、ほとんどというかまったく参考にしてないわけなんだが。
+<br>
+もちろん、JRubyが存在するからといって、最初に挙げた理由は消えていない。しかし、考えて見たら、もともとのNETRubyがRubyモドキだと宣言しているわけなんだから、1.6モドキということで折り合いが付いてたり。
+<br>
+あと、非常に大きな理由として、Monoの連中がJayのC#対応修正を完了させていたってのがある。<br>
+個人的に本家の仕様変更が気になるのは、何よりパーサのポートが重荷だったからだ（細かなクラスの動作の差は大して気にしてない。そもそも、StringをUnicodeベースにするって決定しているわけだから、100%互換になるはずが無い）。<br>
+ここが、parse.cからのポートをするのか、parse.yからのポートで済むのかってのは、作業量的には非常に違うからだ。
+<br>
+っていうわけで、NETRubyは、Java:JavaScriptから、Ruby:JRubyの線で行くことにしたのであった。
+<h3>NETRubyの理由</h3>
+T.B.D
+
+<h2>実装</h2>
+<h3>オブジェクト</h3>
+<a href="NETRuby-pre.zip">これ</a>だ。まだ、四則演算くらいしかできないけど。
+<br>
+JayのC#ポートが無くてもメークできるように、生成後のC#ソースも同梱してある。
+<br>
+ソースの解説
+<table>
+  <tr><th>ファイル名</ht><th>オリジナル</ht><th>備考</th></tr>
+  <tr>
+    <td>NetRuby.cs</td><td>eval.c＋ruby.cってとこ</td><td>メイン。巨大クラス</td>
+  </tr>
+  <tr>
+    <td>nrb.cs</td><td>main.c</td><td>相当</td>
+  </tr>
+  <tr>
+    <td>Kernel.cs</td><td>sprintf.c＋object.c</td><td>sprintfマンセー（いい加減だけど）</td>
+  </tr>
+  <tr>
+    <td>Object.cs</td><td>object.c + ruby.h</td><td>うーん……</td>
+  </tr>
+  <tr>
+    <td>Class.cs</td><td>class.c</td><td>ここ好き</td>
+  </tr>
+  <tr>
+    <td>Node.cs</td><td>eval.c</td><td>相当充実してきた</td>
+  </tr>
+  <tr>
+    <td>Scanner.cs</td><td>lex.c + parse.y</td><td>そのまんま</td>
+  </tr>
+  <tr>
+    <td>Parser.cs</td><td>parse.c</td><td>Monoの連中のエフォートに感謝</td>
+  </tr>
+  <tr>
+    <td>parse.y</td><td>parse.y</td><td>そのまんま</td>
+  </tr>
+  <tr>
+    <td>Numeric.cs</td><td>numeric.c</td><td>仮想関数の恩恵</td>
+  </tr>
+  <tr>
+    <td>Bignum.cs</td><td>bignum.c</td><td>ムズイ……</td>
+  </tr>
+  <tr>
+    <td>excep.cs</td><td>error.c</td><td>迷いがある。.NET Frameworkのクラスを使うほうが正しいのでは無いか?</td>
+  </tr>
+  <tr>
+    <td>Const.cs</td><td>object.cなど</td><td>シングルトンで即値代わり</td>
+  </tr>
+  <tr>
+    <td>Symbol.cs</td><td>ruby.h object.cなど</td><td>相当無理がある</td>
+  </tr>
+  <tr>
+    <td>frmobj.cs</td><td>win32ole.c</td><td>これが無きゃね。</td>
+  </tr>
+  <tr>
+    <td>Array.cs</td><td>array.c</td><td>ArrayListラッパ</td>
+  </tr>
+  <tr>
+    <td>String.cs</td><td>string.c</td><td>Stringラッパ?</td>
+  </tr>
+  <tr>
+    <td>Proc.cs</td><td>eval.c</td><td>Proc</td>
+  </tr>
+  <tr>
+    <td>Thread.cs</td><td>eval.c</td><td><a href="mthread.html">Thread関連</a></td>
+  </tr>
+  <tr>
+    <td>Time.cs</td><td>time.c</td><td>.NET Frameworkはtime_tじゃないから面倒だ</td>
+  </tr>
+  <tr>
+    <td>Enum.cs</td><td>enum.c</td><td>Enumerable</td>
+  </tr>
+  <tr>
+    <td>Regexp.cs</td><td>re.c</td><td>Regexラッパ</td>
+  </tr>
+  <tr>
+    <td>Hash.cs</td><td>hash.c</td><td>Hashtableラッパ</td>
+  </tr>
+  <tr>
+    <td>Loader.cs</td><td>eval.c</td><td>requireとかの処理</td>
+  </tr>
+  <tr>
+    <td>io.cs</td><td>io.c</td><td>3/10開始</td>
+  </tr>
+  <tr>
+    <td>Makefile</td><td>Makefile.subとか</td><td>nmake 7</td>
+  </tr>
+</table>
+<small>やっぱり、小迫さんはすごい。としみじみ思う。</small><br>
+.NET Framework SDKがあれば、メークできる。英語版のリリースでも、日本語Windows2000SP2+IE5.5SP2UPにインストールし、動作している。
+<h3>サンプル</h3>
+一応、VB.NETとC#の組み込みサンプルも同梱してある。Netruby.dllに対してLIBPATH通すか、Netruby.dllと同一ディレクトリでコンパイル可能。<br>
+<a href="nrb.html">英語ページ</a>にも書いたが、現時点で将来までAPI互換性を保証できるのは、NetRubyクラス、NetRubyクラスの無引数コンストラクタ、Init()メソッド、EvalString()メソッド、Funcall()メソッドだけ。
+<br>
+また、現時点のNetRubyのインスタンスはスレッドセーフでは無い。
+<hr>
+<a href="netruby-hist.html">以前の試み</a>
+<hr>
+<address>
+<!-- hhmts start --> Last modified: Sun Mar 10 22:36:13 LMT 2002 <!-- hhmts end -->
+</address>
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2002 <a href="mailto:arton@geocities.co.jp">arton</a>, Under GPL
+</body> </html>

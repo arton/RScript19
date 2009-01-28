@@ -1,0 +1,99 @@
+/*
+ *  Copyright(c) 2000 arton
+ *
+ *  You may distribute under the terms of either the GNU General Public
+ *  License
+ *
+ *  $Date: 2006-11-15 12:49:36 +0900 (水, 15 11 2006) $
+ */
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "activscp.idl";
+
+[
+	object,
+	uuid(1AEE0BE2-04AC-11d4-8EA8-0000F45A3C05),
+	pointer_default(unique)
+]
+interface IRubyEngine : IUnknown
+{
+	HRESULT CreateObject([in]CLSID clsid, [in, string]LPCWSTR pszHost, [in]REFIID riid, [out]IUnknown** ppv);
+	HRESULT CheckInterfaceIsSafety([in]CLSID clsid, [in]IUnknown* pUnk);
+	HRESULT CheckActiveXIsSafety([in]CLSID clsid);
+	HRESULT EnterScript();
+	HRESULT LeaveScript();
+	HRESULT OnScriptError([in]IActiveScriptError* pError);
+	HRESULT RegisterServiceProvider([in]IServiceProvider* pProvider);
+	HRESULT UnregisterServiceProvider();
+	HRESULT GetSecurityLevel([out, retval]long* pResult);
+	HRESULT ClearModuleObject();
+	HRESULT SetRubyize([in]boolean f);
+	HRESULT GetRubyize();
+	HRESULT GetModule([out, retval]unsigned long* pResult);
+	HRESULT DisconnectObjects();
+	HRESULT DefineGlobalObject();
+};
+
+[
+	object,
+	uuid(66D56EE1-0249-11D4-8EA4-0000F45A3C05),
+
+	helpstring("IRubyWrapper Interface"),
+	pointer_default(unique)
+]
+interface IRubyWrapper : IUnknown
+{
+	HRESULT rb_intern([in, string]char* name, [out]unsigned long* pid);
+	HRESULT rb_module_new([in]unsigned long parent, [out]unsigned long* p);
+	HRESULT SearchMethod([in]unsigned long val, [in, string]char* pName, [out]DISPID* pDispID);
+	HRESULT rb_invoke([in]IRubyEngine* pengine, [in]unsigned long Module, [in]unsigned long func, [in]DISPPARAMS* pDispParams, [in, out, unique]VARIANT* pVarResult, [out]IActiveScriptError** ppError);
+	HRESULT SearchClass([in, string]char* pName, [out]unsigned long* pval);
+	HRESULT rb_funcall_with_string2([in]IRubyEngine* pengine, [in]unsigned long val, [in]unsigned long id, [in]long line, [in]long cb, [in, size_is(cb)]char* p, [in]boolean TraceRequired, [out]VARIANT* pVarResult, [out]IActiveScriptError** ppError);
+	HRESULT RegisterObject([in, string]char* pName, [in]unsigned long Module);
+	HRESULT UnregisterObject([in, string]char* pName, [in]unsigned long Module);
+	HRESULT Disconnect([in]IRubyEngine* pengin);
+	HRESULT DefineGlobalObject([in]IRubyEngine* pengine);
+	HRESULT DefineConstant([in, string]char* pName, [in]unsigned long Module, [in]VARIANT* pVar, [in]IRubyEngine* pengine);
+};
+
+[
+	uuid(5DBEF569-E278-11D3-8E7A-0000F45A3C05),
+	version(1.0),
+	helpstring("RScript 1.0")
+]
+library RSCRIPTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		object,
+		uuid(5DBEF577-E278-11D3-8E7A-0000F45A3C05),
+		dual,
+		helpstring("IRubyScript Interface"),
+		pointer_default(unique)
+	]
+	interface IRubyScript : IDispatch
+	{
+	};
+
+	[
+		uuid(5DBEF578-E278-11D3-8E7A-0000F45A3C05),
+		helpstring("RubyScript Language (module)")
+	]
+	coclass RubyScript
+	{
+		[default] interface IActiveScript;
+	};
+
+	[
+		uuid(66D56EE2-0249-11D4-8EA4-0000F45A3C05),
+		helpstring("RubyWrapper Class"),
+		noncreatable
+	]
+	coclass RubyWrapper
+	{
+		[default] interface IRubyWrapper;
+	};
+};

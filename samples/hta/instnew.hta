@@ -1,0 +1,53 @@
+<html>
+<head>
+<script language="RubyScript">
+def resize
+  Window.resizeTo 700, 200
+end
+
+def connectWMI(objname, host, uid, pwd)
+  locator = WIN32OLE.new("WbemScripting.SWbemLocator.1")
+  if host.empty?
+    service = locator.ConnectServer
+  else
+    service = locator.ConnectServer host, "root/cimv2", uid, pwd
+  end
+  service.Get objname
+end
+
+def doinst
+  file = Window.fl.value
+  if file.empty?
+    Window.alert "ファイルが指定されていません"
+    return
+  end
+  inst = connectWMI "Win32_Product",
+	Window.host.value, Window.uid.value, Window.pwd.value
+  n = inst.install file, "", true
+  Window.result.innerText = "結果：#{n}"
+end
+
+def clear
+  Window.host.value = ""
+  Window.uid.value = ""
+  Window.pwd.value = ""
+  Window.fl.value = ""
+  Window.result.innerText = ""
+end
+</script>
+</head>
+<body onload="resize" language="RubyScript">
+<center><h1>アプリケーションインストール</h1></center>
+コンピュータ:<input type="text" id="host">
+ユーザー名:<input type="text" id="uid">
+パスワード:<input type="password", id="pwd">
+<br>
+<input type="file" id="fl" size="80">
+<input type="button" id="go" onclick="doinst" 
+      value="実行" language="RubyScript">
+<input type="button" id="clr" onclick="clear" 
+      value="クリア" language="RubyScript">
+<hr>
+<span id="result"></span>
+</body>
+</html>

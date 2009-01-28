@@ -1,0 +1,230 @@
+<!--Created by MaedowNT-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+
+<!--COLOR-->
+<BODY BGCOLOR="#FFFFFF">
+<!-- 
+
+お願い：
+  ここにGeoGuideのタグをつけ、以下のページでGeoGuideを有効にしてください。
+  http://www.geocities.co.jp/members/tools/geoguide_manager.html 
+
+-->
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<!--HEAD1-->
+<h1></h1>
+<p>
+<!--HEAD2-->
+<h3></h3>
+<p>
+<!--LINE1-->
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<p>
+<!--BODY-->
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<center>
+<h2>ActiveScriptRuby for Ruby 1.4.6</h2>
+<br>
+<a href="ActiveRuby.bin">プレリリース1.0.0.10 (Ruby1.4.6/RScript 1.0.6.4/GRScript 1.0.6.7)</a>
+</CENTER>
+<br>
+<h3>パッケージについて(約700K)</h3>
+同梱しているrubymw.dllなどは、8/20に、<a href="http://www.ruby-lang.org/ja/">ruby-lang.org</a>から落としたruby1.4.6をVC++6.0SP4でビルドしたものです(ruby-list24520のパッチを追加してます)。同梱のwin32ole.dllは、0.1.4を同様に8/27に助田さんのところから落としたものをVC++6.0SP4でビルドしたものです。tcltkutl.dllはTcl83用にメイクしたものです。拡張ライブラリおよびRuby本体は、MSVCRT.DLLではなく、RubyCRT.DLLを使用しています。
+<h3>パッケージの内容</h3>
+<ul>
+ <li>Ruby.EXE, RubyMW.DLL, RubyCRT.DLL
+ <li>fcntl.dll, GD.dll(PNG版, mandel.dllも), md5.dll, nkf.dll, sdbm.dll, socket.dll, tcltklib.dll(tcl83用),tkutil.dll, win32api.dll, win32ole.dll
+ <li>その他、元々のlibに入っていたスクリプト
+ <li>ActiveScriptRuby (RScript.dll, GRScript.dll)
+ <li>ActiveScriptRubyを使ったsampleちょっぴり
+</ul>
+<h3>インストール方法</h3>
+<ul>
+  <li>Windows2000とWindowsME以外のWindowsを使っている場合は、まず<a href="#forins">こちらを参照</a>のこと。
+  <li><a href="ActiveRuby.bin">ActiveRuby.bin</a>を適当なディレクトリに落とし、<strong>名前をActiveRuby.msiに変更します。</strong>
+<br>
+そしたら、ダブルクリック。後は、MSIが勝手にやります。（インストールするディレクトリの指定は可能）
+</ul>
+<p>
+<h3>インストーラが行うこと</h3>
+<ul>
+  <li>デフォルトで、C:\Program Files\Ruby（変更可能）の下に各種バイナリーをコピーします。また、そのディレクトリ内のlibの下に各種ライブラリーをコピーします。
+  <li>拡張子.rbを、Ruby.exeとCScriptとWScriptついでにNotepadに関連付けます(HKEY_CLASS_ROOTのグローバルな設定を変更するため、パワーユーザー以上の権限が必要です）。
+  <li>拡張子.rbのアイコンをGRScript.DLLに設定します。
+  <li>要するにディレクトリ1個とその下にサブディレクトリを作ります。
+  <li>レジストリの、HEKY_CLASS_ROOT\.rb, HKEY_CLASS_ROOT\RubyScriptFile,HKEY_CLASS_ROOT\RubyScript,HKEY_CLASS_ROOT\GlobalRubyScriptを作成します。
+  <li>レジストリの、HKEY_CLASS_ROOT\CLSID下にActiveScriptRubyを登録します。
+</ul>
+<p>
+<h3>インストーラが行わないこと</h3>
+<ul>
+  <li>WindowsディレクトリやSystemディレクトリに、ファイルのコピーは行いません。
+  <li>PATH環境変数のセットは行いません。必要なら自分でやってください。
+  <li>Windows9X系の場合、CScriptを使用することで、たいていのことはそのままできますが、Ruby自体に対する引数が必要な場合は、PATHを設定するほうが、よいでしょう。
+</ul>
+<p>
+<h3>アンインストール方法</h3>
+コントロールパネルの「アプリケーションの追加と削除」からActiveRubyを選択して、削除を実行してください。
+<p>
+<h3>アンインストーラが行ない過ぎること</h3>
+<ul>
+  <li>ごめん！　元々.rbとかを登録していても、Windows2000でエクスプローラから関連付けした場合以外、削除しちゃいます。
+</ul>
+<p>
+<h3>インストールにあたっての注意事項</h3>
+<ul>
+  <li>パッケージのファイル名は、geocities.co.jpのファイルエクステンションの制限のために、ActiveRuby.binとなっていますが、実際は、Microsoft Windows Installerパッケージです。拡張子をmsiに直してご使用ください。またはディスクへ保存時に拡張子をmsiとしてコピーしてください。どうしても、そういった手順が嫌な場合は、<a href="http://home.graffiti.net/uuid/install.html">香港</a>へどうぞ。ただし、MIMEタイプが不正なので、IEで落としてください。
+</ul>
+<p>
+<a name="forins"></a>
+<h3>インストールのためには</h3>
+<ul>
+ <li>Windows Installer1.1以上が必要。これは、Windows2000とWindowsMEにはあらかじめ組み込まれているが、それ以外のWindowsではアドオンとなっている。
+ <li>NT4.0ユーザーは、<a href="http://www.microsoft.com/msdownload/platformsdk/instmsi.htm">ここ</a>から落とせる。
+ <li>9xユーザーも、<a href="http://www.microsoft.com/msdownload/platformsdk/instmsi.htm">ここ</a>から落とせる。
+</ul>
+<h3>動作環境</h3>
+<ul>
+ <li>Windows2000, WindowsME。基本的に考慮は不要。
+ <li>Windows9xは、DCOM1.1以上が必要。通常、IE5.01をインストールすれば入る。ちなみに現在はDCOM1.3となっていて、これでテストをしています。Windows98の場合、基本的にはそのまま使える。
+ <li>WindowsNTはSP3以降が必須。テストはSP6Aで実施していた。が、NTからWindows2000へ移行したのでNT4のことは知りません。だってW2Kはサスペンドできるんだもん。節約だね、デン子ちゃん。
+ <li>従って、1.6系は、Windows2000SP1でテスト。
+ <li>IEは4.0以上が必須。テストはIE5.5SP1で実施。
+ <li>ただし、IE4.0の一部のリリースでは、Scriptタグ内のブロックを改行コード無しで送ってくるものがあります。Ruby的にはコンパイルエラーとなるので、そうなったら(sampleディレクトリのRuby.HTMLを動かすと、いきなりソースコードだらけのメッセージボックスが出て文句を垂れるのでわかる)IEをバージョンアップするか（どうせ、セキュリティホールが埋まってないから、IE5.5にしたほうがマシだよ）、IE系での使用はあきらめてください。
+ <li>Windows98とWindows2000では標準だけど、NTではOptionPack,95ではわからない、WindowsScriptingHostが無いと、寂しい。
+</ul>
+<p>
+<h4>実行環境の補足説明</h4>
+<ul>
+　<li>内部で、RubyLib用パスとしてRScript.DLLが存在するディレクトリ直下のlibという名前のディレクトリを設定します。
+　<li>従って、必要なライブラリはそこに入れてください。
+</ul>
+なお、ホストするアプリケーションが存在するパスもRubyLibパスに含めますので、アプリケーションが使用するスクリプトはアプリケーション自身と同一のディレクトリに存在すればOKです。
+<h4>ソースファイルの入手情報</h4>
+Ruby、Win32OLE、RubyWin、SWin、ActiveScriptRubyそれぞれのソースファイルは、このページの下のほうに記述されたサイトから入手可能です。
+<p>
+<h3>サンプル</h3>
+<a href="http://www.ascii.co.jp/books/detail/4-7561/4-7561-3603-6.html">Rubyを256倍使うための本-邪道編</a>をお勧めします。とか（とか付けるところに含羞が伺える）。
+<br>
+<a href="vb.html">VB6のサンプル</a>(Ruby本のlifegameのRuby/Tkの代わりにVBを使用したもの)
+<br>
+<a href="iehowto.html">IE5.01のサンプル</a>
+<br>
+<a href="c.html">C++サンプル</a>
+<p>
+<h3>出来ること出来ないこと</h3>
+できること
+<ul>
+  <li>WScript, CScriptからのRubyスクリプトの実行
+  <li>特定スレッドでのActiveScriptingHostからの呼び出し
+  <li>スクリプトコントロールコンテナからのRuby制御
+  <li>HTMLそのものの制御言語としての記述(IEのみ。)
+  <li>HTA(HTMLアプリケーション)
+  <li>スクリプトコンポーネント(XML使うやつ)
+  <li>一応ASP内でも動く。が、推奨はしない。（クライアント数が少なければ吉）
+</ul>
+<a name="notyet">まだやってないこと</a>
+<ul>
+  <li>スクリプトコントロール使用したときのモジュール化(優先度低)
+  <li>IActiveScriptDebugインターフェイス
+</ul>
+<p>
+当分、できないこと<br>
+基本方針はブリッジなのでRubyそのものにパッチが必要なことはできません。
+<ul>
+  <li>完全にインタラクティブな行情報などの提供
+  <li>スレッドをいじくること。
+</ul>
+
+<h3>特殊なクラス</h3>
+<pre>
+ActiveScriptRuby&lt;Object: ActiveScriptRuby制御
+ クラスメソッド
+  settrace(bool)        デバッグ情報のためのトレースを行う(true)か否か
+                        デフォルトはtrue
+                        パフォーマンスアップのキーファクター
+                        falseにすると、デバッグ情報の行番号は全く当てにならなくなる
+  trace                 内部処理用(呼ぶな)
+</pre>
+<p>
+<h3>更新情報</h3>
+<address>07 Jan. 2001, 18:11:51</address>
+<br>
+1.4系は、塩漬けにすることにした。
+<p>
+<a href="history.html">過去の更新履歴</a>
+<br>
+<p>
+<h3>Rubyを256倍使用する本 邪道編の情報</h3>
+<ul>追加
+<li>docgrep.rbのとこ書かずに次のExcelとの連動のとこで書いてるのがそもそもおかしいわけだが、相対パスで引数を記述するとNTや2000だとdocgrep.rbはちゃんと動かない。だから、51ページのリストの#Cの部分を
+<pre>
+wdoc = wd.Documents.open File.expand_path(doc)
+</pre>
+としてください。ここからわかること。MSもパスの区切りに'\'を使うのが必ずしも良いと思ってるわけじゃなさそうだということ。Wordは'/'でもちゃんと処理する。
+</ul>
+<ul>追加(12/15)
+ <li>P.125のコード、思い切り間違っています。完全に勘違いしてます。井上さんのご指摘でわかりました。どうもありがとうございます。
+ <li>ScriptControlのErrorイベントで参照しなければならないのは、ScriptControlのErrorプロパティであって、VBのErrオブジェクトではありません。
+ <li>正しくは
+<pre>
+Private Sub ScriptControl_Error()
+  MsgBox "ScriptError: " & Hex(ScriptControl.Error.Number) & ", " & _
+         ScriptControl.Error.Description & ", Line=" & _
+         ScriptControl.Error.Line
+End Sub
+</pre>
+</ul>
+<p>
+<h3>リソースなど</h3>
+Ruby1.4用ActiveRubyScriptの<a href="RScriptSrc.zip">ソース</a>は、こっち。
+<br>
+ビルドするにはVC++6SP4とWindows2000SDK必須。ActiveScriptとして使用するということは、IE(HTAとしてでも)やWScriptやWindows2000やVBから使うというのが目的になるわけなのでMSテクノロジー(HeHe)完全依存です。特に古いmidl使うと正しいマーシャリングコードが生成されないかも。
+<p>
+<h3>Rubyリンク</h3>
+<a href="http://www.ruby-lang.org/ja/">Ruby Home Page</a><br>
+<a href="http://homepage1.nifty.com/markey/index.html">助田さんのページ</a><br>
+<br>
+<br>
+<h4>Ruby256邪道リンク。道可道、非常道、是邪道</h4>
+<a href="http://www.ascii.co.jp/books/detail/4-7561/4-7561-3603-6.html">Rubyを256倍使うための本-邪道編</a><br>
+<a href="http://member.nifty.ne.jp/Fe/other/book/goscoku/ruby256z.html">Rubyを256倍使うための本-邪道編の勝手に正誤表(VED03370 こと Fe<SUP><SMALL>2+</SMALL></SUP>さんのページ)</a>
+<p>
+<a href="http://activeruby.freeservers.com/">ActiveScriptRuby English Page</a><br>
+<p>
+
+<h3>配布条件</h3>
+ActiveScriptRuby自身は、GPLとして、再配布可能。RubyWin,Win32OLE,Rubyについては、それぞれの配布条件に従うこと。
+<br>
+ただし、ActiveScriptRubyのソースファイル内で、Win32oleex.cppは、助田さんのWin32ole.c（単なるフリーソフトウェアという配布条件）を元に作成したソースですので、このソースファイルのみの再利用については、GPLは適用されません。単なるフリーソフトウェアです。
+<h3>免責事項</h3>
+ActiveScriptRubyは無保証です。作者自身が使っているため、基本的にはバグの修正を行いますが、だからといって、すべての問題に対応するわけではありません。また、原因がバグであろうが、仕様であろうが、使用したことによって発生したいかなる障害に対しても作者は責任を持ちません。
+<p>
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+
+
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="../index.html">戻る</a>
+<br>
+copyright(c) 2000 <a href="mailto:arton@geocities.co.jp">arton</a>, Under GPL
+</BODY>
+</HTML>
+
+
+

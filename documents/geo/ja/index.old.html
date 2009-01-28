@@ -1,0 +1,137 @@
+<!--Created by MaedowNT-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc_JIS">
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+
+<!--COLOR-->
+<BODY BGCOLOR="#FFFFFF">
+<!-- 
+
+お願い：
+  ここにGeoGuideのタグをつけ、以下のページでGeoGuideを有効にしてください。
+  http://www.geocities.co.jp/members/tools/geoguide_manager.html 
+
+-->
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<!--HEAD1-->
+<h1></h1>
+<p>
+<!--HEAD2-->
+<h3></h3>
+<p>
+<!--LINE1-->
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<p>
+<!--BODY-->
+
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<center>
+<h2>ActiveScriptRuby</h2>
+</center>
+<p>
+Rubyに興味を持って、見てみたが、どうもWin32について、ちゃんと考えているようには見えないな。
+<ul>
+ <li>ベクターにあがってるのはCygwin.dllが必要だ。
+ <li>そりゃ、Meadow + Cygwin = オレのJava開発環境だが、少しもWindowsユーザー用じゃないな。
+ <li>しかも、環境変数の設定が必要と来たもんだ。
+ <li>インストールシールド化プロジェクトもあるようだが、方向性が違うんじゃないか？
+ <li>そうだ京都へ行こう。
+ <li>COMが必要だ。
+ <li><a href="http://homepage1.nifty.com/markey/">助田さんという方</a>が、WIN32OLEという拡張ライブラリを作ってる。なかなか。
+ <li>でも、違うんだな。
+ <li>これらはRuby.exeありきだよね。
+ <li>RubyがCOMを内包してる。
+ <li>COMにRubyを内包させなきゃ。
+ <li>そうすれば、
+ <li>CGIじゃないぜ。ASPだぜ。IISのデフォルト言語はこれで決まりだね。
+ <li>ダイナミックHTMLだって、いつまでもJScriptじゃ嫌だよね。
+ <li>WShellにまでVBか。VB,VB,VB,VB,嫌じゃん。
+ <li>VBの中で正規表現したいしたい。ScriptControlが簡単だ。
+ <li>みんなRubyでハッピーさ。
+</ul>
+<ul>
+ <li>考えなきゃならないこともたくさんあるよ。
+ <li>ダイナミックHTML? IEの内部制御言語をRubyにする気かい?
+ <li>エンジン側で、IEのシグネチャーをチェックして、セキュリティレベルを最大まで高める必要があるよね。
+ <li>IISのASPで動かす? Apartment動作できるの?
+ <li>やって見なくちゃわからない。
+ <li>移入されたオブジェクトをどう制御する?
+ <li>こいつはOKだ。解決したよ。とりあえず。WIN32OLEをさらに拡張すればいけた。
+</ul>
+<p>
+というわけで、ここに<a href="RScript.zip">アルファ版</a>がある。
+<br>
+同梱しているrubymw.dllなどは、2/13の日曜日に、ruby.orgから落としたばかりのruby1.4.3をVC++6.0SP3でビルドしたものです。同梱のwin32ole.dllは、0.8を同様に2/13に助田さんのところから落としたものを修正してVC++6.0SP3でビルドしたものです。
+<br>
+<h3>注意事項</h3>
+<br>
+上で書いたIE内でのセキュリティ制御はしていないし、Apartment動作もできない。
+名前での呼び出しも未サポート。
+<br>
+できることは、バッチ的なスクリプトの実行だけ。
+<br>
+例えばこんなの。
+<pre>
+ $WScript.Echo "Hello world !!"
+</pre>
+<br>
+これを、Hello.rbという名前で保存して、下の使用方法のインストール完了後に、ダブルクリックしてみれば、コマンドプロンプトが開いて、すぐに消えて行くから。
+<br>
+意味ないじゃん。それはCScriptだから。右クリックして、"Run with WScript"を選択すれば、ほら、メッセージボックスが出るでしょ？
+<br>
+こういった、ActiveScriptHostが提供するオブジェクトはすべてグローバルなWIN32OLEクラスのインスタンスだ。たとえばIISなら、$Responseとか$Requestとかになる。（はず）
+<br>
+<br>
+ま、アルファ版だから、
+単に、WScriptで動くレベルまでの実装だ。こんなのでも評価版としては使えるでしょ?
+<br>
+でも、IEのこと考えると危険すぎて、このレベルではベクターみたいな場所での公開は不可能だ。
+<p>
+<h3>使用方法</h3>
+ZIPを適当なディレクトリにフォルダ付きで展開してください。
+<br>
+そしたら、cd 展開ディレクトリ<br>
+          regsvr32 RScript.dll<br>
+これで完了。
+<br>
+拡張子.rbは、CScriptとWScriptついでにNotepadに関連付けられます。
+<br>
+アンインストールする時は、<br>
+cd 展開ディレクトリ<br>
+regsvr32 /u RScript.dll<br>
+cd ..<br>
+rmdir /s 展開ディレクトリ<br>
+これで完了。
+<BR>
+<a href="RScriptSrc.zip">ソースはここだ。</a>例によってGPL。
+<br>
+助田さんのソースの修正版は<a href="win32ole.zip">ここ。</a>
+<br>
+そもそもActiveScriptHost自体がCOMの初期化をしているのに、win32ole内部でもOleInitializeを呼び出すため、LRPC Proxyが終了しないことがあるので、とりあえず、それをやめさせた。だけ。
+<br>
+
+
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+
+
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="../index.html">戻る</a>
+<br>
+copyright(c) 2000 arton, Under GPL
+</BODY>
+</HTML>
+

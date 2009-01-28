@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+
+<!--COLOR-->
+<BODY BGCOLOR="#FFFFFF">
+<!-- 
+お願い：
+  ここにGeoGuideのタグをつけ、以下のページでGeoGuideを有効にしてください。
+  http://www.geocities.co.jp/members/tools/geoguide_manager.html 
+-->
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+
+<p>
+<!--LINE1-->
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<p>
+<!--BODY-->
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<center>
+<h1>Rubyを256倍使う本 邪道編の間違い探しや訂正などなど</h1>
+</center>
+<h2>Ruby256倍邪道編をRuby1.6で使うための知ってる人は知ってるはずの話</h2>
+<ul>
+ <li>Wordのgrep系は、先頭のほうで明示的に$KCODE="SJIS"とかしてください。
+ <li>僕は、なぜサロゲートが検索できないのか悩んじゃいましたが、"ー"が問題。1.4系では自動的にMSではSHIFTJISとか設定されていたのが、1.6ではNONEになったので、MS漢字コードとみなかったからなのね。
+ <li>life系は、作り直したのをパッケージに入れてますが、ハッシュにnullを代入しているのを全部、deleteの呼び出しに変更してください。（Ruby本由来の元ソースも）
+ <li>同じくWord用grepの$OPT_o.nil?は、$OPT_o == falseに変えてください。
+</ul>
+<h2>NT/2000と9xでの動作の相違について</h2>
+<ul>
+<li>docgrep.rbのとこ書かずに次のExcelとの連動のとこで書いてるのがそもそもおかしいわけだが、相対パスで引数を記述するとNTや2000だとdocgrep.rbはちゃんと動かない。だから、51ページのリストの#Cの部分を
+<pre>
+wdoc = wd.Documents.open File.expand_path(doc)
+</pre>
+としてください。ここからわかること。MSもパスの区切りに'\'を使うのが必ずしも良いと思ってるわけじゃなさそうだということ。Wordは'/'でもちゃんと処理する。
+<li>ちなみに、Cygwin使ってる人は、パスの先頭がcygdrive/cとかになるので、Wordとかに食わせることはできないので、注意。この情報は、野田さん発信のものです（[ruby-list:28112]）。
+</ul>
+<h2>Officeの情報</h2>
+<ul>
+ <li>たむらさんの情報（[ruby-list:28073]）から。Word97ではSaveAsメソッドは機能しないそうです。詳細は、MSのKB（<a href="http://support.microsoft.com/support/kb/articles/Q169/5/65.ASP">Q169565</a>）を参照のこと（Office97SR-1っていうのを当てると直るそうだけど、KBには書いてないが）。
+</ul>
+<h2>大間違いの1</h2>
+<ul>
+ <li>P.125のコード、思い切り間違っています。完全に勘違いしてます。井上さんのご指摘でわかりました。どうもありがとうございます。
+ <li>ScriptControlのErrorイベントで参照しなければならないのは、ScriptControlのErrorプロパティであって、VBのErrオブジェクトではありません。
+ <li>正しくは
+<pre>
+Private Sub ScriptControl_Error()
+  MsgBox "ScriptError: " & Hex(Ruby.Error.Number) & ", " & _
+         Ruby.Error.Description & ", Line=" & _
+         Ruby.Error.Line
+End Sub
+</pre>
+#上のコードのRubyというのは、ScriptControlの変数名
+</ul>
+<h2>多分間違いの2</h2>
+<ul>
+ <li>P.160のイチャモン、ショートカットでは引数が指定できないというやつ。
+ <li>大阪のあおきさん（だって、東京にもあおきさんがいるから）から、情報を頂いて、あらためて調べて見たら、ArgumentsというそのものズバリなプロパティがShortCutオブジェクトにありました。あおきさん、ありがとうございました。
+ <li>文字列型で、R/Wなプロパティなので、ここに設定すればOK。
+ <li>サンプル（引数をいっぱいとるやつの例）
+<pre>
+shell = WIN32OLE.new("WScript.Shell")
+sc = shell.CreateShortCut("d:\\work\\lsa.lnk")
+sc.targetPath = "c:\\winnt\\system32\\posix.exe"
+sc.Arguments = "/C c:\\progra~1\\bin\\ls.exe -l -a"
+sc.save
+</pre>
+ <li>見落としたのか、あの時点でのいい加減なドキュメント（さんざん、文句を垂れてるけど、今のMSDN日本語版だと日本語化されてて、もとのがわからなかったり）なんで出て無かったかどっちか。（h2が「多分」ってのはそういう意味）
+</ul>
+<h2>大間違いの3</h2>
+<ul>
+ <li>P.103の脚注：悪いのはMSじゃなくて、オレだよオレ。ActiveScriptRuby1.6.2.3から修正されてます。クソー、相手が相手だから、まず、相手を疑っちゃうんだよね（実際は8勝10敗くらい）。
+</ul>
+<h2>大間違いの4</h2>
+<ul>
+  <li>P.214のリスト7-4にバグ発見。正しくは
+<pre>
+locator = WIN32OLE.new("WbemScripting.SWbemLocator.1")
+service = locator.ConnectServer
+cols = "Caption, ProcessID"
+set = service.ExecQuery(
+  "select #{cols} from Win32_Process where name = '#{ARGV[0]}'")
+set.each {|proc|proc.Terminate 0}
+</pre>
+  <li>言い訳：元々WQLは1行で#{cols}なんてのは使ってなかったと思うんだけど、１行に収まらないんで分割してくうちに、なんか間違えたみたい。
+  <li>小澤泰裕さんが発見されました。どうもありがとうございます。
+</ul>
+<h2>大間違いの5(new! Oct 2003)</h2>
+<ul>
+  <li>P.57のリスト2-2 #Kにバグ発見。正しくは
+<pre>
+cells.item(1, i).columnWidth = x[1]
+</pre>
+  <li>どうして、こんなバグがあるんだろう？ サンプルソースのzipでは正しくなっています（動作確認はしたので……）。</li>
+  <li>中島さんが発見されました。どうもありがとうございます。</li>
+</ul>
+<h2>いい加減な書き方の1</h2>
+<ul>
+ <li>P.55でのEで、「何文字になるかわからないので……」とか書いているため、文字コード変換やメモリーアロケーションのオーバーヘッドだけが強調されていますが、それ以上に、Ruby−Wordのプロセス間通信のコストを減らすというのが重要です。mmさんの指摘より。
+</ul>
+<h2>いい加減な書き方の2</h2>
+<ul>
+ <li>P.252で、「eXtensible Markup Language」の略でとか、つい、字面にこだわった書き方してますが、英語圏じゃ"ex"が（発音も同じだし）大体"X"なので、「Extensible Markup Language」の略と書いたほうが良かったですね。
+ <li>多分、なひさんの指摘だと思うけど、良くわからないっす。IActiveScriptDebugインターフェイス付けてくだされば、大喜びで取り込みますです。（つーか、その前に今のset_trace使う方法直せよな&gt;オレ――直したよ。1.0.8.4）
+</ul>
+<h2>いい加減な書き方の3</h2>
+<ul>
+ <li>P.137で、レジストリへの登録方法だけ書いて、登録抹消方法を書いてなかったです。中田さんから質問を頂きました。気が利かなくてすみませんでした。つーか、読者が知らない前提で登録方法書いてるんだから、抹消方法も書かなきゃダメだったよね。ごめんなさい。
+<pre>
+regsvr32 /u LifeCanvas.dll
+</pre>
+と、"/u"オプションを付けて実行します。（パスの設定は登録時と同様です）
+ <li>ちなみに、なひさんから、
+<pre>
+regsvr32 /h
+</pre>
+でヘルプが見られるよとの情報をいただいておりますので、ご参考まで。
+</ul>
+<h2>誤植、タイポ系</h2>
+<ul>
+ <li><a href="http://member.nifty.ne.jp/Fe/book/seigo/4-7561-3603-6.html">Rubyを256倍使うための本-邪道編の勝手に正誤表(VED03370 こと Fe<SUP><SMALL>2+</SMALL></SUP>さんのページ)</a><br>
+ <li>誤植、タイポの発見は、Fe<SUP><SMALL>2+</SMALL></SUP>さん、にゃすさん、mmさん、すぎむしさんから、頂きました。どうも、ありがとうございます。
+</ul>
+<p>
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2000-2001,2003 <a href="mailto:artonx@yahoo.co.jp">arton</a>, Under GPL
+<br>
+<address>1 Oct 2003, 21:20:34</address>
+</BODY>
+</HTML>

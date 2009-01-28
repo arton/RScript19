@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Distributed Ruby Book</title>
+</head>
+
+<body>
+<CENTER>
+<!--#geoguide-->
+<p>
+<!--LINE1-->
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<p>
+<!--BODY-->
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<CENTER>
+<h1>Rubyを256倍使う本 網道編の補遺</h1>
+</CENTER>
+<h2>気にしてること</h2>
+なんかあったんだけど忘れた。思い出したら、ここに書こう。
+<h3>思い出した(12:05 7 Jul)</h3>
+　P.238のリスト内のKについてのコメントがどこにもないってことだ。<br>
+　K.： Rubyrobotsに対する終了要求を見つけたら終了するようにした（このパケットを見つけたセッションの以降のパケットを監視してFIN/ACK/FIN/ACKを全部見てから終了するように作るのが吉。その場合クライアント側のポート番号を見張り、両端のFINとそれに対するACKをチェックするようにすれば良いだろう）。<br>
+　てなようなことを書くべきだよね。
+<p>
+.NETのRemotingってLRPCのマーシャリングにも……
+
+<h2>Distributed By あおきみねろうさん</h2>
+　どうもありがとう。特に、言いっぱなしになってたP.246の注9に対する検証をできるようにして頂けたのが嬉しい。<br>
+　なんでも、Tcl/Tk版が遅いんで（そりゃそうだ）、GTK版を作って試してみて、それでも遅いんで、コネクション張りっぱなしを試してみられたそうです。効果のほどは、各自で検証してちょ。
+<br>
+　ヘイ、カモン、SDL！　（自分でやれよ。ってSWin版で満足なんだもん……）
+<h3>GTK版ビュー</h3>
+<a href="dao/gtkrobot.rb.txt">gtkrobot.rb</a>
+<br><small>
+(例によってGeoの拡張子制限があるからtxtをファイル名に付加してる。逆にブラウジングができるとも言えるけど。)
+</small>
+<br>
+僕は、まだ試してない（ちょっとLinuxマシンが死んでるの……Windowsマシンには余りいろいろ入れたくないし）。
+
+<h3>コネクション張りっぱなし版drb</h3>
+<a href="dao/drb.rb.txt">drb-aamine-persistent-version</a>
+<br><small>
+(例によってGeoの拡張子制限があるからtxtをファイル名に付加してる。逆にブラウジングができるとも言えるけど。)
+</small>
+<br>
+　なるほど。DRbConnのnewから相手のURIをキーにしてDRbPersistentConnectionを返すわけか。つーか、||=というのはちょっとムずい感じ（僕のバックボーンにあるC/C++には存在しない自己代入式だからだろう）。nilは偽だから、中身が入ってなければDRbPersistentConnectionを新規に作って代入ってことだ。
+<br>
+
+<h3>rbrobotパッチ</h3>
+趣旨を聞き忘れたけど、上のaamineバージョンではDRbObjectとDRbUndumpedをグローバルネームスペースに定義してるから、drb/eqが無い場合の==追加処理が無効になっちゃったので（drb/eqがあれば大丈夫というか、aamineバージョン自体が1.3.1相当だから問題ないような気もするけど）以下のパッチも頂きました。
+<br>
+と、最初とぼけたこと書いてましたが、このパッチ自体がグローバルなDRbObjectに対して働きかけてるから、全然、有効になってないという趣旨でした(9:25 7 Jul)。
+<br>
+<pre>
+--- org.rbrobot.rb	Tue Jul  3 12:53:11 2001
++++ rbrobot.rb	Tue Jul  3 12:53:24 2001
+@@ -11,13 +11,15 @@
+ begin
+   require 'drb/eq'
+ rescue LoadError
+-  class DRbObject
+-    def __drburi
+-      @uri
+-    end
+-    def ==(other)
+-      return false unless DRbObject === other
+-      (@ref == other.__drbref) &amp;&amp; (@uri == other.__drburi)
++  module DRb
++    class DRbObject
++      def __drburi
++        @uri
++      end
++      def ==(other)
++        return false unless DRbObject === other
++        (@ref == other.__drbref) &amp;&amp; (@uri == other.__drburi)
++      end
+     end
+   end
+ end
+</pre>
+
+<hr>
+<address></address>
+<!-- hhmts start --> Last modified: Sat Jul 07 12:11:27 LMT 2001 <!-- hhmts end -->
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2000-2001 <a href="mailto:arton@geocities.co.jp">arton</a>, Under GPL
+</body> </html>

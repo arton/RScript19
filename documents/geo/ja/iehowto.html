@@ -1,0 +1,217 @@
+<html>
+<head>
+ <title>How to program RubyScript in Internet Explorer</title>
+</head>
+<body><DIV ALIGN=CENTER><!--#geoguide--></DIV>
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<p>
+<center><h2>
+Ruby Meets Internet Explorer 5 (maybe 4.x)
+</h2></center>
+<br>
+現在の実装状況 (2000/6/7更新)
+<ul>セキュリティ(スクリプト)
+ <li>JavaAppletのセキュリティルールを適用。Low=2、High=3。Javaルールが適用できない場合は、UNTRUSTED_DATA=3として処理。
+ <li>内部での実行は、すべて、Rubyのスレッドとして実行するようにして実装。
+</ul>
+<ul>セキュリティ(IDispatchExがらみ)
+ <li>DHTML操作のためのIDispatchEx用Win32ole改造は終了。ソースのWin32oleex.cppを参照。既存スクリプトとの互換性のために、Win32oleは従来通りRequireしてます。
+</ul>
+<br>
+以下は4/22から変わらず
+<br>
+<ul>セキュリティ(ActiveXコントロール)
+ <li>ソースのWin32oleex.cppを参照。
+ <li>WIN32OLEクラスを含めて、IObjectSafetyチェックを行なおうとしている。
+ <li>が、InternetSecurityManagerのポリシーのGUIDが現在MSから非公開のため、呼び出しきれていない。(気休め程度)
+</ul>
+<ul>マルチスレッディング対応
+ <li>ほぼ完了。
+ <li>Rubyの実行部は、IRubyWrapperインターフェイスのみを通して処理可能なSTAに隔離した。
+ <li>それ以外のホストスレッドからは、(実際はSTA内であっても内部処理なので)フリースレッディング動作するIRubyEngineインターフェイスを通して上記のSTAと行き来を行なう。
+ <li>これにより、コンカレントな動作はできないまでも、見かけ上マルチスレッドのホストから安全(ただしリエントラントがらみの問題にはまだ目を瞑っている個所あり)に呼び出し可能とした。
+ <li>6/22追記:リエントラントにならない事がはっきりわかったので、他のスレッド実行中（というか、アウトゴーイングの旅行中）に再入した場合、元のスレッドに押し返すように修正した。すげー、乱暴。
+ <li>なお、Don BoxのGIPLIPを使った。別に使わなくても良いのだが(特にこの場合)、便利は便利。
+</ul>
+<p>
+さて、では実例をお見せしながら、解説しよう。サンプルのソースは<a href="biorhythm.zip">ここです。</a>
+<p><em>
+6/22 注:IE内でのセキュリティチェックが実装されたため、以下のサンプルは動作しません。date.rbに対するrequireがエラーとなるため。単に、IE内でのRubyScriptの書き方のサンプルとなってしまいました。
+</em>
+<p>
+これは、Ruby配布パッケージ内のbiorhythm.rb（Yasuo OHBAさん作成−著作権情報何も書いてないけどGPLだよね？違ったら、<a href="mailto:arton@geocities.co.jp">メイル</a>お願いします。別のサンプルを元にします。)を元にしたHTMLです。
+<br>
+さて、スクリプトは以下の2つのScript要素としてHTMLに記述されています。
+<br>
+<pre>
+&lt;script for=window event=onload language="RubyScript"&gt;
+    @doc = @window.frm.document
+&lt;/script&gt;
+</pre>
+<br>
+これは、このHTMLがロード完了したときのイベント処理の記述です。<br>
+ここでモジュールの初期化処理を行なう必要があります。<br>
+実際には、すでにスクリプトをevalするために内部的にモジュールは生成されていますが。<br>
+ちなみにモジュールは無名で作成され、ActiveRubyScript内部でホスト単位に切り替えを行なっています。
+<br>
+このHTMLでは、バイオリズムグラフの出力をフローティングフレーム(frmという名前)に行なうため、該当ドキュメントをインスタンス変数に格納しています。また、ActiveScriptRubyの仕様により、トップレベルオブジェクトのwindowはモジュールのインスタンス変数として@windowで参照されます。
+<br>
+windowオブジェクトは、視覚要素を持たないため、HTML上に要素としてタグで表現されないので、イベントの記述は上の方法になりますが、それ以外のオブジェクトはすべてオブジェクトのタグ内に記述したほうが良いでしょう。
+<br>
+<br>
+オキテ：インスタンス変数の初期化はwindowのonloadイベントまたはbodyのonloadに記述する。
+<br>
+<br>
+さて、次のscript要素内には、
+<pre>
+&lt;script language="RubyScript"&gt;
+include Math
+require "date.rb"
+def printHeader(doc, y, m, d, p, w)
+  doc.write "--- Biorhythm ---&lt;br&gt;"
+  doc.write sprintf("The birthday %04d.%02d.%02d is a %s&lt;br&gt;", y, m, d, w)
+  doc.write sprintf("Age in days: [%d]&lt;br&gt;&lt;br&gt;", p)
+end
+
+def getPosition(z)
+  pi = 3.14159265
+  phys = (50.0 * (1.0 + Math::sin((z / 23.0 - (z / 23)) * 360.0 * pi / 180.0))).to_i
+  emot = (50.0 * (1.0 + Math::sin((z / 28.0 - (z / 28)) * 360.0 * pi / 180.0))).to_i
+  geist =(50.0 * (1.0 + Math::sin((z / 33.0 - (z / 33)) * 360.0 * pi / 180.0))).to_i
+  return phys, emot, geist
+end
+
+#
+# main program
+#
+def main()
+    begin
+        bd = Date.new(@window.bday.value)
+    rescue
+        @window.alert "BAD Input Birthday !!"
+        return nil
+    end
+    dd = Date.new(Time.now.strftime("%Y%m%d"))
+    display_period = 9
+    @doc.open "text/html", "replace"
+    @doc.write "&lt;center&gt;&lt;span style=\"font-family: 'Courier'\"&gt;"
+    printHeader(@doc, bd.year, bd.month, bd.day, dd.period - bd.period, bd.name_of_week)
+    @doc.write "                     P=physical, E=emotional, M=mental&lt;br&gt;"
+    @doc.write "             -------------------------+-------------------------&lt;br&gt;"
+    @doc.write "                     Bad Condition    |    Good Condition&lt;br&gt;"
+    @doc.write "             -------------------------+-------------------------&lt;br&gt;"
+    for z in (dd.period - bd.period)..(dd.period - bd.period + display_period)
+	phys, emot, geist = getPosition(z)
+        @doc.write sprintf("%04d.%02d.%02d : &lt;br&gt;", dd.year, dd.month, dd.day)
+        p = (phys / 2.0 + 0.5).to_i
+        e = (emot / 2.0 + 0.5).to_i
+        g = (geist / 2.0 + 0.5).to_i
+        graph = "." * 51
+        graph[25] = ?|
+        graph[p], graph[e], graph[g] = ?P, ?E, ?M
+        @doc.write graph + "&lt;br&gt;"
+        dd = dd + 1
+    end
+    @doc.write "             -------------------------+-------------------------&lt;br&gt;"
+    @doc.write "&lt;/span&gt;&lt;/center&gt;"  
+    @doc.close
+end
+
+def clear_input()
+    @window.bday.value = ""
+end
+&lt;/script&gt;
+</pre>
+<br>
+と、元のbiorhythm.rbが標準出力にプリントしていたものをフローティングフレーム内にHTMLとして出力するように変更しただけのものです。
+<br>
+<br>
+オキテ：標準出力を使用するな。（食べたら死ぬで）標準出力が使用可能なのは、CScriptを使用したGlobalRubyScriptだけとなります。WScriptの場合はWSH経由の出力が必要です。またホストされる場合は、それぞれのホストオブジェクトの機構を使用してください。
+<br>
+<br>
+ここで注意すべきは、例外の捕捉をきちんとすべきだということです。(入力から日付を作成している部分)
+<br>
+ただでさえ、わけのわからないハングアップや御臨終となるIEですので、障害の切り分けを行ないやすくするためにも、是非、例外の捕捉処理の記述は行なってください。
+<br>
+<br>
+オキテ：例外捕捉をちゃんと記述しないとブラウザークラッシャーの出来上がり。
+<br>
+実際は、RScript内部で捕捉していますので、ブラウザークラッシャーにはなりませんが、例外が発生したというのが内部的にわかるだけで、利用者にフィードバックできないため、何が起きているのかわからないプログラムになってしまいます。
+<br>
+IEの左下にスクリプトエラー発生マークが出ることもありますので、その場合はクリックして内容を確認できます。ただし、行番号は常に1になります。また、IActiveScriptDebugインターフェイスは実装されていないため、スクリプトデバッガーを使用したデバッグは出来ません。
+<br>
+<br>
+次に注意すべきことは、あくまでもイベントドリブン的な記述を行なう必要があるということです。すべて、メソッドの形式で記述してください。
+そうでないと、思わぬタイミングで実行されることになり、確実にとらぶります。
+<br>
+ここでは、GOボタンのクリックでmainメソッドが呼ばれて処理を行なうようにしています。
+<br>
+最後の部分のclear_inputメソッドはclearボタンの処理です。フォームの形式でHTMLを作成していないため、resetタイプのボタンが使用できないからです。
+<br>
+<br>
+オキテ：script要素内のすべての記述はメソッドとする。
+<br>
+<br>
+すなわち<br>
+<pre>
+&lt;script language="RubyScript"&gt;
+ if ....
+</pre>
+<br>のようにscript要素に直接手続きを記述することは本質的に問題となります。こういった処理が必要な場合、既に書いたようにwindowまたはbodyのonloadイベントに記述してください。
+<p>
+で、次はHTML内の部品の記述方法ですが、下のように一般的な書式です。<br>
+&lt;input type="button" value="GO!" id=start name=start onclick="main" language="RubyScript"&gt;
+<br>
+これで、このボタンをクリックすると、上のmainメソッドが呼び出されます。
+<br>
+さて、IE5(多分IE4でもOKかな?)とRScriptで試してください。
+<p>
+<h3>HTA</h3>
+HTMLの拡張子をHTAに変更すると、そのまま実行可能なアプリケーションプログラムとなります。
+<br>
+ソケットを使用して指定されたHTMLのソースを表示する<a href="viewsource.zip">サンプル</a>を作ってみました。表示にDHTMLを使用しているほかは、どうってことないものです。また、拡張子をHTMLに変更してもOKです。(IEのメニューや外枠が出るか出ないかだけの違いに過ぎないが、HTAのほうが起動が早い気がする)
+<p>
+<h3>ActiveXControlセキュリティのテスト</h3>
+以下のようなHTMLを作成する
+<pre>
+ &lt;html&gt;
+  &lt;head&gt;
+   &lt;script language="rubyscript" for="window" event="onload"&gt;
+     @window.alert "start test"
+     x = WIN32OLE.new("Scripting.FileSystemObject")
+     f = x.GetFile("c:\\autoexec.bat")
+     @window.alert "autoexec.bat was created on " + f.DateCreated
+   &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+   What Am I Doing, hehe ?
+  &lt;/body&gt;
+ &lt;/html&gt;
+</pre>
+"Scripting.FileSystemObject"は、安全では無いとマークされているため、
+作成できない。これは例え、HTMLがローカルファイルとして存在しても。
+ロードすると"start test"表示後、、IEの左角にエラーマークが出るので、
+ダブルクリックすると、アクセス拒否例外があがったことが表示される。
+<p>
+<h3>セキュリティレベルのテスト</h3>
+ついに、
+<a href="sample/readmk.html">テスト用スクリプトの一部</a>を公開(6/7)
+<br>
+ボタンクリックで、2.C:\のファイル列挙、1.c:\にrubytestというディレクトリを作成しようとする。このバージョンからは、すべてエラーとなる。
+<p>
+<IMG SRC="/pictures/icons/lines/rainbow_thinline.gif">
+<br>
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2000 arton, Under GPL
+</body>
+</html>
+

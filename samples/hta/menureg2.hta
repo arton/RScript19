@@ -1,0 +1,208 @@
+<html>
+<head><title>Start Menu Registration</title>
+<script language="RubyScript">
+
+class ProgFile
+  attr_reader :name
+  attr_reader :path
+  attr_accessor :entried
+  def initialize(path, name)
+    @path = path
+    @name = name
+    @entried = false
+  end
+
+  #//cmt{拡張子を落とした名前を返す//}
+  def basename()
+    @name[0, @name.length - 4]
+  end
+
+  #//cmt{表示用HTMLの作成//}
+  #//cmt{登録情報の作成。引数は情報の識別子を一意にするために使用//}
+  def createreginfo(title, regid)
+    <<-INFO
+    プログラム：#{@name}&nbsp&nbsp
+    ショートカット名：
+    <input id="#{title}" type="text" 
+           value="#{basename.capitalize}">
+    <span id="#{regid}" style="display:none">
+          #{@path}\\#{@name}</span>
+   INFO
+  end
+
+  #//cmt{ショートカットを指定された位置に名称で作成//}
+  def makeshortcut(shell, menupath, title)
+    shortcut = shell.CreateShortCut("#{menupath}\\#{title}.lnk")
+    shortcut.targetPath = "#{path}\\#{name}"
+    shortcut.save
+  end
+end
+
+#//cmt{登録情報に使用するタグのidを作成する//}
+def makeid(regno)
+  "reg#{regno}"
+end
+
+def maketitle(regno)
+   "titel#{regno}"
+end
+
+def searchprog(path)
+  return if FileTest.exist?(path) == false
+  fs = Array.new
+  Dir.foreach(path) do |f|
+    next if f[0] == ?.
+    if FileTest.directory? "#{path}\\#{f}"
+      searchprog "#{path}\\#{f}"
+    else
+      /.*\.exe\z/i =~ f
+      next if $&.nil?
+      flobj = ProgFile.new(path, f)
+      @fs["#{path}\\#{f}"] = flobj
+      fs.push flobj
+    end
+  end
+  if fs.empty? == false
+    s = ""
+    fs.each {|f| 
+      s << "<a href=\"#{path}\\#{f.name}\">#{f.name}</a>&nbsp\r\n"
+    }
+    tbl = @window.document.all("progtbl")
+    tr = tbl.insertRow(-1)
+    td = tr.insertCell(-1)
+    td.innerText = path
+    td = tr.insertCell(-1)
+    td.innerHTML = s
+  end
+end
+
+def checkprg()
+  name = @window.event.dataTransfer.getData("Text")
+  #//cmt{変なものをドラッグされた場合処理は出来ない}
+  return if name.nil?
+  name = name[8..(name.length - 1)] #//cmt{先頭の"file://"を削除//}
+  #//cmt{手抜き。URLデコードをマジメにやるべし//}
+  name.gsub! /%20/, " " 
+  name.gsub! /\//, "\\"
+  fl = @fs[name]
+  #//cmt{違うものをドラッグされた場合処理は出来ない//}
+  return if fl.nil?
+  #//cmt{既にエントリー済みのファイルは無視//}
+  return if fl.entried
+  fl.entried = true
+  doc = @window.document
+#//cmt{printfデバッグの代わりにこんな事をやってたりする//}
+#  s = ""
+#  @fs.each {|k,f|s << "#{k}-#{f.name}<br>"}
+#  doc.all("test").innerHTML = s
+  div = doc.createElement("div")
+  #//cmt{登録用の行を作成させる//}
+  div.innerHTML = fl.createreginfo maketitle(@regno), makeid(@regno)
+  @regno += 1
+  span = doc.all("regtbl")
+  span.appendChild div
+  doc.all.gobutton.style.display = "block"
+  doc.all.canbutton.style.display = "block"
+end
+
+#//cmt{登録実行処理//}
+def regstart()
+  shell = WIN32OLE.new("WScript.Shell")
+  doc = @window.document
+  menu = doc.all("menuname")
+  path = shell.SpecialFolders("Programs")
+  menupath = "#{path}\\#{menu.value}"
+  begin  #//cmt{メニュー用のディレクトリを作る//}
+    Dir.mkdir menupath
+  rescue
+    #//cmt{既にディレクトリがある場合の例外だけを前提//}
+    #//cmt{ディレクトリ名として不適切な名前が来た場合のチェックはしてない//}
+  end
+  (0...@regno).each do |i|
+    fl = @fs[doc.all(makeid(i)).innerText]
+    title = doc.all(maketitle(i)).value
+    #//cmt{登録したくなければ、ショートカット名を空にすればいい//}
+    next if title.empty? 
+    #//cmt{ありえないが念のためチェックしたりして//}
+    next if fl.nil?
+   fl.makeshortcut shell, menupath, title
+  end
+  regcancel
+  @runcnt += 1
+  menu.value = "MyTools#{@runcnt}" #//cmt{メニュー名を繰り上げる//}
+end
+
+#//cmt{現在の登録情報の消去//}
+def regcancel()
+  @regno = 0
+  doc = @window.document
+  doc.all("regtbl").innerHTML = ""
+  doc.all.gobutton.style.display = "none"
+  doc.all.canbutton.style.display = "none"
+  @fs.each {|k,f|f.entried = false}
+  #//cmt{キャンセルボタンを押した時、戻り値が評価できずに//}
+  #//cmt{エラーとなるので、ダミーの戻り値を記述する//}
+  nil
+end
+
+#//cmt{標準のD&D処理の挙動を変更させる//}
+def nonaction()
+  @window.event.returnValue = false
+end
+
+#//cmt{プログラムの開始地点//}
+def enumprogs()
+  @runcnt = 1      #//cmt{実行回数//}
+  @regno = 0       #//cmt{登録情報の識別用//}
+  @fs = Hash.new   #//cmt{プログラム情報登録用//}
+  shell = WIN32OLE.new("WScript.Shell")
+  senv = shell.Environment
+  windir = shell.ExpandEnvironmentStrings(senv.item("WinDir")).downcase
+  shell.ExpandEnvironmentStrings(senv.item("PATH")).split(";").each {
+    |path| 
+    #//cmt{""で囲まれている場合、削除する//}
+    path.gsub! /\"/, ""
+    #//cmt{Windowsディレクトリ関係はスキップ//}
+    next if path.downcase.index(windir).nil? == false
+    searchprog path
+  }
+end
+</script>
+</head>
+
+<body onload="enumprogs" language="RubyScript">
+<table>
+<td>グループ名：</td>
+<td><input id="menuname" type="text" value="MyTools"></td>
+<td><span id="regent" style="background-color: lightblue"
+     ondrop="checkprg" ondragenter="nonaction" 
+     ondragover="nonaction" language="rubyscript">
+     ここにプログラム名をドラッグ&ドロップしてください</span>
+</td>
+<td><input id="gobutton" type="button" value="実行" 
+     style="display:none; width:10em"
+     onclick="regstart" language="rubyscript" >
+</td>
+<td><input id="canbutton" type="button" value="キャンセル" 
+     style="display:none; width:10em"
+     onclick="regcancel" language="rubyscript" >
+</td>
+</table>
+<!-- ここにドロップされたプログラムを表示する -->
+<span id="regtbl">
+</span>
+<hr>
+<table id="progtbl" border="1" onclick="nonaction" 
+       language="rubyscript" >
+ <tr><th>ディレクトリ</th><th>プログラム</th></tr>
+</table> 
+<hr>
+<center>
+  <input id="exitbutton" type="button" value="終了" 
+         onclick="@window.close" language="rubyscript" 
+         style="width:10em">
+</center>
+<!-- デバッグ用の出力位置 -->
+<span id="test"></span>
+</body>
+</html>

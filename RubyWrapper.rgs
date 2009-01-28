@@ -1,0 +1,25 @@
+HKCR
+{
+	RScript.RubyWrapper.1 = s 'RubyWrapper Class'
+	{
+		CLSID = s '{66D56EE2-0249-11D4-8EA4-0000F45A3C05}'
+	}
+	RScript.RubyWrapper = s 'RubyWrapper Class'
+	{
+		CLSID = s '{66D56EE2-0249-11D4-8EA4-0000F45A3C05}'
+		CurVer = s 'RScript.RubyWrapper.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {66D56EE2-0249-11D4-8EA4-0000F45A3C05} = s 'RubyWrapper Class'
+		{
+			ProgID = s 'RScript.RubyWrapper.1'
+			VersionIndependentProgID = s 'RScript.RubyWrapper'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{5DBEF569-E278-11D3-8E7A-0000F45A3C05}'
+		}
+	}
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+<body bgcolor="#FFFFFF">
+<address>22 Apr. 2000</address>
+
+<center><h1>ActiveScriptRuby</h1></center>
+
+<h2>Description of ActiveScriptRuby</h2>
+
+There are two separate dlls, RScript.dll and GRScript.dll.
+
+<h3>GlobalRubyScript</h3>
+
+GRScript.dll (progid="GlobalRubyScript") is an engine just fit for Windows Script Host Scheme.
+<br>
+It has no capability to handle multiple IActiveScript interface, but very similar environment to original Ruby.exe. Because the script evaluate always in the top level context, with global name space.
+<br>
+In addition with CScript (not WScript), you can use STDIN/STDOUT.
+<ul>
+ <li>Imported Objects are referenced as Global Variable. In Ruby, the global variable starts doller sign, so
+</ul>
+sample script:
+<pre>
+ $WScript.Echo "Hello World !"
+</pre>
+
+<h3>RubyScript</h3>
+
+RScript.dll (progid="RubyScript") is for others.
+<br>
+It has capability to handle multiple IActiveScript interface, each engine runs isolated name space using Ruby's module.
+<ul>
+ <li>Imported Modules are referenced with namespace prefix, because the environment itself is in module.
+ <li>Imported Objects are referenced as Module Instance Variable. In Ruby the instance variable starts with atmark, so
+</ul>
+Sample script:
+<pre>
+ &lt;script for=window event=onload language=RubyScript&gt;
+  @window.alert "Hello World !"
+ &lt;/script&gt;
+</pre>
+
+<h3>Biorhythm Sample</h3>
+There is a script in ActiveScriptRuby package (default=c:\program files\ruby\samples\biorhythm.hta) original created by OHBA. 
+<DL>
+<DT>biorhythm.hta
+<DD>run with Internet Explorer, Interact using input object and iframe. The engine is RScript.dll.
+</DL>
+See the difference of how to reference Math module's method.
+<br>
+keywords: Math, print, Date
+
+<h3>ViewSource Sample</h3>
+This <a href="sample/viewsource.zip">sample</a> shows the power of Ruby, with HTML Application.
+<br>
+keywords: Socket, TCPsocket, each (iterater), regular expression
+
+<h3>VB6 Sample with sources</h3>
+This <a href="sample/VBLife.zip">sample</a> shows how to using ActiveScriptRuby with an application that hosts Script Control.
+<br>
+Also, it shows how to import/export each objects. VB uses Ruby object (in this sample, Lifegame controller and geometry object) and Ruby uses VB object (in this sample, the canvas object).
+<br>
+<em>Caution </em>, Because the version of VisualBASIC6 ported by Microsoft Japan inserts many Japanese characters into its project files, I doubt you can load them easily.
+
+<h3>C++ Sample</h3>
+What is the benefit for using ActiveScriptRuby in C++ ? <br>
+In spite of Ruby has own C/C++ interface, to use ActiveScriptRuby means the application can choose its script language in uniformed style.<br>
+<a href="sample/c.zip">The sample</a> illustrates how to call ActiveScript Engines. It uses RubyScript like JScript and VBScript.
+
+<p>
+<hr>
+<p>
+<a href="main.html">Top</a>
+<p>
+<address>copyright &#169; 2000 <a href="mailto:arton@geocities.co.jp">arton</a> under GPL</address>
+<br>
+</body>
+</html>

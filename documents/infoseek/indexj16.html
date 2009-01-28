@@ -1,0 +1,153 @@
+<!--Created by MaedowNT-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<address>23 Jun 2007</address>
+<a href="index.html">English</a>
+
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<hr>
+<center><h1><a href="indexj.html">for Ruby 1.8</a></h1>
+</center>
+<center><h1><a href="168/ActiveRuby.msi">ActiveScriptRuby 1.6.8.3</a></h1>
+</center>
+  <small>
+ <ul>
+  <li>ヘッダとライブラリのMSIパッケージはこのページの下のほうにリンクがあります。拡張ライブラリなどを作成する場合は、そちらをASRと同一ディレクトリにインストールしてください。
+  <li><strong>
+同一Rubyバージョンのインストール前は、必ずコントロールパネルの「アプリケーションの追加と削除」を使用して、古いバージョンを削除してください。</strong>
+  <li><strong>
+ Ruby1.4系を使用していて、自力でRUBYLIB環境変数を設定している場合、1.6系以降をインストールしたら削除するか修正してください。</strong>
+  <li>ActiveRuby1.6.2.xから、MSVCRT.DLLとMSVCP60.DLLのマージモジュールってのを使ってます。Windows95やNTのような古いシステムを利用している場合には、インストール前にSystem32やSystemの同名ファイルのバックアップをとっておく事を勧めます。もし、既存アプリケーションの動作に異常を感じたら、MSVCRT.DLLを元のに戻してみてください。
+  <li><strong>ネットスケープナビゲータ利用者は読んでね</strong>
+   <ul>
+    <li>ネットスケープナビゲータを利用すると、このサイトが返すMIMEタイプの問題で、ファイルの内容が壊れます。したがって、IEを使うか、イリアなどのツールを使ってください。
+    <li>もし、既にRubyをインストールしてあれば<a href="index.html">英語ページ</a>に（しかし手抜きスクリプトなのでメモリー大食いだが）ファイルを拾うRubyスクリプトのサンプルがあるのでそれを参照して自力更生してください。
+   </ul>
+ </ul>
+ </small>
+<p>
+<h3>パッケージについて</h3>
+<ul>内容（1.6.8.3）約2.5MB
+ <li>12/24に、<a href="http://www.ruby-lang.org/ja/">ruby-lang.org</a>からゲットしたruby1.6.8
+ <li>socket.soにパッチを当ててdup抜きにしてあります。
+ <li>ActiveScriptRuby (RScript16.dll 1.0.9.6, GRScript16.dll 1.0.9.6)
+ <li>ActiveScriptRubyを使ったsampleちょっぴり
+ <li>12/24に、助田さんのところからゲットしたRubyUnit 0.5.5
+ <li>5/3に、助田さんのところからゲットしたWin32OLE 0.5.3
+ <li>1/13に、助田さんのところからゲットしたRubyWin 0.0.4.3
+ <li>5/3に、にゃすさんのところからゲットしたVRSWin030421(パッチ無し)
+ <li>5/3に、にゃすさんのところからゲットしたvruby030421
+ <li>3/2に、Toshさんのところから落としたRDtool 0.6.11
+ <li>12/24に、あおきさんのところからゲットしたRacc1.4.3
+ <li>2/5に咳さんのところからゲットしたdRuby 1.3.9
+ <li>12/24に中田さんのところからゲットしたOptionParser 0.10.1
+ <li>12/24に、青木大輔さんのところからゲットした1.6.8の日本語リファレンス
+ <li>12/24に小林さんのところからゲットしたBigFloat1.2.1
+ <li>7/11にRAAから取って来た石塚さんのforwardable-1.1
+ <li>12/24によしだむさんのところからゲットしたuconv 0.4.11
+</ul>
+<ul>ビルド環境
+ <li>VC++6.0SP5
+ <li>Oct. 2001 Platform SDK(やっと更新)
+ <li>Tcl83 (stub使用-途中まで違ってた-1.6.4.2から再度stub使用に戻した)
+ <li>Visual Installer 1.1添付のMSVCRT.MMFとMSVCP60.MMF　(SP5)
+</ul>
+<p>
+<h3>インストール方法</h3>
+<ul>
+  <li>Windows2000とWindowsMe以外のWindowsを使っている場合は、まず<a href="#forins">こちらを参照</a>のこと。
+  <li><a href="ActiveRuby.msi">ActiveRuby.msi(ruby 1.6.8)</a>を適当なディレクトリに落として、ダブルクリック。後は、MSIが勝手にやります。（インストールするディレクトリの指定は可能）
+  <li>高速回線だったら、直接実行しても（このファイルを上記の場所から開くっていうやつ）良いかも。
+</ul>
+<p>
+<h3>インストーラが行うこと</h3>
+<ul>
+  <li>デフォルトで、C:\Program Files\Ruby（変更可能）の下のbinに各種バイナリーをコピーします。また、lib\ruby\1.6の下に各種ライブラリーをコピーします。
+  <li>拡張子.rbを、Ruby.exeとCScriptとWScriptついでにNotepadに関連付けます(HKEY_CLASS_ROOTのグローバルな設定を変更するため、パワーユーザー以上の権限が必要です）。
+  <li>拡張子.rbのアイコンをGRScript.DLLに設定します。
+  <li>要するにディレクトリ1個とその下にサブディレクトリを作ります。
+  <li>レジストリの、HEKY_CLASS_ROOT\.rb, HKEY_CLASS_ROOT\RubyScriptFile,HKEY_CLASS_ROOT\RubyScript,HKEY_CLASS_ROOT\GlobalRubyScriptを作成します。
+  <li>レジストリの、HKEY_CLASS_ROOT\CLSID下にActiveScriptRubyを登録します。
+  <li>RubyWinをスタートアップメニューに登録します。
+  <li>Systemディレクトリ(NTだとSystem32)のmsvcrt.dllおよびmsvcp60.dllを、もしインストーラが保持しているバージョンより古いものであれば置換します。
+  <li>PATHの設定についてはまだ思案中です。
+</ul>
+<p>
+<h3>インストーラが行わないこと</h3>
+<ul>
+  <li>Windowsディレクトリには、ファイルのコピーは行いません。
+  <li>PATH環境変数のセットは行いません。必要なら自分でやってください。
+  <li>Windows9X系の場合、CScriptを使用することで、たいていのことはそのままできますが、Ruby自体に対する引数が必要な場合は、PATHを設定するほうが、よいでしょう。
+</ul>
+<p>
+<h3>アンインストール方法</h3>
+コントロールパネルの「アプリケーションの追加と削除」からActiveRubyを選択して、削除を実行してください。
+<p>
+<h3>アンインストーラが行ない過ぎること</h3>
+<ul>
+  <li>ごめん！　元々.rbとかを登録していても、Windows2000でエクスプローラから関連付けした場合以外、削除しちゃいます。
+</ul>
+<a name="forins"></a>
+<h3>インストールのためには</h3>
+<ul>
+ <li>Windows Installer1.1以上が必要。これは、Windows2000とWindowsMeにはあらかじめ組み込まれているが、それ以外のWindowsではアドオンとなっている。
+ <li>NT4.0ユーザーは、<a href="http://www.microsoft.com/downloads/release.asp?ReleaseID=17344">ここ</a>から落とせる。
+ <li>9xユーザーも、<a href="http://www.microsoft.com/downloads/release.asp?ReleaseID=17343">ここ</a>から落とせる。
+</ul>
+<h3>動作環境</h3>
+<ul>
+ <li>Windows9xは、DCOM1.1以上が必要。通常、IE5.01をインストールすれば入る。ちなみに現在はDCOM1.3となっていて、これでテストをしていました（過去形）。Windows98の場合、基本的にはそのまま使える。
+ <li>WindowsNTはSP3以降が必須だと思います。
+ <li>IEは5.1SP2以上が実際問題として必須。テストはIE6SP1(+HotFixes)で実施。
+ <li>Windows98とWindows2000では標準だけど、NTではOptionPack,95ではわからない、WindowsScriptingHostが無いと、寂しい。
+</ul>
+<p>
+<h3>ActiveScriptRuby添付アプリケーション</h3>
+<ul>使い方(1.6系)
+ <li>IRB、RaccとRDtoolの使い方。WindowsNTやWindows2000だったら、PATHにRubyインストールディレクトリ\binを追加すれば、あとは、rd2.rb hogeとか、書けばいいだけなんで、まあいいでしょ（この項、RDtoolについては半分嘘。HTML用フィルタ以外を使用する場合には、ちゃんとrubyから書かないとうまくライブラリのロードができないかも−未テスト）。Windows9x系では、やっぱ、同じようにPATHに追加してstart rd2.rb hogeとかやって。オリジナルから変更して拡張子rbを付けてるから、パスさえ通せばどうにかなるでしょう。か、RubyWinに読み込んで使用するとか。
+ <li>olegen.rbも同様に、デフォルトではc:\progra~1\ruby\binにコピーしてあります。
+</ul>
+<p>
+<h3>ドキュメント</h3>
+rdで配布されている各種ドキュメントは、テストを兼ねてrdtoolを使ってHTML化したものをインストールディレクトリ直下のdocにコピーしてあります。それ以外のはダブルクリック対応で拡張子txt化。中身いじったのは、forwardableのrdだけ(=begin,=endを最初と最後に入れた）。<br>
+なお、ファイル名は適当に変えてます。例えばREADMEをRubyWIN.TXTとか。
+<h4>実行環境の補足説明</h4>
+<ul>
+ <li>必要なライブラリは、インストールディレクトリの下のlib\ruby\1.6とかに入れてください。site_rubyも作ってあるので、そちらに入れてももちろんOK（手で追加したファイルはアンインストールでは消さないので大丈夫）。
+ <li>ホストするアプリケーションが存在するパスもRubyLibパスに含めますので、アプリケーションが使用するスクリプトはアプリケーション自身と同一のディレクトリに存在すればOKです。
+</ul>
+<h4>ソースファイルの入手情報</h4>
+Ruby、Win32OLE、RubyWin、SWin、Racc、RDtool、BigFloat、optparse、forwardable、ActiveScriptRuby、RubyUnit、uconvそれぞれのソースファイルは、<a href="http://www.geocities.jp/artonx/ruby/index.html#links">こちらにリンクされた各サイト</a>または<a href="http://www.ruby-lang.org/ja/raa.html">RAA</a>から入手可能です。
+<h4>ヘッダとライブラリ</h4>
+Ruby 1.6系は<a href="ASRDev.msi">ここ</a>。ASR1.6.8.xと同じディレクトリにインストールしてください。
+<h4>古いやつ</h4>
+<a href="ActiveRuby.1.6.6.1.msi">1.6.6.1</a>
+<br/>
+<a href="ActiveRuby.1.6.5.7.msi">1.6.5.7</a>
+<br/>
+<a href="ActiveRuby.1.6.4.8.msi">1.6.4.8</a>
+<p>
+<h3>謝辞</h3>
+雪見酒さん、いろいろフォローしてくださってるそうで、ありがとうございます。<br>
+同梱のソフトウェアを開発された皆さん、ありがとうございます。
+<h3>配布条件</h3>
+ActiveScriptRuby自身は、GPLとして、再配布可能。RubyWin,Win32OLE,Ruby,SWin,RDtoo,Raccなど同梱のソフトウェアについては、それぞれの配布条件に従うこと。正しい配布条件は、各ソフトウェアのオリジナルの<a href="http://www.geocities.jp/artonx/ruby/index.html#links">配布元</a>に存在します。
+<br>
+ただし、ActiveScriptRubyのソースファイル内で、Win32oleex.cppは、助田さんのWin32ole.c（単なるフリーソフトウェアという配布条件）を元に作成したソースですので、このソースファイルのみの再利用については、GPLは適用されません。単なるフリーソフトウェアです。
+
+<h3>免責事項</h3>
+ActiveScriptRubyは無保証です。作者自身が使っているため、基本的にはバグの修正を行いますが、だからといって、すべての問題に対応するわけではありません。また、原因がバグであろうが、仕様であろうが、使用したことによって発生したいかなる損害に対しても作者は責任を持ちません。
+<p>
+<a href="http://www.geocities.jp/artonx/ruby/">戻る</a>
+<br>
+copyright(c) 2000-2006 <a href="mailto:artonx@yahoo.co.jp">arton</a>, Under GPL
+</BODY>
+</HTML>

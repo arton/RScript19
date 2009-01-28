@@ -1,0 +1,31 @@
+ActiveScriptRuby for Ruby 1.8
+
+Running Environment
+
+Required Win32 and DCOM (later, I described the reason). 
+
+     WindowsNT SP3 or later (but I never test with it) 
+     Windows98 (but I never test with it) 
+     Windows95 with DCOM1.1 or later (but I never test with it) 
+     Windows2000
+     WindowsXP
+
+Required additional libary
+
+If you use Windows95, then you need DCOM1.1 or later (I suppose maybe necessary updates was already included in IE5 distribution, and
+Windows98). 
+You are hardly recommended to get or upgrade to Internet Explorer 5.01 (I've never checked in 3.x and 4.x), whether you like or not, whether
+you navigate in Internet with it or not (indeed, I never navigate in Internet with IE, sorry). 
+
+Distribution Condition
+
+ActiveScriptRuby is freely redistributal product under GPL2. 
+
+Disclaimer Notice
+
+THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION,
+THE IMPLIED WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+
+http://www.geocities.co.jp/SiliconValley-PaloAlto/9251/ruby/main.html
+
+artonx@yahoo.co.jp

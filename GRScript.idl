@@ -1,0 +1,42 @@
+/*
+ *  Copyright(c) 2000 arton
+ *
+ *  You may distribute under the terms of either the GNU General Public
+ *  License
+ *  $Date: 2006-11-03 04:23:11 +0900 (金, 03 11 2006) $
+ */
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "activscp.idl";
+
+[
+	uuid(C9A96A27-0247-11D4-8EA4-0000F45A3C05),
+	version(1.0),
+	helpstring("Global Ruby Script 1.0")
+]
+library GRSCRIPTLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		object,
+		uuid(0AC0D357-E866-11D3-8E82-0000F45A3C05),
+	
+		helpstring("IGlobalRubyScript Interface"),
+		pointer_default(unique)
+	]
+	interface IGlobalRubyScript : IUnknown
+	{
+	};
+
+	[
+		uuid(0AC0D358-E866-11D3-8E82-0000F45A3C05),
+		helpstring("RubyScript Language (global)")
+	]
+	coclass GlobalRubyScript
+	{
+		[default] interface IGlobalRubyScript;
+	};
+};

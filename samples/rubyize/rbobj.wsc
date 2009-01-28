@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+<?component error="true" debug="false"?>
+<component id="RubyObj">
+ <registration
+  progid="ruby.object"
+  version="1.0"
+  classid="{000004BB-E222-11D2-9FC4-00105A1C56C0}"
+  description="Rubyize Object"
+  remotable="true">
+  <script language="RubyScript">
+  <![CDATA[
+  def Register()
+    d = Dir.pwd.gsub('/', '\\')
+    o = WIN32OLE.new("Scriptlet.TypeLib")
+    o.addUrl "#{d}\\rbobj.wsc"
+    o.Path = "#{d}\\rbobj.tlb"
+    o.doc = "Rubyize Object TypeLib"
+    o.GUID = '{9FE661F7-AA05-4fe2-8B2B-231904E3D268}'
+    o.Name = 'RbObjTLib'
+    o.MajorVersion = 1
+    o.MinorVersion = 0
+    o.Write
+    o.Reset
+  end
+  ]]>
+ </script>
+ </registration>
+<public>
+ <method name="rubyize">
+   <parameter name="object"/>
+ </method>
+ <method name="erubyize">
+   <parameter name="script"/>
+ </method>
+</public>
+<script language="RubyScript">
+<![CDATA[
+  def rubyize(str)
+    ActiveScriptRuby.rubyize true
+    str
+  end
+  def erubyize(str)
+    ActiveScriptRuby.rubyize true
+    eval str
+  end
+]]>
+</script>
+</component>
+</package>

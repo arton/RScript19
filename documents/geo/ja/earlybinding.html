@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title>Win32OLE Early Binding</title>
+</head>
+<body BGCOLOR="#FFFFFF">
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+
+<h1>RubyでCOMアーリーバインディング</h1>
+
+注）　面倒だから、COMとOLEを同じ意味で使う。
+
+<h2>OLEの3種類のバインディング</h2>
+　IDispatchインターフェイス、ようするにOLEオートメーションを使用したオブジェクトの呼び出しには3種類のバインド方法がある。ざっと解説すると、
+<h3>VTBLバインディング</h3>
+　C++とかCだと、MIDL生成のヘッダを使用して直接VTBLをアクセスできる。だから、引数はスタックに積んで（LRPCを含むリモートの場合、OLEプロクシがマーシャルする――つまり実際にはプロクシのVTBLの呼び出しになるわけだが）直接、オブジェクトのメソッドを呼び出す。当然ながら、最も効率は良い。ちなみに、VB5（多分VB4も？）も相手がデュアルかつUI付きActiveXコントロールでなければ、VTBLバインディングを行う。（ただし、As Objectとしたらだめだけど）
+<br>
+　ただし、オブジェクト側は、デュアルインターフェイスと呼びれる方法でインターフェイスを定義しなければならない。これはATLを使用すると簡単に作れるが、MFCを使う場合、MFCDualというテクニカルノートに示された方法を使うか、あるいはActiveXSDKで（VC++ピープルではなく、おそらくCOMピープルによって）紹介された方法を使用してOLEAUT32にデリゲートさせなければならない。いずれにしろ、ちょっと面倒。ただし、安全配列を直接引数に使用したい場合には、MFCのクラスウィザードではメソッドが生成できないので、こっちの方法を使うしかない。
+<br>
+　そもそも、VB5以降でVBもカスタムインターフェイスをサポートしたため、現在、デュアルインターフェイスを使用する意味はATLのデフォルトということ以外に大した意味はない。もし、スクリプト言語をサポートしたいのであれば、カスタムインターフェイスと、バレリー（ラストネーム忘れた。DCOMメーリングリストで調べてちょ）とかジョナサン・ボーデンとかクリス・セルスとかが作ったデリゲータを使えばそっちのほうがよっぽど良い。
+<ul>良い理由：
+  <li>効率最高
+  <li>1オブジェクトが複数インターフェイス持つ場合、の無矛盾性
+</ul>
+ただし、カスタムインターフェイスって言ったって、OLEオートメーション互換タイプしか使っちゃダメだってのは忘れちゃならない。つまるところ、OLEオートメーション互換＝CLS、MIDLサポートタイプ＝CTSってことだね。
+<h3>レイトバインディング</h3>
+　従来のWin32OLEの方法。GetIDsOfNamesというメソッドに呼び出したいメソッド名を渡し、該当する実際のメソッドID（メンバーIDとかディスパッチIDとか呼ぶ）を取得し、Invokeというメソッドに対しメソッドIDを渡して実際のメソッド呼び出しを依頼する。
+<br>
+　引数のタイプコンバージョンもOLEAUT32が行うとか、いろいろメリットがある。ただし、処理効率の問題から、いちいち名前を調べるため、特に相手がアウトプロセスだと効率が悪い。複雑な引数の処理ができないとか、いろいろ面倒な点がある。
+<br>
+　VBでAs Objectとして宣言した場合、こちらが使用される。
+<br>
+　ちなみに、ダイナミックにメソッドやプロパティが決定される場合、これしか使えない。例えばDHTMLのDocumentオブジェクト。HTMLを読まなきゃ、どんなプロパティがあるかなんてわからんからね。その場合、IDispatchExの使用が効率的だとかいろいろあるけど、ほとんどアンドキュメンテッドなのは知ってる人は知っている。
+<h3>アーリーバインディング</h3>
+　VB4でのデフォルト。レイトバインディングと異なり、型変換と、ディスパッチIDの取得は、事前に行うため、型変換チェックなどがOLEAUT32によって行われるとは言うものの、効率が良く、また型制限が少ない。
+<br>
+　VTBLバインドは面倒なんで、アーリーバインディングを行うことにより、効率の追求っていうか、型の制限を外そうというのが、<em>Win32OLEアーリーバインディング</em>ってわけだ。やっと本題に入れたぞ。
+
+<h2>Win32OLEアーリーバインディングとは</h2>
+　Win32OLEのmethod_helpを使って、事前にタイプライブラリの内容から、アーリーバインディングに必要な情報を取り出し、OLEオブジェクトのプロクシを生成しておいて、そいつを使おうってのが、こいつの趣旨だ。
+<h3>準備</h3>
+　Win32OLE 0.2.8では、method_helpの実装に不足があるので、パッチを持ってくかまたはMSWin32版ならSOを持ってく。ついでに、プロクシジェネレータも持ってってくれ。というか、1個のZIPになってる。つまり、<a href="win32ole028.zip">これだ</a>。
+<br>
+ Win32OLE.soは、当然、それなりの場所に入れること。パッチを使う場合は、自分でメーキンストールしてくれ。
+<h3>olegen.rb</h3>
+<pre>
+ruby olegen.rb progid [more progid...] >proxy.rb
+</pre>
+だ。もちろん、proxy.rbの部分は、適宜直す。例えば
+<pre>
+ruby olegen.rb word.application word.document >word.rb
+</pre>
+ってな感じ。ちなみに、生成されるプロクシのクラス名は、progidの.を_に変換し、語頭を大文字化したものになる。上の例だとWord_ApplicationとWord_Documentだ。
+<br>
+で、プロクシを使うスクリプトを書く。例えば、
+<pre>
+require 'word.rb'
+word = Word_Application.new
+word.dispatch.visible = true #プロパティには未対応
+doc = Word_Document.new(word.dispatch.Documents.open ARGV[0])
+doc.AddToFavorites
+</pre>
+<em>ただし、Wordを始めとしたOffice群はレイトバインディングを非常に考慮しているから、はっきりいって、あまり意味は無い。</em>
+<br>
+運がよければ、少しばかり処理時間が早くなるかなぁ？というところ。
+<br>
+意味を持つのは、引数がスクリプトコンパチブルじゃない場合だ。例えば、IDLで
+<pre>
+[id(?)] HRESULT ILikeByRef([in,out]long* plong, [in,out]BSTR* pbstr);
+[id(?)] HRESULT ILikeArray([in]SAFEARRAY(byte) array);
+</pre>
+とかなってるやつ。ちなみに、文字列のバイト配列変換はしない。あくまでも[1,2,3]みたいに書いてくれ。これらは、通常、スクリプトでは処理できないってのは、VariantChangeType APIの制限ってことだからだ。ちなみに、最近のVBScriptは頑張り過ぎてるわけで、そのへんの頑張りが古いマシンでのIEの処理の遅さとかに関係しているのではないかと思わなくも無い。
+<br>
+そう言えば、戻り値がVariant配列じゃない場合のことを考慮してないや。
+<br>
+と言うわけで、続く。
+<p>
+<br>
+<a href="index.html">戻る</a>
+<br>
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<hr>
+<address>copyright(c) 2001 arton, Under GPL</address>
+<!-- hhmts start --> Last modified: Mon Sep 10 23:37:56 LMT 2001 <!-- hhmts end -->
+</body> </html>

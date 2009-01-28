@@ -1,0 +1,63 @@
+<package>
+<job>
+<reference object="Scripting.FileSystemObject"/>
+<script language="GlobalRubyScript">
+
+  require 'test/unit'
+  class TestGRscript < Test::Unit::TestCase
+    def setup
+    end
+
+    def test_constantiate
+      assert_equal('Windows Script Host', Globals.wsh.Name)
+    end
+
+    def test_globalize
+      assert(/^\d+\.\d+$/.match($WSH.Version))
+    end
+
+    def test_addtypelib
+      assert_equal(1, ForReading)
+    end 
+
+    def test_moniker
+      begin
+        WIN32OLE.connect('WinNT://localhost/foobar')
+        assert(false)
+      rescue WIN32OLERuntimeError => e
+        assert_not_nil(e.message.index('OLE server'))
+      end
+    end 
+
+    def test_namedarg
+      loc = WIN32OLE.new('WbemScripting.SWbemLocator.1')
+      assert_not_nil(loc.connectServer('strserver' => 'localhost'))
+    end 
+
+    def test_optargs
+      obj = WIN32OLE.new('TestObject.Win32OleTestObj')
+      assert_equal(6, obj.optArgs(1, 2, 3))
+      assert_equal(3, obj.optArgs(1, 2))
+    end
+
+    def test_varargs
+      obj = WIN32OLE.new('TestObject.Win32OleTestObj')
+      assert_equal(6, obj.varargs(6))
+      assert_equal(45, obj.varargs(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    end
+
+    def test_namedargs
+      obj = WIN32OLE.new('TestObject.Win32OleTestObj')
+      assert_equal(3, obj.Args('param2' => 5, 'param1' => 18))
+    end
+
+    def test_namedargs_as_sym
+      obj = WIN32OLE.new('TestObject.Win32OleTestObj')
+      assert_equal(3, obj.Args(:param2 => 5, :param1 => 18))
+    end
+  end
+  exit Test::Unit::AutoRunner.run
+
+</script>
+</job>
+</package>

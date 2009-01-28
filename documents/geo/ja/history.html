@@ -1,0 +1,1187 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<TITLE>ActiveScriptRuby Release History</TITLE>
+</head>
+<body BGCOLOR="#FFFFFF">
+<CENTER>
+<!--#geoguide-->
+</CENTER>
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<h3>更新履歴</h3>
+<h3>更新情報</h3>
+<address>9 Sep 2006, 16:28:15</address>
+<ul>ActiveScriptRuby 1.8.5.0
+  <li>ruby 1.8.5</li>
+  <li>rjb 1.0.0</li>
+</ul>
+<address>25 Dec 2005, 04:13:42</address>
+<ul>ActiveScriptRuby 1.8.4.0
+  <li>ruby 1.8.4</li>
+  <li>rjb 0.2.5</li>
+</ul>
+<address>29 Dec 2004, 18:06:29</address>
+<ul>ActiveScriptRuby 1.8.2.0
+  <li>ruby 1.8.2</li>
+  <li>rjb 0.1.7</li>
+  <li>展開済みrdocのzipを同梱</li>
+  <li>openssl.soを有効化</li>
+</ul>
+<h3>更新情報</h3>
+<address>19 Jun 2004, 18:56:42</address>
+<ul>ActiveScriptRuby 1.8.1.2
+  <li>RScript18.dll 1.1.1.0</li>
+  <li>rjb 0.0.9</li>
+  <li>swin 040316</li>
+</ul>
+<address>06 May 2004, 18:16:14</address>
+<ul>ActiveScriptRuby 1.8.1.1(変わらず)
+  <li><a href="asr18src.zip">ASR18ソース更新1.1.1.0</a></li>
+  <li>MSXMLがサーバー上のxmlをloadメソッドで読み込めない問題への対処。<br>
+      とは言うものの、バイナリー化はもう少し様子見とします。</li>
+</ul>
+<address>15 Apr. 2004, 01:10:37</address>
+<ul>ActiveScriptRuby 1.8.1.1(変わらず)
+  <li>Fe<SUP><SMALL>2+</SMALL></SUP>さんのページへのリンクを修正（お知らせありがとうございます）</li>
+</ul>
+<address>10 Mar. 2004, 21:13:30</address>
+<ul>ActiveScriptRuby 1.8.1.1
+  <li>VRSWin040306</li>
+  <li>vruby040306</li>
+  <li>Win32OLE(ruby-list:39157以降パッチ)</li>
+  <li>test/ui/vrtestrunner(使用するにはautorunner.rbに以下のパッチが必要です)
+<pre>
+--- ..\ruby-1.8.1\lib\test\unit\autorunner.rb	Wed Dec 24 16:17:38 2003
++++ c:\home\ruby\lib\ruby\1.8\test\unit\autorunner.rb	Fri Jan 16 00:32:32 2004
+@@ -35,6 +35,10 @@
+           require 'test/unit/ui/tk/testrunner'
+           Test::Unit::UI::Tk::TestRunner
+         end,
++        :vruby => proc do |r|
++          require 'test/unit/ui/vr/testrunner'
++          Test::Unit::UI::VRuby::TestRunner
++        end,
+       }
+ 
+       OUTPUT_LEVELS = [
+</pre>
+テストで使用するには、-rvまたは--runner=vrubyを指定してください。<br>
+  </li>
+</ul>
+<address>17 Jan. 2004, 13:53:50</address>
+<ul>ActiveScriptRuby 1.8.1.0
+  <li><a href="vrtestrunner.zip">vr/testrunner</a>追加(ASRにはまだ含めていません))</li>
+</ul>
+<address>29 Dec. 2003, 02:54:12</address>
+<ul>ActiveScriptRuby 1.8.1.0
+  <li>Ruby 1.8.1</li>
+  <li>ReadLine修正版</li>
+</ul>
+<address>1 Oct. 2003, 21:18:52</address>
+<ul>ActiveScriptRuby 1.8.0.5(変わらず)
+  <li><a href="r256.html">256邪道編のバグ情報を追加</a></li>
+</ul>
+<address>11 Sep. 2003, 00:32:29</address>
+<ul>ActiveScriptRuby 1.8.0.5
+  <li>vrswin/vruby030906</li>
+  <li>irbの補完機能を有効化</li>
+  <li>スタートメニューのコンソースからならerbを呼び出し可能</li>
+</ul>
+<address>10 Aug. 2003, 02:51:03</address>
+<ul>ActiveScriptRuby 1.8.0.0
+  <li>現時点で同梱しているのはVRuby, Swin, UconvとRuby1.8だけです。</li>
+  <li>リクエストがあればメールください。</li>
+</ul>
+<address>5 May. 2003, 02:17:05</address>
+<ul>ActiveScriptRuby 1.6.8.3
+  <li>RScript 1.0.9.6
+  <li>AddScriptletの断片をオブジェクトとして扱う処理の問題を修正。
+  <li>複数スクリプトレットが存在する場合の参照カウンタ。
+  <li>NamedItemがAdviseされる場合の参照の解放漏れ（イベントソースとなる場合には
+      防御していた）。
+  <li>の修正。バグの発見は、坂上さんです。
+  <li>SWinとVRubyを030421に更新。(threadcriticalはデフォルト真です)
+  <li>Win32OLE 0.5.3
+  <li>とは別にruby 1.6.8にはsocket.soのdup削除パッチだけ当ててあります。
+</ul>
+<address>5 Feb. 2003, 02:23:52</address>
+<ul>ActiveScriptRuby 1.6.8.1
+  <li>RScript 1.0.9.5
+  <li>AddNamedItemされたインターフェイスをAddRefせずに、渡した側の参照カウンタだけで管理しようとしたのが敗因で、解放処理がおこなわれていなかったバグの修正。
+  <li>とは別にruby 1.6.8にはsocket.soのdup削除パッチだけ当ててあります。
+</ul>
+<h3>原因と解決方法</h3>
+以下の誤った仮定を行っていた（理由はCRScriptCore::Disconnectにコメントされている）。
+<pre>
+　　メイン                        Ruby
+　　p-&gt;AddRef() // +1
+                           -&gt;
+                                p-&gt;AddRef(); // +1 = 2
+                           &lt;-
+    p->&gt;Release(); // -1
+    p->&gt;Release(); // 0
+</pre>
+実際には上図のようにはならない(同一アパートメントなら、上のは正しい)。<br>
+<small>
+※ただし、<code>p</code>で示されたインターフェイスは実際にはメソッドの引数としてマーシャリングされてスレッド境界を越えるのではなく、GIT経由でローカライズされる。<br>
+</small>
+実際には、右のアパートでのAddRef()の結果は、+4に相当する。<br>
+<pre>
+　　メイン                        Ruby
+　　p-&gt;AddRef() // +1 = 1
+                            -&gt;
+                                   p-&gt;AddRef(); // +4 = 5
+                            &lt;-
+    p->&gt;Release(); // -1 = 4
+                            -&gt;
+                                   p->&gt;Release(); // -4 = 0
+                            &lt;-
+</pre>
+解決方法：RubyWrapperに、オブジェクト解放のためのメソッドを追加し、SetScriptStateによって非活性化された時点でアパート境界を越えて解放処理を行う。<Br>
+実際には、ソース上はメインのオブジェクトの解放処理（だが、FreeThreadMarshalerを集約しているので、呼出元のアパートで実行されるため、実際のスレッド上の位置は上のようになる。
+<address>4 Feb. 2003, 03:24:50</address>
+<ul>ActiveScriptRuby 1.6.8.0（かわらず）
+  <li>RScript16のソースを更新
+  <li>雪見酒さんからの指摘（ありがとうございます）で判明したIActiveScript::AddNamedItemで移入されたオブジェクトの解放をしくじっている件の修正。
+  <li>ちょっと様子見のため、ソースだけを更新。
+  <li>ちなみに、Ruby-MSWin1.6.8には、ソケット回りで問題が出ることがあります。（例えば下にあるICMPPINGを試すと、エラーになる）
+</ul>
+<address>25 Dec. 2002, 19:40:51</address>
+<ul>ActiveScriptRuby 1.6.8.0
+  <li>つられて、軒並みバージョンアップ
+  <li>VRSwin021215, VRuby021216
+  <li>RubyWin 0.0.4.1(パッチ有り)
+  <li>optparse 0.10.1
+  <li>racc 1.4.3(パッチ有り)
+  <li>bigfloat 1.2.1
+  <li>uconv 0.4.11
+  <li>drb 1.3.8
+</ul>
+<address>20 Oct. 2002, 19:02:25</address>
+<ul>ActiveScriptRuby 1.6.7.6
+  <li>Win32OLE 0.5.2
+  <li>VRSwin020902, VRuby021015 + SWinデフォルトマルチスレッドパッチ
+  <li>ASRを使用したHTAサンプル集(rd2.htaは結構便利じゃないかと思う)追加
+</ul>
+<address>23 Aug. 2002, 21:28:27</address>
+<ul>ActiveScriptRuby 1.6.7.5
+  <li><a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/17061">selectパッチ</a>当てなおし
+  <li>十分に気をつけてたはずが、socket.soだけVC.NETのライブラリとリンクされてました。VC6SP5で作り直し。
+  <li>鴫谷さん、ありがとうございます。
+</ul>
+<address>19 Aug. 2002, 01:23:48</address>
+<ul>ActiveScriptRuby 1.6.7.4
+  <li>Win32OLE 0.5.0
+  <li>VRSwin020629
+  <li>vruby020727
+  <li><a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-dev/17080">selectパッチ</a>
+  <li>このパッチの必要性の指摘はおくやまさんからでした。どうもご教示ありがとうございます。<small>パッチはカプセル怪獣とか?</small>
+  <li><a href="http://www.moonwolf.com/~arcml/cgi-bin/arcml/arcml.cgi?rm=view;list_id=1;ml_count=273">構造化例外チェーン復元パッチ</a>
+
+  <li>全然、試していないので不安を感じる方はバージョンアップしないほうが良いかも知れません。
+</ul>
+<address>22 Jun. 2002, 11:51:25</address>
+<ul>ActiveScriptRuby 1.6.7.3
+  <li>VRSWin/VRuby 020610
+  <li>ASR1.0.9.4(fole_eachを取り込む。VT_DISPATCHからwin32oleexを作成)
+  <li>Windows XPではWindows 2000より更にメモリー回りのチェックが厳しくなったのか。
+  <li>というか、良く今まで動いていたと言うべきか。
+  <li>ASR内ではWIN32OLEはWIN32OLEEXとしてIServiceProvider付きで処理を行う必要があるので、win32oleからVT_DISPATCHをRubyへ持ち込む処理はすべてトラップしていたつもりだったが、eachは抜けていた。
+  <li>そのため、IEnumVARIANT経由でVT_DISPATCHをVALUEにする処理はWin32OLEのfole_eachがそのまま走っていた。
+  <li>結局、そうやって取り込まれたWIN32OLEインスタンスだがmethod_missingはASRに入ってくる
+  <li>と、存在しないIServiceProviderの呼び出しを行ってクラッシュする（Win XP）
+  <li>という問題の修正。クラッシュの指摘は酒本さんからでした。どうもありがとうございます。というわけでなし崩しにWindowsXPでも動作確認が始まったという状況。
+</ul>
+<address>26 May. 2002, 18:36:44</address>
+<ul>ActiveScriptRuby 1.6.7.2
+  <li>Win32OLE-0.4.8
+  <li>VRSWin/VRuby 020412
+  <li>ASR1.0.9.3(VT_EMPTY → VT_SCODE & DISP_E_PARAMNOTFOUND)
+  <li>省略引数にnilを記述した場合の動作不良を修正（Win32OLEに合わせました）
+  <li>注）ASRは、Win32OLEと異なりセキュリティコンテキストの判定にゴチャゴチャやっている関係で、名前付き引数をサポートしていません。名前付き引数が必要な場合は、ピュアRubyとWin32OLEを使用してください（ASRのパッケージでRubyを直接呼び出せば使用できます）。
+</ul>
+<address>8 Apr. 2002, 22:42:41</address>
+<ul>ActiveScriptRuby 1.6.7.1（変わってない）
+  <li>Win32OLE-0.4.7が出てますが、まだ更新してないです（自分のシステムでは動かしてるけど）
+  <li>うーん、[ruby-list:34534]見てると、ASRがGPLというのは意図に反してるかも。
+  <li>ASR自体はGPL2だけど、同梱してあるのはそれぞれの配布条件に従うと明記してあるから、RubyとかはRuby'sってことで緩いわけだ。当然、ASR使わずにRuby使ってる限りはRubyのCOPYINGが有効（配布してないが、ruby-lang.orgへの参照は出してある）。
+  <li>で、ASRというのは、静的にはもちろん、動的にもリンクをしているわけではなく、単にレジストリから引っ張り出したCOMのインターフェイスであって、利用するプログラムがGPLであるかどうかは関係ないと勝手に思ってたわけなんだが。
+  <li>もちろん、明示的にCLSIDを指定したら、それは静的リンクと言えるかも知れないが。
+  <li>しかし、RubyScriptとか言うActiveScript名そのものは、レジストリで置き換え可能なんだから、それがASRかどうかは関係ないわけじゃん。
+  <li>というわけで、GPL透過なんじゃないかと考えてたわけなんだけど。
+  <li>というわけで、もし気にする人がいて指摘されたらLGPLに変えるつもり。
+  <li>というのとは、全然、関係なく、<a href="http://sourceforge.jp"><img src="http://sourceforge.jp/sflogo.php?group_id=44" width="96" height="31" border="0" alt="SourceForge.jp"></a>を試してみたり。CVSの使い方を覚えようとか思ったとかもあって。
+  <li>ちなみにネタは<a href="https://sourceforge.jp/projects/netruby/">NETRuby</a>。
+  <li>WinNTでのsourceforge.jp使い方メモ：
+  <li>SSHを入手する。これは、ftp://ftp.cs.hut.fi/pub/ssh/contrib/ssh-1.2.14-win32bin.zipあたり。
+  <li>適当にPATHが通ったところに突っ込む。他の作業はこの時点では不要。何かすると深みにはまる。
+  <li>次に、LinuxでもBSDでもなんでも良いけどあっちの環境で、ssh-keygenをやる。んなバカな。でも、しょうがないのよ。ちなみにキーは、~/.ssh/に作られる。パスフレーズは入れても入れなくても好きにすれば良いでしょう（つい、自分のログイン用パスワードを設定してしまったが）。
+  <li>で、生成したidentity.pubを、自分のアカウント情報に登録。
+  <li>再び、WinNTに戻る。HOME環境変数を設定してやる。%HOMEDRIVE%%HOMEPATH%が正解かな。
+  <li>%HOMEDRIVE%%HOMEPATH%\.ssh\に、上で作ったidentityをコピーしてやる。
+  <li>CVSはWinCVSがSourceForge.netのほうにあるので貰ってくる。
+  <li>WinCVSのGUIは設定が良くわからないし面倒なので、PATHだけ通してCVSを生で使う。（でもログインの設定は必要かも）−ここは好みだけど。
+  <li>これで環境ができる。良かった。/etcとかWindows的には変なものを作らないで済んで。
+  <li>NETRubyは、とりあえずコンパイラの実装もしてみた（といっても、条件節くらいしか静的な解決をしてないので、インタープリタよりパースしない分だけ早いだけだけど）。
+</ul>
+<address>24 Mar. 2002, 23:42:15</address>
+<ul>ActiveScriptRuby 1.6.7.1
+  <li>Win32OLE-0.4.4
+  <li>今度のolegenは完成度がすごい。
+  <li>使用方法
+   <pre>ruby olegen.rb "タイプライブラリ名" &gt;スクリプト名</pre>
+</ul>
+<address>2 Mar. 2002, 12:48:39</address>
+<ul>ActiveScriptRuby 1.6.7.0
+  <li>ついに、rubyunit(0.5.4)を入れました。だって入れないと、パッケージが正しくできてるか確認できないんだもん。というわけで、ほとんど、<a href="http://www.yoshidam.net/Ruby_ja.html#uconv">よしだむさん</a>に強制されったつーか。
+  <li>Ruby-1.6.7です。
+  <li>RScript/GRScriptが、それぞれマイナーバージョンアップしました。って言ったって、reinterpret_castの中に書くメソッドのキャストだけなんですが。まあ、1.6.7対応ということで。あと、Win32OLE-9.4.0に型変換を合わせました（2項目下を参照）。
+  <li>uconv 0.4.9を入れました。doc/README-UCONV-by-arton.txtに書いてありますが、EUC、SJISありありで、Win32API使用としてあります。
+  <li>Win32OLE-0.4.0です。あわせて、ActiveScriptRubyも、Bignum-double変換をするように変えました。
+  <li>vrswin011030はmakeし直しました。
+  <li>vruby020225にバージョンアップしてあります。
+  <li>Racc 1.4.2にバージョンアップしました。(例によって\ruby\bin\racc.rbと拡張子を追加してます)
+  <li>RDtoolは0.6.11。(例によって\ruby\bin\rd2.rbと拡張子を追加してます)
+  <li>ここから下は以前と変えてませんが、念のため、書いておきます。
+  <li>drubyは1.3.4.2です。
+  <li>forwadable-1.1
+  <li>optparse-0.8.6
+  <li>BigFloat-1.1.8
+  <li>RubyWin-0.0.3.8
+</ul>
+<address>10 Feb. 2002, 11:53:39</address>
+<ul>ActiveScriptRuby 1.6.6.1（変らず）
+  <li>Win32OLE、RDTool、Raccなどがバージョンアップされてますが、まだ対応できてません。1.6.7まで待ってチョ。
+  <li>NETRubyが進展してるので、<a href="netruby.html">ドキュメントを更新</a>。
+  <li>ところで、NETRubyみたいなものをテストするには、C#で記述するのか(csunit?)Rubyで記述するのか(RubyUnit)どちらが良いんでしょう？　ご教示くださる方は<a href="http://www.jin.gr.jp/~nahi/RWiki/?cmd=view;name=NETRuby">こちらまで</a>。
+</ul>
+<address>28 Jan. 2002, 18:54:55</address>
+<ul>ActiveScriptRuby 1.6.6.1
+  <li>Win32OLE 0.3.4
+  <li>NetRubyは、<a href="NETRuby-pre.zip">メタメタ版</a>が固まったので、この先を思案中。
+  <li>CLRのタイプシステムの上に、比較的忠実に（というよりそっくりそのままだ。単にC#でリライトしたというだけだ）Rubyの構造を乗っけたから、メタデータが2重になってるというわけで、メタメタ版だ。
+  <li>これをどうするかが問題。屋上屋を架けているからすごく遅い。ネイティブRubyの100倍というところ。初期化に100ミリ秒（しかもまだ、本物の1/20程度の処理量）、パーシングに200ミリ秒という具合だ。
+  <li>無理矢理CLRのタイプシステムに統合するか（やっと方法論を考えついたけど試して見ないとわからない）、ムーアの法則に身を委ねるか。
+  <li>ちなみに、メークするには、<a href="http://www.go-mono.com/">Mono</a>の成果物のJayのC#版が必要。
+  <li>注！実用性（実装レベルから）は皆無なのでそのつもりで。
+  <li>もう少しポーティングしたら、マルチスレッド化、CodeDOM対応(ASP.NETだ)、部分的なコンパイルなど、やることは山ほどあって、当分、楽しめそうだ。
+  <li>っていうか、コメントや助けてくれる人を<a href="http://www.jin.gr.jp/~nahi/RWiki/?cmd=view;name=NETRuby">募集中</a>。
+</ul>
+<address>28 Dec. 2001, 22:53:56</address>
+<ul>ActiveScriptRuby 1.6.6.0
+  <li>Ruby 1.6.6
+  <li>DRuby 1.3.4.2 (RubyRobotsは未検証)
+  <li>NETRubyは、<a href="http://cis.paisley.ac.uk/crow-ci0">lg/pg</a>というC#ネイティブなパーサジェネレータを使用することにして再開したけど、Rubyの文法の複雑さにお手上げな状態でスタック中（なかなか割り切れないわけで）。
+  <li>pgはともかく、lgが力不足で、かといってlgを拡張するのもなんだし、lg相当のは自力で作ってpgだけ使うという方法もアリだなとか、いろいろ。rubyのソースにはlexのソースがないけどそういうことかいな？
+  <li>lgは、^Lを[.]でしか認めない（\nと\tでハードコードしてるから）とこも引っ掛かるし。でも、確かにlg/pgの設計思想からはそれは正当だし。だし。
+  <li>状態の扱いも複数行のコメント用と割り切った実装になっているので、EXPR_CLASSみたいな状態を記述するのは手で書いてくより煩雑だ。
+  <li>非常に嫌だけどparse.yそのものをC#にポートしてbyaccにC#吐かせるしかないかなぁ（前の力作業よりはマシだが）。（いずれにしろ、ここが肝なだけに思案中）
+  <li>これがイヤなのはソース配布が無意味になるからだ。byaccなんか持ってないって。僕が使って欲しい人たちは。
+  <li>Javaに移植してる人たちの作業を参考にするのが正解か？
+  <li>.NETメーリングリスト見ても、なんのこたない、みんなyacc使ってやってるんじゃん。
+  <li>うーむ。
+  <li>目標はINRb（対話型）とCNRb（コンパイラ）の2種類
+  <li>配布はNETRuby.dll、NRNodes.dll、NRObjs.dll、INRb.EXE、CNRb.EXE。DLLはLGPL、という感じかな。
+  <li>CNRbは現在公開しているいい加減なやつをまともにした程度のものを想定。既存のネイティブRuby用スクリプトとの互換性は考えない。むしろ、VB.NETに近いかも。
+  <li>結局、SWin+VRuby+Win32OLE+ASRという感じだ。
+  <li>INRbはやれるとこまで。しかしやり過ぎるのはイヤ。−いずれにしろ公開された安定版しか追う気もないし。
+  <li>当初の予定は年内にパーサ完了、松の内にNodes.dll完成だったが既にずれ込んでいるから、先の話だ。
+</ul>
+<address>18 Dec. 2001, 22:59:32</address>
+これでお終い怒涛のバージョンアップ
+<ul>ActiveScriptRuby 1.6.5.7
+  <li>RScript16, GRScript16 1.0.9.1
+  <li>IActiveScriptParseProcedureをサポートした。
+  <li>これは無名タグのイベントを取れるようにするため。
+  <li>1.0.8 -> 1.0.9 に変ったのは、同一エンジンによるリエントラントかつinstance_evalが必要な状態になったからだ。
+  <li>上の意味は非常にインパクトがあるので、非常に慎重だったり
+  <li>かくして、RubyObject.cppでもSleepを入れたり、
+  <li>無名イベントがデフォルトオブジェクトなのか良くわからなくてAddScriptletの評価遅延用の（結局無駄な）仕組みを導入したり
+  <li>どうでも良いが、IEがらみだとメモリーリークなのか正しい動作なのか皆目見当がつかなかったり（一応、正しいことは確認済みだが、タスクマネージャでメモリーが上昇するのをチェックしないように、っていうか……）
+  <li>クッキーバグ防御のためにabout:を制限ゾーンに変えたの忘れて悩んだり
+  <li>まあ、いろいろ。
+  <li>テストしたのは、IE(ruby.html),HTA(Biorhythm,Thumview2),Behavior(N/A),Rubyize,VBLifeだけなので、問題あったら報告ください。
+</ul>
+<address>18 Dec. 2001, 00:30:18</address>
+懲りずに続く怒涛のバージョンアップ
+<ul>ActiveScriptRuby 1.6.5.6（変ってない）
+  <li>RScript16, GRScript16 1.0.9.0のソースだけ。
+  <li>IActiveScriptProcedureをサポートした。
+  <li>無名タグのイベントを取れるようにするため。
+</ul>
+<address>15 Dec. 2001, 21:21:59</address>
+まだまだ続く怒涛のバージョンアップ
+<ul>ActiveScriptRuby 1.6.5.6
+  <li>RScript16, GRScript16 1.0.8.10
+  <li>DISPID_VALUEかつDISPATH_METHODでInvokeを呼び出すシナリオを発見したので、対応
+  <li>そのシナリオとは、<a href="behavior.html">ここを見よ</a>
+  <li>鴫谷さん、<a href="behavior.html">ネタ</a>をありがとうございました。
+</ul>
+<p>
+<address>13 Dec. 2001, 22:45:03</address>
+怒涛のバージョンアップっていうかバグフィクス
+<ul>ActiveScriptRuby 1.6.5.5
+  <li>RScript16, GRScript16 1.0.8.9
+  <li>WIN32OLEEX（ASRが使用するWIN32OLEクラス）のmethod_missingのバグ修正
+  <li>タイプライブラリを動的にも静的にも持たないオブジェクトの呼び出しが失敗するバグ。
+  <li>foo.barは失敗するがfoo.invoke("bar")が成功するとしたら、このバグが問題。
+  <li>直した。
+</ul>
+<address>12 Dec. 2001, 22:48:06</address>
+<ul>ActiveScriptRuby 1.6.5.4
+  <li>VRSwin011030, vruby011130, Racc1.4.1, Optparse-0.8.6
+  <li>ActiveScriptRuby 1.0.8.8
+  <li>HTA終了時にアウトプロセスサーバが終了しない問題の修正
+  <li>多分、objref導入に起因するVBScriptのGetObjectの制限をActiveScriptRubyにも実装
+  <li>ruby_safe_levelがruby.hに外出しされているけど、まだどう扱うべきか決定できないので、相変わらずSTAの制限は残ってます。
+</ul>
+<address>12 Dec. 2001, 02:59:26</address>
+<ul>ActiveScriptRuby 1.6.5.3（変らず）
+  <li>できた。
+  <li>ソースだけ更新。<a href="RScript16Src.zip">1.0.8.8</a>
+  <li>モジュール廃棄時とWIN32OLEオブジェクトの廃棄時の双方で処理するようにした。
+  <li>したがって、WIN32OLEそのものはRubyに見せずに内部的に保存しておく。
+  <li>WIN32OLEEX::connectの禁止
+  <li>ruby_errinfoを使用。（dllimportを忘れてた）
+  <li>CoCreateInstanceExのセキュリティ設定（完全に無しにした）。
+  <li>CoCreateInstanceEx直後にReleaseしてもWinWordが生きてるのはなぜだろう。でも、Releaseしちゃってるからどうにもならないんだけど。
+  <li>というのは異常ケースなので放っておくが、ある意味DoSかも。
+</ul>
+<address>11 Dec. 2001, 02:29:19</address>
+<ul>ActiveScriptRuby 1.6.5.3（変らず）
+  <li>HTAでExcelが終了しないという報告を水谷さんから頂く。
+  <li>Quitを呼んでも終わらないというのはともかく、HTAを終了させても終わらない（ゾンビになってるけど、イルカはいるなぁ）
+  <li>HTA終了のタイミングが変わったのか？　――良くわからない。
+  <li>いずれにしろ、Rubyのスレッドがいつの間にかTerminateThreadされてるらしく、終了処理が走らないのだ。
+  <li>とりあえず、ActiveScriptのインスタンスのリリース時に処理を追加してみた。
+  <li>こんなもんだろうと思ったけど、インスタンス変数しか相手にしてないのはまずいなぁ。
+  <li>というわけで、もう一度練り直すことにしたので、ソースだけ更新。<a href="RScript16Src.zip">1.0.8.7</a>
+  <li>多分、各モジュールに、@asr_win32ole_objectsというような配列を作り、該当モジュールのコンテキストで生成したオブジェクトをがめといて、最後に一括リリースってな感じになるだろう。
+  <li>しかし、その場合、テンポラリなやつの寿命を引き伸ばすことにならないか？（いや、なる）
+  <li>それもまずかろうて。と思ったけど、集約したオブジェクトの寿命はもともと成り行きだから、それほど変化はなかろう。
+  <li>ruby_errinfoの内容が???なんだけどなぜでしょう。NTはdefineしてるし（rb_cTimeとかは取れてる）、rb_protectを抜けた時点ではまだ設定されていないのかと思ったけど、そうでも無いようだし。
+  <li>あと、VBScriptの真似して、IEの中ではWIN32OLE::connectを禁止する処理を追加予定。っていうのと含めて、connectでurlモニカ、objrefモニカのサポートを予定。
+  <li>ちなみに、現在はnewモニカのみをサポート。
+</ul>
+<address>1 Dec. 2001, 18:18:52</address>
+  <li>256邪道編の<a href="r256.html">正誤表</a>を修正。「勝手に正誤表」のリンクと、kill.rbのバグ修正です。
+  <li>そろそろNETRubyを再開しようかなぁ。（その前にハンギングロックガーデンっていうWin32プログラムをVectorに放り込む予定）
+  <li>うむ、SWinの更新もVRubyの更新もさぼってるし……
+</ul>
+<address>6 Nov. 2001, 01:20:30</address>
+<ul>ActiveScriptRuby 1.6.5.3（変らず）
+  <li>MIDIの勉強途中にして、舟迫さんのsmfを発見（主語は「オレ」。smf自身は当然、昔から存在している）したので、利用させて頂く事にした。
+  <li><a href="http://www.ruby-lang.org/en/raa-list.rhtml?name=smf">smf</a>
+  <li>ASRで使用するには、c:\progra~1\ruby\lib\ruby\site_rubyの下にtar.gz内のlibより下をコピーすれば良い。
+  <li>ちなみに、スクリプトとかメモ帳で読むにはWinZipのスマートCR/LFコンバージョンが必要だけど、それやるとサンプルのMIDファイル全滅なので面倒。あとから、MIDファイルだけ、スマートコンバージョン抜きで再抽出。
+  <li>面倒だけど、リンクとか無いしー、絶対にWinZIPを使う（主語は「オレ」）。
+  <li>ところが、sample/play.rbはWin32じゃ動かない。というかサポートされていない。
+  <li>そこでMIDI APIラッパにWait処理とデフォルトMIDIマッパーの取得処理を追加してplaywin32.rbに改造。まあ、Win32OLE使ってるからwin32がポストフィックスされたわけだ。
+  <li><a href="../midi/midiCtl.zip">MIDI APIのラッパとRubyサンプルHTMLとplaywin32.rb（要smf）</a>
+  <li>レジストリへの登録と解除を行うsetup.rbを添付してみた。解除には-uを指定する。
+  <li>miditest.htmlでは、サウンドブラスター互換MIDIとか亡霊のようなデバイスが登録されているとエラーになるのがわかったので修正。厄介だな。
+  <li><a href="../midi/midiCtlSrc.zip">ラッパのソース</a>
+  <li>なぜ、拡張ライブラリやwin32apiじゃないかと言えば、だって拡張ライブラリやwin32apiよりCOMのほうが簡単なんだもん。って言うか、C++Builderとかで使いたいし。
+  <li>うむ、SWinの更新を忘れてた……
+</ul>
+<address>1 Nov. 2001, 00:50:37</address>
+<ul>ActiveScriptRuby 1.6.5.3（変らず）
+  <li>MIDIの勉強中
+  <li><a href="../midi/midiCtl.zip">MIDI APIのラッパとRubyサンプルHTML</a>
+  <li><a href="../midi/midiCtlSrc.zip">ラッパのソース</a>
+</ul>
+<address>28 Oct. 2001, 00:14:32</address>
+<ul>ActiveScriptRuby 1.6.5.3
+  <li>VRuby011026
+</ul>
+<address>25 Oct. 2001, 01:28:54</address>
+<ul>ActiveScriptRuby 1.6.5.2
+  <li>BigFloat 1.1.8
+  <li>VRuby011008 (vr/contribのコピー忘れを修正してます)
+</ul>
+<address>19 Oct. 2001, 23:05:40</address>
+<ul>ActiveScriptRuby 1.6.5.1
+  <li>Win32OLE 0.3.1
+  <li>VRSwin011005, VRuby011008
+  <li>ちゃんと見てないから単に言ってるだけなんだけど、通常メッセージポンプはトップレベルにあるよね。でも、SWinの場合、そういう意味では必ずしもプロセスのトップレベルにはないから（rubyのeval.cにいると考えれば良いのかな）、そこでlongjmpによってDispatchMessage(&msg);を含む（この中でWin32内を走り回ってからSWinやVRubyに回ってくるわけだから）スレッドの切り替えがおきるわけだけど、そこでWin32APIを呼び出すと、Win32側では（たとえばDCの取得とか）現在のWindowプロシージャの判定基準としてDispatchMessage(&msg);で作った*なにか*を得ようとして違うものを得ておかしくなるのかなぁとか考えてる。試せばいいわけなんだけど、クリスマス休暇になりそうだ（デバッガ使ってると時間があっというまに過ぎていくのでなかなか手が出せない）。
+</ul>
+<address>20 Sep. 2001, 23:41:24</address>
+<ul>ActiveScriptRuby 1.6.5.0
+  <li>Ruby 1.6.5
+  <li><a href="earlybinding.html">Win32OLE アーリーバインディング</a>
+      <ul>
+	<li>インストール後、c:\progra~1\ruby\binにコピーされるolegen.rbの取りあえずのマニュアルとして参照してください。
+	<li><a href="http://www.jin.gr.jp/~nahi/RWiki/?cmd=view;name=Win32OLE">RWiki版Win32OLEリファレンス</a>に反映したらパッチ<em>（バグがあるので、ASR内のを使用してください）</em>なんかは消しますので（技術情報は、こっちに詳細を書くかも知れないが）、必要ならお早めに（と言ったって、2〜3週間はかかると思うけど）
+      </ul>
+</ul>      
+<address>18 Sep. 2001, 23:08:10</address>
+<ul>ActiveScriptRuby 1.6.4.8
+  <li>Win32OLE 0.3.0
+  <li>VRSwin010913
+  <li>VRuby010910
+  <li><a href="earlybinding.html">Win32OLE アーリーバインディング</a>
+      <ul>
+	<li>インストール後、c:\progra~1\ruby\binにコピーされるolegen.rbの取りあえずのマニュアルとして参照してください。
+	<li><a href="http://www.jin.gr.jp/~nahi/RWiki/?cmd=view;name=Win32OLE">RWiki版Win32OLEリファレンス</a>に反映したらパッチなんかは消しますので（技術情報は、こっちに詳細を書くかも知れないが）、必要ならお早めに（と言ったって、2〜3週間はかかると思うけど）
+      </ul>
+</ul>
+<address>10 Sep. 2001, 23:28:15</address>
+<ul>ActiveScriptRuby 1.6.4.7（変わらず)
+  <li><a href="win32ole028.zip">Win32OLE アーリーバインディングバイナリとパッチ</a>（直しまくってるから10 Sep, 23:28より前に落としたのは廃棄してください）
+  <li><a href="earlybinding.html">Win32OLE アーリーバインディング</a>      
+</ul>
+<address>01 Sep. 2001, 20:08:43</address>
+<ul>ActiveScriptRuby 1.6.4.7
+  <li>RubyWin 0.0.3.8
+      <ul>
+	<li>ノーパッチ＆ノープロブレム
+      </ul>
+  <li>vrswin010827
+  <li>vruby010825
+  <li>BigFloat-1.1.7
+  <li>win32oleには、まだ、オプション引数のパッチ未作成
+      <ul>
+	<li>思ったんだけど、TypeLibから、全引数情報とか取り出して、完全なスタブを作って、そいつのダンプを実行時に読むってのはどうだろう？ 実行時ペナルティは当然無いし、どんな引数にも耐えうるはずだし。
+	<li>ということを考えると、結局、強い型付けの勝利なのか？ という疑問も湧いてくる（ってのは、そればかりじゃないだろうと思ってるからだけど）
+	<li>うーん
+	<li>まあ、口じゃなんとでも言えるわけで、トコトコと（森の熊さんじゃなくて、小島麻由美だ）、作って見るか
+      </ul>
+</ul>
+<address>11 Aug. 2001, 01:47:55</address>
+<ul>ActiveScriptRuby 1.6.4.6
+  <li>RubyWin 0.0.3.6
+  <li>ActiveScriptRubyの修正
+      <ul>
+	<li>RScript16.dll 1.0.8.6
+	<li>GRScript16.dll 1.0.8.6
+      </ul>
+  <li>Win32OLEEx.CPPの修正
+      とにかく、オプション引数についてはInvokeする時にポインタではなく値を引数として設定するようにしてみた。常識的にオプションかつin,outってのは考えにくい。でも、RScriptの場合、Invokeのために、ITypeInfoの往復が何度も行われるから、1回の呼び出しコストは非常に大きい。やっぱり、JScriptのようにin,outをサポートしないほうが良かったと思われる今日この頃。なお、RScript1.0.8.5はバグでした。
+</ul>
+<address>1 Aug. 2001, 23:47:20</address>
+<ul>ActiveScriptRuby 1.6.4.4（変わらず）
+  <li>freewebがinfoseekになったので、ダウンロードページのURLを更新
+</ul>
+<address>26 Jul. 2001, 22:31:35</address>
+<ul>ActiveScriptRuby 1.6.4.4
+  <li>Win32OLE 0.2.8
+  <li>VRSwin010725
+  <li>VRuby010725
+</ul>
+<address>11 Jul. 2001, 18:22:11</address>
+<ul>ActiveScriptRuby 1.6.4.3
+  <li>RDtool 0.6.10
+  <li>forwardable 1.1
+  <li>RubyWin 0.0.3.5
+</ul>
+<address>7 Jul. 2001, 00:03:13</address>
+<ul>ActiveScriptRuby 1.6.4.2（変わらず)
+  <li><a href="moudou.html">妄動編のページ</a>作成
+</ul>
+<address>1 Jul. 2001, 22:50:00</address>
+<ul>ActiveScriptRuby 1.6.4.2
+  <li>tcltklib.soがいつのまにかtcl83とtk83とリンク（スタブ抜きでリンク）されていたのでスタブを使うように修正。
+  <li>設定が良くわからん。--with-tcllib=tclstub83とかだとなぜかtcl83stub.libとリンクしようとするMakefile作られちゃうし。
+  <li>とりあえず網道編の正誤表もRWikiのとこに入れといた。
+  <li>あっ、RubyWinのバージョンが上がってる。でも来週だぁ。
+</ul>
+<address>30 Jun. 2001, 18:34:29</address>
+<ul>ActiveScriptRuby 1.6.4.1（変わらず）
+  <li>場外乱闘編の正誤表のリンクなどを追加
+</ul>
+<address>24 Jun. 2001, 18:26:42</address>
+<ul>ActiveScriptRuby 1.6.4.1
+  <li>RubyWin 0.0.3.3
+      <ul>
+	<li>ちょっとだけパッチを当ててる。（書くのいつも忘れるのでここにメモ）
+	<li>#include &lt;memory.h&gt;をustring.cに追加（前から）
+	<li>Makefileからversiondlgに関する条件を削除（0.0.3.2から）
+	<li>dlgbase.cpp：リソースに書き込みを行わない（前から。通知済み）
+	<li>RUBY_METHOD：これはこういうもんなのかな？（今回から。検討中）
+      </ul>
+  <li>VRSwin010616
+  <li>VRuby010612
+  <li><strong>場外乱闘編の199ページ下から8行目に出てくる「nyasu」さんは「yasu」さんの間違い。お詫びして訂正します。</strong>
+  <li>この上の情報のためだけに正誤表を書くのも面倒だが、どうしようかなぁ。
+</ul>
+<address>24 Jun. 2001, 18:26:42</address>
+<ul>ActiveScriptRuby 1.6.4.0（変わらず）
+  <li><a href="netruby.html">NETRuby</a>を、SDKβ2用に修正した。
+      <ol>
+	<li>boxの引数が間接参照から直接参照に変わったようだ？
+	<li>便利な定数が軒並み削除。まあ、気持ちは理解できる。
+	<li>代わりにデフォルトの動作がデオフォルトらしくなったからだ。
+	<li>つーか、Convertに全部追いやられたのはなぜ？
+      </ol>
+</ul>
+<address>6 Jun. 2001, 21:51:41</address>
+<ul>ActiveScriptRuby 1.6.4.0
+  <li>GRScript1.0.8.5：このバージョンでは、文字列として渡されたスクリプトを1度ファイルに落とすというRubyWinと同様な方法でエラー情報を取得するようにした。これでModuleの2段重ねなんかの問題はなくなったはず。
+  <li><strong>場外乱闘編の199ページ下から8行目に出てくる「nyasu」さんは「yasu」さんの間違い。お詫びして訂正します。</strong>
+</ul>
+<address>4 Jun. 2001, 01:17:25</address>
+<ul>ActiveScriptRuby 1.6.3.5（変わらず）
+ <li>書き方がまずかったので修正。
+     <ul>
+       <li><strong>場外乱闘編の199ページ下から8行目に出てくる「nyasu」さんは「yasu」さんの間違い。お詫びして訂正します。</strong>
+     </ul>
+ <li>以下は前回更新時からの居残り情報
+ <li><a href="netruby.html">NETRuby</a>についての正式なアンカーを作った。
+ <li>危ないよ。GRscript16.dllの動作が変わったから。雪見酒さん、どうも。requireでモジュール内容の追加してる場合は、バージョンアップしないが吉。修正はもうちょっと待っててね。
+</ul>
+<address>3 Jun. 2001, 04:01:38</address>
+ <li>場外乱闘編にyasuさんがnyasuさんになってる個所がある。編集の過程で変わった？
+ <li><a href="netruby.html">NETRuby</a>についての正式なアンカーを作った。
+<address>22 May. 2001, 22:53:03</address>
+ <li>Fe<SUP><SMALL>2+</SMALL></SUP>さんのRuby256邪道編正誤表ページのリンク修正。
+ <li><a href="netrubyold.html">情報を小出し</a>の第1回目
+<address>13 May. 2001, 10:41:48</address>
+<ul>ActiveScriptRuby 1.6.3.5（変わらず）
+ <li>危ないよ。GRscript16.dllの動作が変わったから。雪見酒さん、どうも。requireでモジュール内容の追加してる場合は、バージョンアップしないが吉。修正はもうちょっと待っててね。
+ <li><a href="netruby.html">情報を小出し</a>
+</ul>
+<address>4 May. 2001, 18:12:40</address>
+<ul>ActiveScriptRuby 1.6.3.5
+ <li>VRSWin 010428
+</ul>
+<ul>memo
+ <li>MDAC2.6にバージョンアップしたとき、データソースの更新を手動でやらないとOracleのOLEDBプロバイダが古いのポイントしたままになって、とっても悲しいことになる。
+ <li>こんだJDOって……まさか.JETとか出て来ないだろうな（逆だって）？
+ <li>広島大学のVisual Programmingってどうなったのかなとか、VISIO使ったBizTalkビルディングブロックの繋ぎ合わせ見てて思い出したりして。
+ <li>クイズ：アドレスタグ内のMay.の最後のドットはなんでしょう？
+</ul>
+<address>22 Apr. 2001, 22:38:45</address>
+<ul>ActiveScriptRuby 1.6.3.4
+ <li>ASR1.0.8.4。トレースやめた。instance_evalやmodule_evalの第3パラメータを使うように修正。
+</ul>
+捨てた情報
+<pre>
+ActiveScriptRuby&lt;Object: ActiveScriptRuby制御
+ クラスメソッド
+  settrace(bool)        デバッグ情報のためのトレースを行う(true)か否か
+                        デフォルトはtrue
+                        パフォーマンスアップのキーファクター
+                        falseにすると、デバッグ情報の行番号は全く当てにならなくなる
+</pre>
+<address>22 Apr. 2001, 03:13:10</address>
+<ul>ActiveScriptRuby 1.6.3.3(変わらず)
+ <li>タイポ直した。
+ <li>あおきさんへのリンク修正。いいなぁ、オレもDSL入れようかなぁ。
+ <li>Scriptletオブジェクトってとっても曲者。
+ <li>中川さんと調べたけど、ASPからWSCを使う場合、つまり&lt;implements type="ASP"/&gt;の結果は、Scriptlet.Responseとしてアクセス可能となる。implementsってのは、Scriptletオブジェクトつまるところ、ScrObj.dllが実装つーか提供するインターフェイスを指定するということのようだ。
+ <li>つまり、VBScriptやJScriptは、グローバルなオブジェクト（ネームスペースオブジェクトってことか）の記述を省略できるけどActiveScriptRubyは省略できないから、こんな感じとなるってことだ。
+<pre>
+&lt;?xml version="1.0" encoding="shift_JIS" ?&gt;
+&lt;package&gt;
+  &lt;component id="asptest"&gt;
+    &lt;registration
+     progid="ruby.asptest"
+     version="1.0"
+     clsid="{19C85652-A379-4998-83E7-8C525E9ED3E8}"
+   /&gt;
+
+    &lt;public&gt;
+     &lt;method name="say"&gt;
+       &lt;parameter name="word"/&gt;
+     &lt;/method&gt;
+    &lt;/public&gt;
+    &lt;implements type="ASP"/&gt;
+
+    &lt;script language="RubyScript"&gt;
+    &lt;![CDATA[
+
+    def say( word="world" )
+      Scriptlet.Response.Write "Hello #{word} from Ruby Script Component."
+    end
+
+    ]]&gt;
+    &lt;/script&gt;
+  &lt;/component&gt;
+&lt;/package&gt;
+</pre>
+なんで、1行のメソッド説明すんのに、こんな長くなるんだろう、っていうか、冗長性。
+<li>で、教訓は？　――VBScriptとかのサンプル読んでて、いきなりスクリプトの言語仕様に出て来ないオブジェクトがWSC内で出て来たら、とりあえず、Scriptletで修飾してみようということだ。つーか、include Scriptletされたとオレ（＝ActiveScriptRuby）が、みなしゃあ済むのかも（やんないけど）。
+</ul>
+<address>15 Apr. 2001, 21:54:44</address>
+<ul>ActiveScriptRuby 1.6.3.3
+ <li>RubyWin 0.0.3.1
+ <li>Racc 1.3.9
+ <li>VRuby010409
+ <li>VC++SP5を使用
+ <li>1番の変更は、インストール環境を<a href="http://www27.freeweb.ne.jp/computer/arton/indexj.html">freeweb</a>に移動したこと。ジェオシティすっきりキャンペーンだ。つーか、msiで直接実行だい。
+</ul>
+<address>29 Mar. 2001, 23:25:43</address>
+<ul>ActiveScriptRuby 1.6.3.2
+ <li>小林さんのBigFloat 1.1.6を同梱（こないだのは1.1.6βだったようです）
+ <li>中田さんだけソース（option pareser同梱してる）リンクから抜けてたので修正。
+ <li>MSIはSISYTEMだからパーミッションに引っかかってインストール出来なかっただけ。メディアの速度がどうたらとか書いたの嘘。
+ <li>香港はダメになったみたいなので、引越し。
+</ul>
+<address>27 Mar. 2001, 02:04:54</address>
+<ul>ActiveScriptRuby 1.6.3.1
+ <li>小林さんのBigFloat 1.1.6を同梱
+ <li>rbconf.rbを追加（雪見酒さん、ご指摘感謝します）
+ <li>パッケージの内容が2ヶ所にあって変だから統合
+</ul>
+<address>21 Mar. 2001, 06:26:32</address>
+<ul>ActiveScriptRuby 1.6.3.0
+ <li>咳さんのI like Rubyへのアンカータグを書き間違えてたのを修正。
+ <li>大変失礼いたしました。
+ <li>すぎむしさん、教えてくださってありがとうございました。
+</ul>
+<address>20 Mar. 2001, 17:04:16</address>
+<ul>ActiveScriptRuby 1.6.3.0
+ <li>win32ole（標準）と、win32oleex（ActiveScriptRuby内部）の修正。内容は、ruby-list:28764のスレッド参照
+ <li>Ruby 1.6.3
+</ul>
+<address>15 Mar. 2001, 21:41:51</address>
+<ul>ActiveScriptRuby 1.6.2.10（変わらず）
+ <li>このページの古びた情報（MSIへのリンクとか）の修正など
+ <li>前回の修正、違うんじゃないかという気がしてきた...元々ので参照カウンタは合ってたんじゃないか？では何が問題？（つーか、COM+か……）
+</ul>
+<address>14 Mar. 2001, 00:50:00</address>
+<ul>ActiveScriptRuby 1.6.2.10
+ <li>RubyWin 0.0.3.0
+ <li>RScript16.DLL 1.0.8.1
+</ul>
+<address>5 Mar. 2001, 21:19:00</address>
+<ul>ActiveScriptRuby 1.6.2.9
+ <li>RubyWin 0.0.2.9
+ <li>Win32OLE 0.2.5
+ <li>Racc 1.3.7
+ <li>RDtool 0.6.7
+ <li>SWin 010302
+ <li>VRuby 010227
+ <li>dRuby 1.3.1
+ <li>Ruby1.6.2 Refference Manual(HTML)
+</ul>
+<address>23 Feb. 2001, 22:38:05</address>
+<ul>ActiveScriptRuby 1.6.2.8（変わらず）
+ <li>Ruby256邪道編の情報を<a href="r256.html">別のページ</a>へ移動
+</ul>
+<address>18 Feb. 2001, 22:38:58</address>
+<ul>ActiveScriptRuby 1.6.2.8
+ <li>RubyWin 0.0.2.7
+ <li>Win32OLE 0.2.4
+</ul>
+<address>07 Feb. 2001, 22:08:12</address>
+<ul>ActiveScriptRuby 1.6.2.7
+ <li>パッケージのリフレッシュ
+ <li>RubyWin 0.2.6
+ <li>Win32OLE 0.2.3
+ <li>Racc 1.3.6
+ <li>SWin/VRuby010126
+</ul>
+<address>20 Jan. 2001, 23:46:24</address>
+<ul>ActiveScriptRuby 1.6.2.6
+ <li>RScript16.dll 1.0.8.0、GRScript16.dll 1.0.8.0
+ <li>ActiveScriptRuby.rubyizeというRubyオブジェクトをそのままオートメーション化して返すための機構を導入（samplesの中のrubyizeのWSCとVBS参照）
+ <li>WIN32OLE::new(ProgID, ServerName)をActiveScriptRuby内では使えるようにしてみた。
+ <li>Win32OLE 0.1.9
+ <li>Racc 1.3.5
+</ul>
+<address>16 Jan. 2001, 00:37:01</address>
+<ul>ActiveScriptRuby 1.6.2.5
+ <li>RScript16.dll 1.0.7.7、GRScript16.dll 1.0.7.7
+ <li>Win32OLEで、1次元配列が戻らなかったので修正。
+ <li>ActiveScriptRuby側修正。ついでにwin32ole.cもテンポラリパッチを当てた。
+ <li>RubyWin0.0.2.3へバージョンアップ
+</ul>
+<address>13 Jan. 2001, 21:47:32</address>
+<ul>ActiveScriptRuby 1.6.2.4
+ <li>RScript16.dll 1.0.7.6、GRScript16.dll 1.0.7.6
+ <li>セキュリティ設定の見直し。ちょと甘すぎた部分があったので修正（1.6.2.3での修正とは無関係です）。一応、IEを使用したヤンチャは出来なくなったはず。もちろん、HTAでは何でもあり。
+ <li>GRScript16.dllにバグがあったので修正。UKなドメインのBerrieさんからの指摘。ありがとう。
+ <li>Berrieからのリクエストもあって、実験的なメソッドを追加。
+  <ul>
+    <li>WIN32OLE#__release
+    <li>__release__のほうが良かったかな？ いずれにしろ、アンダースコアを先頭につければ、IDispatchのメソッド名と衝突する可能性は極めて低いからいいんじゃない？
+    <li>名前の通り、保持しているインターフェイスを解放する。IUnknown::Releaseのラッパ。
+    <li>GCを待てない場合など。
+    <li>ただし、必ずしも役には立たないかも。あと、win32ole.cにパッチしたわけではないので、ActiveScriptRuby内でしか使用できません。
+    <li>簡単にSEGVを呼べるので使用時は注意が必要。
+    <pre>
+     obj = WIN32OLE.new hoge.hoga
+     obj.__release
+     obj.suicide    #SEGV RIP
+    </pre>
+  </ul>
+ <li>使いたかったので、実験的な機能を追加。
+  <ul>
+   <li>Newモニカーの呼び出しを実装。スキーマは文字ケース敏感肌なので、全部小文字で"new:"で決まりだ。
+   <li>これも、win32ole.cへのパッチでは無いので、ActiveScriptRuby内でしか使用できません。
+   <li>これは手始め。場合によっては、URLモニカーインターフェイスも実装するかも。キュードコンポーネント？
+   <pre>
+     obj = WIN32OLE.connect "new:{ED8C108E-4349-11D2-91A4-00C04F7969E8}"
+   </pre>
+   <li>モニカー呼ぶんだから、WIN32OLE::connectに対する実装だよね。WIN32OLE::newでは使えないよ。
+  </ul>
+ <li>個人メモ：Windows2000固有の問題。Windows9x固有の問題。どっちもどっちだ。
+  <ul>
+   <li>ruby.exe + Win32OLEで、Windows2000では終了しない場合がある。原因はOLEUninitialize()。UI+StdProxyが原因らしい。が、まだ不明。
+    <ul>
+     <li>しかし、CScript + ActiveScriptRubyだと、上記の問題は発生しない。メッセージポンプを空回りさせればいいのか？ 
+     <li>というか、COM+か？ NT4+MTSでも、似たような症状を見たことがある。
+     <li>つーか、16ビットWindowsじゃないんだから、OLEUninitialize()呼ばなきゃいいんだけどね。
+     <li>って、Windows9x使ってる人がいるからダメじゃん。
+    </ul>
+   <li>command.com逝ってよし。dir 2&gt;bootaleg.log　って書いたら、「ファイルは見つかりません」ってのが画面に出て来てやんの。
+    <ul>
+     <li>2をファイルだと思って、&gt;の先には標準出力してんじゃん。
+     <li>つーか、DOSだからしょーがないのか。中島信行さんの本を久々に紐解いちまった。だめなんだ、エラーをファイルに出すのって。
+     <li>ノンサポでいいから、cmd.exe相当のシェルを入れてくれりゃいいんだが。
+    </ul>
+  </ul>
+</ul>
+<address>11 Jan. 2001, 20:17:54</address>
+<ul>ActiveScriptRuby 1.6.2.3
+ <li>RScript16.dll 1.0.7.5
+ <li>IObjectSafetyのチェックのバグ修正(今まで、意味無く厳しすぎた)
+ <li>この修正で、ScriptControlを使用したスクリプト内でActiveXコントロールの使用が可能となります
+ <li>このバグ自体は、2000/12に井上さんから教えて頂いていたのですが、その時点ではバグだと思わずに放っておいたものです。本日、検証してバグであることを確認しました。
+</ul>
+<address>10 Jan. 2001, 02:53:16</address>
+<ul>ActiveScriptRuby 1.6.2.2
+ <li>Systemディレクトリに対する注を追記
+ <li>RScript16.dll 1.0.7.4
+ <li>wsfに対応させた。
+</ul>
+<address>07 Jan. 2001, 18:11:51</address>
+<ul>ActiveScriptRuby 1.6.2.1
+ <li>Racc復活
+ <li>RDtool追加
+</ul>
+1.4系は、塩漬けにすることにした。
+<address>3 Jan. 2001, 00:29:18</address>
+<ul>ActiveScriptRuby 1.6.2.0(same as last year)
+ <li>Yet Another <a href="icmpping.zip">(icmp)ping.rb</a>
+</ul>
+<address>29 Dec. 2000, 18:15:38</address>
+<ul>ActiveScriptRuby 1.6.2.0
+ <li>Ruby1.6.2対応
+ <li>MSVCRT, MSVCP60で作成
+ <li>VRubyも入れた。
+ <li>訳あってRaccは一時外した。(復活予定あり)
+</ul>
+<address>15 Dec. 2000, 15:27:20</address>
+<ul>ActiveScriptRuby 1.6.0.5（変わらず）
+ <li>Ruby256邪道編の情報の修正（ScriptControlの記述の誤まり訂正）
+</ul>
+<address>7 Dec. 2000, 20:58:40</address>
+<ul>ActiveScriptRuby 1.6.0.5
+ <li><strong>1.6.0.4は同梱のwin32api拡張ライブラリが壊れていました。ごめん。</strong>
+ <li>にゃすさんのSWinは古いままです。ちょっと、いろいろやってることがあるので、停止してます。つーか、Cygwin版を使ってマルチスレッディングのアプリケーション書いてたりして。
+</ul>
+<address>2 Nov. 2000, 01:03:45</address>
+<ul>ActiveScriptRuby 1.6.0.4のまま
+ <li><strong>テスト用のLIBを通した環境でビルドしたため、動かないパッケージを10/31に出していました。廃棄して、落としなおしてください。ごめんなさい</strong>
+ <li>VED03370 こと Fe<SUP><SMALL>2+</SMALL></SUP>さんが正誤表を公開されているのを発見してリンク。どうもです。
+</ul>
+<address>31 Oct. 2000, 8:50:40</address>
+<ul>ActiveScriptRuby 1.6.0.4のまま
+ <li><strong>テスト用のLIBを通した環境でビルドしたため、動かないパッケージを10/31に出していました。廃棄して、落としなおしてください。ごめんなさい</strong>
+ <li>にゃすさんのSWin.so 001022(だと思う)を入れました。まだ何に使うか未定。
+ <li>小松さんのメッセージFixパッチ(ruby-dev:11312)を早速当ててみました。いろいろと納得。MSの翻訳が腐ってるのかと思っていたら、MSの作り方が腐っていたのね。
+ <li>Ruby.EXEとmswin32-ruby16.dllのバージョンを1.6.1.2にしてます。だってインストーラがアンインストールしないで実行するとGUID変えても更新してくれないんだもん。
+</ul>
+<address>31 Oct. 2000, 1:58:38</address>
+<ul>ActiveScriptRuby 1.6.0.4
+ <li>にゃすさんのSWin.so 001022(だと思う)を入れました。まだ何に使うか未定。
+ <li>小松さんのメッセージFixパッチ(ruby-dev:11312)を早速当ててみました。いろいろと納得。MSの翻訳が腐ってるのかと思っていたら、MSの作り方が腐っていたのね。
+ <li>Ruby.EXEとmswin32-ruby16.dllのバージョンを1.6.1.1にしてます。だってインストーラがアンインストールしないで実行するとGUID変えても更新してくれないんだもん。
+</ul>
+<address>28 Oct. 2000, 0:12:41</address>
+<ul>ActiveScriptRuby 1.6.0.3
+ <li>RubyWinスタティックリンク版にした（FILE*をRubyと受け渡ししてないことを切に祈る）。中川さん、教えてくれてありがとう。
+ <li>本当は小松さんの真似してRubyCPPRT.DLLにしたかったんだけど、駄目じゃん。MSVCP60.DLL自身はビルド出来ないようにしてありやんの。そんなに例外処理の実装を隠したいのか?
+ <li>やっとVInstaller1.1で更新が出来るようになったので試してみた。うまくいくみたい。
+ <li>RScript16.dllのソースをちょっといじった。#if 0とかを削除とか。本質とは関係ない。
+</ul>
+<ul>28 Oct. 2000 以下の文言をindex.htmlから削除。
+  <li>既にインストール済みのパッケージを更新する場合は、<strong>以前のをアンインストール（コントロールパネルのアプリケーションの追加と削除を使って）してからでないと、インストールできません。</strong>（永遠に、前のが再インストールされるだけ。）
+  <li>上の変な制限は、Visual Installerを使って作ったパッケージの仕様です。キャッシュしといて、誤まって削除した場合に修復するために、取っておくとか。面倒だとは思いますが、処理時間は大してかかんないので、しばらく我慢してください（って、どうにか出来るのか？）。
+</ul>
+<address>26 Oct. 2000, 2:29:22</address>
+<ul>ActiveScriptRuby 1.6.0.2
+ <li>RubyWinがC++用DLLを求めることが発覚。しおしお
+ <li>c#用のコンパイラコンパイラ誰か作らない?(謎)
+</ul>
+<address>22 Oct. 2000, 23:36:30</address>
+<ul>ActiveScriptRuby 1.6.0.2
+ <li>RScript16.dll, GRScript16.dllの修正。
+ <li>IMessageFilter使った。自分でやるか、RPCにやらせるかだけで、あまり変わらないけど、最初から、こう作れば楽だったのは事実。まだ手を入れられるな。
+ <li>ただし、アンドキュメンテッドなのはウンザリだ。wMethodsは0からのvtblの順ね。
+ <li>あと、-DNTしてなかったのをちゃんとした。シオシオ。
+ <li>*.soは、i586-mswin32にちゃんと放り込むように変更。Cygwin版との共存をちょっと考慮。
+</ul>
+<address>22 Oct. 2000, 16:33:20</address>
+<ul>IMessageFilter
+ <li>また、アンドキュメンテッドだよ。
+ <li>INTERFACEINFO::wMethodって一体なんだい？
+ <li>どうも、vtbl上の0から始まる番号だってやっとわかったが、これに3時間。
+ <li>まったく、腐ってるな。プンプン。
+ <li>というか、なんか自分でループさせてんのと変わらんな。
+</ul>
+<address>11 Oct. 2000, 19:27:06</address>
+<ul><a name="r161">Ruby256倍邪道編をRuby1.6.1で使うための知ってる人は知ってるはずの話</a>
+ <li>Wordのgrep系は、先頭のほうで明示的に$KCODE="SJIS"とかしてください。
+ <li>僕は、なぜサロゲートが検索できないのか悩んじゃいましたが、"ー"が問題。1.4系では自動的にMSではSHIFTJISとか設定されていたのが、1.6ではNONEになったので、MS漢字コードとみなかったからなのね。
+ <li>life系は、作り直したのをパッケージに入れてますが、ハッシュにnullを代入しているのを全部、deleteの呼び出しに変更してください。（Ruby本由来の元ソースも）
+ <li>同じくWord用grepの$OPT_o.nil?は、$OPT_o == falseに変えてください。
+ <li>ぐらいかな。まつもとさんも「1.6.1でなにか問題にぶちあたらない限り、1.4.6を使う理由はもうないのではないかと思います。」と言われてます（ruby-list:25244）。僕の場合は、256のサンプルが動かないってのが1.6.1を勧めなかった理由。一応、現象は確認できたので、1.6.1をどうぞ。
+</ul>
+<ul>メモ（手付かずのうちは、history送りにできなかったりして）
+ <li>考えたらIMessageFilterって、クライアント側インターフェイスだと決め付けていたが、違うな。
+ <li>Ruby側にフィルター実装してインバウンドのチェックしてペンディングさせればいいんじゃないか？
+</ul>
+<address>9 Oct. 2000, 16:41:00</address>
+<ul>ActiveScriptRuby 1.6.0.1
+ <li>RubyWin0.0.2をパッケージに含めた。超、久しぶりって感じ。
+</ul>
+<address>7 Oct. 2000, 09:56:04</address>
+<ul>メモ
+ <li>考えたらIMessageFilterって、クライアント側インターフェイスだと決め付けていたが、違うな。
+ <li>Ruby側にフィルター実装してインバウンドのチェックしてペンディングさせればいいんじゃないか？
+ <li>というのが1点と、1.6で、regexpの動作が変わったような気がするんだが、まだ手が付けられないというのが1点。
+ <li>$OPT_?はtrue/falseとなった（あおきさんからの情報。どうも）。
+</ul>
+<address>29 Sep. 2000, 23:09:02</address>
+<ul>
+ <li><a href="16/ActiveRuby.bin">Ruby1.6.1バージョン</a>の追加。Ruby256邪道編の一部のサンプルが動かなくなりそうな気がするんで、まだテスト中だけど、最新の安定版とか書いちゃったから、一応、作ったのを入れておくことにした。
+ <li>ruby-list:25234適用済み
+ <li>すぐに動くはずのサンプルも同梱。HTA版マンデルとか、VBLife系とか、BiorhythmのHTA版とか。
+</ul>
+<address>17 Sep. 2000, 16:45:45</address>
+<ul>
+ <li><a href="sample/RubyLife.zip">VBサンプル</a>の修正。IDEからインタープリターで実行するとき、RUBYLIBが正しく設定されないので、明示的に環境変数をセットするようにした。
+ <li>なんとなく、この文書のリライト。
+</ul>
+<address>4 Sep. 2000, 23:37:44</address>
+ ちょっと修正(<a href="index.html">このページを</a>)
+<address>27 Aug. 2000, 18:05:06</address>
+<ul>1.0.0.10
+ <li>ruby(win32.c)に引数に渡したファイル名展開の修正を追加(cf.ruby-list24520)
+ <li>GRScriptに引数に渡したファイル名展開の修正を追加(1.0.6.6->1.0.6.7)
+ <li>1.0.0.9に入れそこなっていたtkvirtevent.rbを追加
+ <li>Win32OLEを0.1.3改から0.1.4に入れ替え
+</ul>
+<address>26 Aug. 2000, 5:22:32</address>
+<ul>1.0.0.9
+ <li>Ruby1.4.6 with RubyCRT.DLLに入れ替え
+</ul>
+<address>12 Aug. 2000, 00:33:53</address>
+<ul>1.0.0.8
+ <li>Win32OLE 0.1.3に入れ替え
+</ul>
+<address>22 Jul. 2000, 01:47:15</address>
+<ul>1.0.0.7
+  <li><a href="sample/mandel.zip">サンプルを追加</a>
+  <li>libpng1.0.7+zlib1.1.3+GD1.8.3とRuby拡張ライブラリGDの改造版(GDPNG.DLL)で動く金光さんのマンデルブロート表示プログラム<a href="http://www.vector.co.jp/soft/win95/prog/se143265.html">tkmandel.rb</a>(Ruby本の第9章実行速度改善に出てくるやつ)を元にしたHTMLアプリケーション(HTA)。
+  <li>Tcl83を用意すれば、Tcl版も動く（が、インストールがかったるいので、勧めない）ことは確認した。
+  <li>GDPNGのソースも同梱。元のGD拡張ライブラリには2点、問題があって、
+    <ol>
+     <li>GIF時代のGDを使用している（これは、中村さんのruby-ext:00450のパッチを当てた）。
+     <li>もっとでっかな問題（ruby-ext:00556以降のスレッドでも扱われている）。rubymw.dllがfopenしたFILE*は、拡張ライブラリ側のstdio関数内で高い頻度でクラッシュすること。
+   </ol>
+  <li>rubycrt.dllも考えたが、面倒なので（だって、Rubyの正規パッチじゃないからね）やめた。[cf. ruby-dev:9250, ruby-dev:9231]
+  <li>そのため、元のGD拡張ライブラリのファイル処理系のメソッドをすべて、ファイル名を受け取り、拡張ライブラリ内でfopenするように修正した（このプログラムの使用方法なら、これでもいいんじゃないかな）。
+  <li>従って、同梱のtkmandel.rbも改造したものになっている。
+  <li>使い方は、<a href="sample/mandel.zip">ZIP</a>内のmandel.hta、mandel.dll、gdpng.dllを同一ディレクトリにコピーして、そこをカレントディレクトリとして、mandel.htaを実行する。別にエクスプローラでのダブルクリックでも良い。
+  <li>IE5.5だと最適化されているため、描画がスキップされるが、100%になれば、いずれにしろ、表示される。
+  <li>RScriptがトレース付きだと死ぬほど遅いので、ActiveScriptRuby1.0.0.7は必須。
+  <li>マンデルブロート図を1回クリックすると、白い"+"が表示されるので、もう一個所をクリックする。この矩形が拡大される。
+  <li>詳細はソース(mandel.hta)を直接参照。
+</ul>
+<address>17 Jul. 2000, 20:52:52</address>
+<ul>1.0.0.6
+ <li>GRScript.dllのWindows2000正規修正完了。
+ <li>スタックの開始位置を揃えるように修正。
+ <li>ついでに、SystemExit例外を取った場合は、正常終了扱いにするように変更。
+</ul>
+<address>8 Jul. 2000, 17:12:39</address>
+<ul>1.0.0.5
+ <li>Windows2000で、GRscript.DLL（CScriptなどのスクリプティングホストと関連付けられるシングルスレッドホスト専用エンジン）の動作が異常（ブロックの繰り返しで例外となる）なことをもりきゅうさんからの指摘で発見。
+ <li>バンザーイ（は、お手上げの意味）
+ <li>この更新は、対症療法（根本治療ではありません）を施したGRscript.DLLだけの更新です。これだけ必要な場合は、<a href="GRScript.zip">こちらから</a>どうぞ。Windows2000以外の場合、現在のところ、この件については、問題ないです。
+ <li>RScript一本化してしまえば、話しは簡単なのだが、捨て難いとこもあって、K6じゃなかった鶏肋とか、言ってみたり。
+</ul>
+<address>4 Jul. 2000, 21:40:11</address>
+<ul>1.0.0.4
+ <li>tcltklib.dllをインストールパッケージに追加。参考=ruby-dev:7501
+ <li>Tcl/Tkを使用するには、<a href="http://www.sra.co.jp/people/m-hirano/tcltkjp/">Tcl/Tk80日本語化パッチ</a>をインストールして、出来たbinディレクトリにパスを通してください。
+</ul>
+<address>1 Jul. 2000, 3:24:45</address>
+<br>
+ ちょっと語句訂正。スクリプトコンポーネントをなぜかリモートスクリプティングと書いていた。
+<ul>1.0.0.3
+ <li>スクリプトコンポーネントのサポートのために、パーシステント処理を実装。
+ <li>IActiveScript::Cloneで、親のモジュールから派生したモジュールとして名前空間を作ってみた。
+ <li>グローバルネームスペースを実験的に実装。こんなことが出来るけど、意味あるかな。
+  <pre>
+    &lt;head&gt;
+    &lt;script language="Jscript"&gt;
+      function jfunc(n)
+      {
+        window.alert("JavaScript");
+        if (n < 1)
+          rfunc(1);      // 修飾不要
+      }
+    &lt;/script&gt;
+    &lt;script language="RubyScript"&gt;
+      def rfunc(n)
+        Window.alert "Ruby"
+        if n < 1
+          Window.jfunc 1  #Window(@window)で修飾が必要
+        end
+      end
+    &lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;input type="button" id=jbutton onclick="jfunc(0);" language="JavaScript"&gt;
+    &lt;input type="button" id=rbutton onclick="rfunc 0" language="RubyScript"&gt;
+    &lt;/body&gt;
+  </pre>
+</ul>
+<address>28 Jun. 2000, 00:51:08</address>
+<ul>1.0.0.2
+ <li>win32.cとwin32.hをruby-list:23522,23531を反映したものに交換
+ <li>ruby-1.4.5を再パッキング版とまた交換(socket.cの修正があるものにした）
+</ul>
+<address>27 Jun. 2000, 17:03:00</address>
+<ul>1.0.0.1
+ <li>たむらさんから、NT用Windows Installerの場所の情報を頂きました。感謝!
+ <li>Windows2000(Pro)でテストを開始。スタックサイズが小さくなったことによるGCの頻度が高まったこと（多分）、スレッド間マーシャリング中のメッセージフィルターの挙動が変わったことなどから、他のスレッドの実行中にGCが起動され自スレッドのオブジェクト（このスレッド自身はRubyのスレッドに入れなくてリトライしている）のリリースに来た場合、ハングすることを発見。リトライ中にメッセージポンプを入れて逃げているが、あまり良い解ではないな。Windows98は調子が良い（余分なこと考えて無さそうだし）、NTと2000は共に調子が悪くなった。（連続して動き回る処理をマルチスレッディングで呼び出すのはちょっと考えもの）
+</ul>
+<address>23 Jun. 2000, 00:44:10</address>
+<ul>ベータ2リリース (1.0.5.1)
+ <li>1.0.5.1での修正。バグがあって、なんでも先頭を大文字にしてたから、IEで動けなくなっちゃってた。直した。
+</ul>
+<ul>
+ <li>移入されたオブジェクトの名前を変更
+  <ol>
+   <li>IIS/ASPを使用したとき、暗黙のうちにResponseオブジェクトに対する呼び出しが行なわれていることがわかった。どうにも、手が出ないや。
+   <li>しかし、良く見たらResponseってことは、定数で、モジュールの名前空間が有効じゃないか。
+   <li>というわけで、定数として移入することにした。
+   <li>今までの、GlobalRubyScriptはグローバル変数、RubyScriptはモジュール変数というのも生かす。これらの場合は、元の移入されたオブジェクトのケースが保存されていると考えて良い。
+   <li>統一を取るため、小文字で始まるやつは、先頭を大文字にして定数としてやはり移入する。
+   <li>したがって、次は同じ意味。
+<pre>
+  $WSH.Echo "Hello!"
+  WSH.Echo "Hello!"
+</pre>
+<pre>
+  @window.document.all("inputArea").value = "What Are You Doing ?"
+  Window.document.all("inputArea").value = "What Are You Doing ?"
+</pre>
+   <li>小文字で始まるオブジェクトを暗黙のうちに、呼び出すホストは、従ってサポートできないという意味でもある。
+  </ol>
+ <li>ASPを動かして気付いたこと。SCRIPTSTATE_UNINITIALIZEに対応できていない。返事が返ってきたり、来なかったりするんで気付いた。
+ <li>どうやっても、うまくいかないので、あきらめて非サポートとした。
+ <li>非サポートっていうのは、UNINITIALIZE状態を非サポート(E_FAILを返す)という意味。
+ <li>これで、ASPも納得してくて、必ずクローズしてくれて、いつも動くようになったので、まあ良し。
+ <li>謝辞：田原さんが、いろいろテストしてくださったので、それなりにASPで動くことがわかりました。どうも、ありがとう。
+</ul>
+<address>26 Jun. 2000, 00:08:20</address>
+<ul>プレリリース1.0.0.0 (1.0.6.0)
+ <li>RUBYLIBの扱いが変わっててビックリ。
+ <li>まじめにインストールプログラム作るの面倒なので、VisualInstallerを使って、適当にパッケージングしたけど、まあ、動くからいいかな。
+ <li>PATH環境変数の設定は、うまくいかないから、とりあえず行わない。
+</ul>
+<address>22 Jun. 2000, 21:54:32</address>
+<ul>ベータ2リリース (1.0.5.0)
+ <li>移入されたオブジェクトの名前を変更
+  <ol>
+   <li>IIS/ASPを使用したとき、暗黙のうちにResponseオブジェクトに対する呼び出しが行なわれていることがわかった。どうにも、手が出ないや。
+   <li>しかし、良く見たらResponseってことは、定数で、モジュールの名前空間が有効じゃないか。
+   <li>というわけで、定数として移入することにした。
+   <li>今までの、GlobalRubyScriptはグローバル変数、RubyScriptはモジュール変数というのも生かす。これらの場合は、元の移入されたオブジェクトのケースが保存されていると考えて良い。
+   <li>統一を取るため、小文字で始まるやつは、先頭を大文字にして定数としてやはり移入する。
+   <li>したがって、次は同じ意味。
+<pre>
+  $WSH.Echo "Hello!"
+  WSH.Echo "Hello!"
+</pre>
+<pre>
+  @window.document.all("inputArea").value = "What Are You Doing ?"
+  Window.document.all("inputArea").value = "What Are You Doing ?"
+</pre>
+   <li>小文字で始まるオブジェクトを暗黙のうちに、呼び出すホストは、従ってサポートできないという意味でもある。
+  </ol>
+ <li>ASPを動かして気付いたこと。SCRIPTSTATE_UNINITIALIZEに対応できていない。返事が返ってきたり、来なかったりするんで気付いた。
+ <li>どうやっても、うまくいかないので、あきらめて非サポートとした。
+ <li>非サポートっていうのは、UNINITIALIZE状態を非サポート(E_FAILを返す)という意味。
+ <li>これで、ASPも納得してくて、必ずクローズしてくれて、いつも動くようになったので、まあ良し。
+ <li>謝辞：田原さんが、いろいろテストしてくださったので、それなりにASPで動くことがわかりました。どうも、ありがとう。
+</ul>
+<address>18 Jun. 2000, 18:54:00</address>
+<ul>ベータ2リリース (1.0.4.0)
+ <li>GlobalRubyScriptを更新。
+  <ol>
+   <li>IActiveScript::InterreptScriptThreadをサポート。従って、//T:nnオプションが使用可能になった。OLEオートメーション呼び出し中の動作は当然ながら危険がつきまとうけど。
+   <li>ホスト側オブジェクトとRuby側オブジェクトの相互乗り入れをGlobalRubyScriptでも実装した。VBのサンプルのような場合、同一アパートで動くので、こっちのほうが高速。スクリプト名は"GlobalRubyScript"
+   <li>IEで、GlobalRubyScriptはホスト出来ないように制限しているので注意。（どうせ、クラッシュするから、最初からインスタンス化できないように、仕込んだ）
+   <li>Outlookでの動作はわからない。つーか、無闇にダブルクリックするやつがどうかしていると思うんだけどね。Outlookって、右クリックで、クイックビューとか出ないのかな？
+   <li>エラー時の情報の取得用にtrace_funcを使用するようにしてみた。なんとなく、IActiveScriptDebugの実装もできそうな感じはしてきたが。
+   <li>Windows98の場合、NtInitializeを呼び出してなかったが、呼び出す必要がありそうだと気付き、修正。
+   <li>引数のワイルドカード展開を実装。Windows98SEのWSHは腐ってる。WScriptを2回AddNameしに来る。NTのは大丈夫。なぜ、ファイルが2倍増するのか不思議だったよ。2度目の呼び出しでは、引数設定をスキップするように修正。
+  </ol>
+ <li>RScript.DLLも、trace_funcを使用するようにしてみた。遅い。驚いた。
+ <li>全部、evalの行番号だから、結構辛いものがあるが、少なくても行番号情報になんらかの意味が出てきたとも言える。まだ、もう少しいじくる必要は大有り。
+</ul>
+
+<address>12 Jun. 2000, 2:54:00</address>
+<ul>ベータ2リリース (1.0.3.2)
+ <li>IActiveScript::InterruptScriptThreadを実装。
+ <li>RUBYLIB環境変数が設定されている場合、オーバーライドしないように修正。
+ <li>Ruby側のオブジェクトをホストに渡すとき、明示的にグローバルなハッシュテーブルに登録するようにした。
+</ul>
+
+<address>8 Jun. 2000, 1:41:28</address>
+<ul>ベータ2 (1.0.3.1)
+ <li>1:41に追加。やり過ぎてた。VBLifeが動かなくなってた。修正した(1.0.3.1)。
+ <li>Ruby自身のセキュリティ処理を、Rubyのスレッドを使用することで実装。
+ <li>その結果、Win32ネイティブスレッドからの呼び出しがリエントリーとなる場合、たとえば、WIN32OLEオブジェクトからのアウトゴーイングの最中など、で、元のRubyの$SAFEが設定されたスレッドコンテクストのままとなると（エンジン側からのスレッドコンテキスト切り替えは未サポート。というか、できるのかなぁ）、パーシングが不可能となるため、リエントリーを徹底的に排除するための機構を導入。
+ <li>この時、アウトゴーイングのスレッドがどこへ行くかは全く不明なため、クリティカルセクションをはじめとした、すべての同期オブジェクトが使えず、結局、アパートに一度突入させて、そのコンテキスト内でチェックせざるを得なくなった。
+ <li>結果：とっても遅い。（マルチスレッディング・ホストの場合）
+ <li>普通に使用するぶんには、上記の遅延は無視可能な範囲であること、および、IE内でのセキュリティが、確保されたことを記念して、ベータ2として公開。
+ <li>動作変更に伴なう、<a href="iehowto.html">ページの文章</a>の修正など。
+</ul>
+<p>
+2 Jun. 2000 (ベータリリース4 (1.0.2.5))
+<ul>
+ <li>HTAの場合でも、タイポで、ActiveXコントロールの作成を不許可にしていたので修正。
+ <li>IEで再読み込みを行なうと、内部で例外となり処理ができなくなる事が判明したので修正。原因は、Ruby側用にローカライズしたポインタをエンジン側でリリースしたせいで、Ruby側のStubが異常な状態となったようだ。
+ <li>スクリプトエラー発生で、終了を選択するとIEがクラッシュする問題の修正。こっちは、内部オブジェクトの参照カウンタを無視してエンジンのエクステントと一致させてたのが問題。IEは、エンジン解放後に内部オブジェクトをいじりに来てるよ。（エラーとなったんで、とりあえずエンジンを殺した後、後始末を行なうという実装なんだろう。それはそれで正解なので、文句は言えない。
+ <li>Win32OLEの修正をやめた。そのまま使っても問題無いことが判明。最初のはこっちのバグだったのかなぁ。従って、同梱してるのはオリジナルソースのバイナリ化。
+</ul>
+<p>
+22 Apr. 2000 (ベータ3 1.0.2.4)
+<ul>
+ <li>1.4.4のヘダーとlibでビルドし直した。それに伴い<a href="RScript.zip">RScript.zip</a>に1.4.4を同梱した。
+ <li>ActiveX Controlの作成時にエンジンのポインターをラッパーに渡していなかったため、安全性チェックが走っていなかったので修正。
+ <li>それに従い、<a href="iehowto.html">IEのページ</a>を修正。
+ <li>ただし、RubyそのものがI/O可能なので、だから安全になったというわけではない。
+ <li>なひさんのサイトにあったC++ソースを元にC++(ATLやMFCを使用していない純Win32/C++)の<a href="c.html">サンプル</a>を追加。
+</ul>
+<p>
+15 Apr. 2000
+<ul>
+ <li><a href="http://activeruby.freeservers.com/">英語のサイト</a>を作った
+ <li>1.4.4でのテストを開始(このサイトには無い)
+ <li><a href="#notyet">まだやっていないこと</a>を手直し。
+</ul>
+<p>
+09-10 Apr. 2000
+<ul>
+ <li>Ruby側からホストのオブジェクトを呼ぶときの引数順序を逆順にしていたので修正。(win32oleex.cpp側のWIN32OLEXオブジェクトの場合。なお、WIN32OLEEXでは名前付き引数のサポートは行ないません。だってタイプライブラリが無いのが前提だから面倒過ぎ。MSだって無くすつもりで、インテリセンス作ったと思うよ。−MFCがサポートしてないしね)
+ <li>Ruby側からの呼び出しパラメータにRuby側のオブジェクトを記述可能とした。(WIN32OLEEXを拡張して、IRubyEngine*も格納するようにした。同一コードの繰り返しがひどいので、そのうち整理予定。GlobalRubyScriptでも使用価値があるようなら、WIN32OLEパッチを作るかも)
+ <li>ラッパーと組み込みスクリプト側ソースの整理
+ <li>history.htmlがMS漢字コードのくせにeuc_jisとデタラメなメタタグになっていたので、ちゃんとEUCに変換した。
+ <li><a href="vb.html">VBサンプルの説明</a>を追加。
+</ul>
+<p>
+06 Apr. 2000
+<ul>
+ <li>RubyのクラスインスタンスをIDispatchインターフェイスで操作可能とした。
+ <li>雰囲気は<a href="sample/RubyLife.zip">「VBだよ人生は｣</a>を参照。
+ <li>こういったプログラム内で使用するRubyファイルがrequreを呼び出すことに対応するために、RubyLibに実行プログラム(ActiveRubyScriptから見たホスト)のパスも設定するようにした。
+ <li>この機能はGlobalRubyでは使用できません。
+ <li>ActiveRubyScriptとしてのセキュリティポリシーを決定。
+ <li>Javaアプレットセキュリティのルールを適用することとする。
+ <li>まあ、通常のスクリプトと異なりI/O能力を持っているので。
+ <li>ただし、現状では実装不可能。(eval.cをいじればいけるようだが、オリジナルRubyに手を入れないつもりなので)
+ <li><a href="sample/read.html">参照</a>プログラム。読める。書ける。もちろん送れる。
+ <li>現状、ActiveRubyScriptユーザーをターゲットにしてトラップを仕掛けることはありえないと思いますが、注意は必要です。
+</ul>
+<p>
+4 Apr. 2000
+<ul>
+ <li>Rubyを入れたSTAの終了方法を変更。一度ホストしたスレッドは変更しないように修正。
+ <li>ActiveXコントロール作成時のセキュリティチェックをほんのちょっと実装。
+ <li>Windows98ではGITがマーシャリングに失敗するとクラッシュするので、IEのセキュリティマネージャをGITに登録を試すコードを廃棄。
+</ul>
+<p>
+ベータ1からの修正／変更／拡張内容 (3/26)
+<ul>
+ <li>MSのスクリプトサポートのピーターの協力によって、フローティングフレームとして内包したabout:のドメインの変更方法がわかったため、IEのフルサポートを開始。
+ <li>わかったこと。つーか、わかってたのに考慮してなかったこと。
+  <ul>
+   <li>RubyはGCのために、スタックにマークを入れている
+  </ul>
+ <li>これによって、最初にRubyの初期化を行なったスレッド以外からRubyを呼び出し、そこでGCが走ったら、Stackが不足しているというエラーになる。結構、はまった。
+ <li>スタックはスレッドオリエンテッドだからだ。知ってるって。
+ <li>折角、IEで動かす方法論がわかったので(IDispatchExというよりは、この場合、IServiceProviderに関する方法だ)、ソースに残しておきたい。
+ <li>というわけで、IEでまともにマルチスレッディング可能なようにすることにした。
+ <li>といっても、Rubyを変える気はない。
+ <li>とすれば、STAを作って、その中にRubyを入れるしかないでしょう。最初MTAでいいかと思ってたけどスタックオリエンテッドではどうにもならない。
+ <li>しかし、扱うべきインターフェイスは山ほどある。
+ <li>というわけで、伝家の宝刀IGlobalInterfaceTableの出番となりました。
+ <li>というわけで、DCOM1.1以上がインストールされている(またはIE5.01以上がインストールされている)Windows95/98と、NT4SP3以降が最低稼動条件となった。
+ <li>というか、COMを使うなら、IE5.01入れてね。
+ <li>このへんの実装は、なかなかすごいものがあって、インターフェイススパゲッティだな。まあ、ソースを見てやってください。なお、参照カウンタはちゃんと合っているので変更しないように。
+ <li>ちなみにRubyの部分でSTAやってるってことは、再入可能であっても同時には動かないということだ。逆にRubyを変える必要はこれによって不要となった。
+ <li>というわけで、Ruby内でループするような処理は、IEの全ウィンドウがひっかかるので注意。STAなので、同時に1要求しか受け付けない。
+ <li>ASP向きでもないな。しかし、動かなくはないけど。他にも必要なインターフェイスがあるかも知れないから、こっちは置いておく。
+ <li>予想としては、ASPで時間がかかる処理というのは、SQL出してるときで、この間はMessageFilter付きのループのはずだから、以外と見かけ並行動作できるかもしれない。
+ <li>これじゃ、スクリプティングホスト環境じゃ効率が悪すぎる。つーか、スレッド間マーシャリングのコストは、プロセス間マーシャリングと同等だから。
+ <li>というわけで、グローバルRubyScriptは別DLL(GRScript.DLL)に独立させた。こいつは同じSTAに入るからマーシャリングのコストは0。
+ <li>別立てしたのはわけわかんなくならないようにだが、ソースの共用を当然しているので、結構ifdefが入ってしまった。
+ <li>なお、RScriptはプロクシ／スタブをマージしてるので(マーシャリングするってわかってるのに別立てにするこたないね)_MERGE_PROXYSTUBが定義されているかでくくっている。場所によってはマーシャリング専用ラッパーのインターフェイスの定義でチェックしている個所もある。
+</ul>
+<p>
+アルファ4からの修正／変更／拡張内容 (3/19)
+<ul>
+ <li>助田さんのRubyWinの真似をしてGlobalRubyScriptの場合、スクリプトテキストをファイルとしてロードするように変更しました。
+ <li>これは例外発生時の行番号を取得するためです。
+ <li>埋め込みバージョンのIDispatch::GetIDsOfNames, Invokeをそれぞれ実装しました。
+ <li>これにより、スクリプトコントロール・コンテナからRubyを比較的自由に呼び出すことが出来るようになりました。
+ <li>とりあえず、仕様的には予定していた機能が揃ったので、ベータとします。
+ <li>IEのDHTMLをサポートするために、WIN32OLEのサブクラスのWIN32OLEEXというのを導入しました。可能ならば、IDispatchの代わりにIDispatchExを使用します。
+ <li>ただし、IEのマルチインスタンスにはまだいろいろ問題があるので、HTAをお勧めします。
+ <li><a href="viewsource.zip">とりあえずのサンプル</a>-Socket使ってGETしてきたヘダーとHTMLをPREで表示するHTA。IE5がインストールされていれば、コマンドラインから、またはエクスプローラからのダブルクリックで動きます。
+ <li>VBのサンプル(追加予定)
+ <li>TODO: HTAで、例外をIEに通知した後、IEがクラッシュする。
+</ul>
+<p>
+アルファ3からの修正／変更／拡張内容 (3/6)
+<ul>
+ <li>IActiveScriptErrorインターフェイスをとりあえず追加
+ <li>Ruby内のハンドルされていない例外のmessageをスクリプトホストへ渡すようにしました。
+ <li>ただし、行番号がうまく処理できていないので、いまひとつです。
+</ul>
+<p>
+アルファ2からの修正／変更／拡張内容 (3/4)
+<ul>
+ <li>中田さんからの御教示に基づいて無名モジュールに変更しました。
+ <li>COMのオブジェクトとしてGlobalRubyScriptとEmbeddedRubyScriptの2本立てとしました。
+ <li>GlobalRubyScriptは、WScriptにバインドされます。このオブジェクトではモジュールは使用していません。組み込みオブジェクトの参照はアルファ1同様$xxxとなります。既存のWin32用Rubyアプリケーションの実行互換性を保つためです。
+ <li>また、GlobalRubyScriptは、ARGVの設定を行なうようにしました。
+ <li>EmbeddedRubyScript（ProgIDは"RubyScript"）は、IEなどへの組み込み用です。
+ <li>例外への対応を暫定的に行ないました。(IActiveScriptErrorインターフェイスには未対応です)
+ <li>IEについては、難題山積みなので、ちょっと方向転換しつつあります。
+</ul>
+<p>
+アルファ1からの修正／変更／拡張内容 (2/20)
+<ul>
+ <li>中田さんの御教示に基づいてActiveScriptHost単位にモジュール化しました。
+ <li>この結果、Hostから提供されるオブジェクトは、モジュールのインスタンス変数となります。
+ <li>例えば、Windows Shell環境で提供されるWScriptオブジェクトは、アルファ1では$WScriptでアクセスできましたが、アルファ2では@WScriptでアクセスするように変更されています。
+ <li>これは、IEのように、個々のスクリプトエンジン毎にトップレベルwindowオブジェクトが存在するようなホストに対応するためです。
+ <li>Rubyの正規配布版で、モジュールをincludeしているもので、モジュール関数を特異メソッドとして呼び出していない（単に関数として呼び出しているもの）記述はエラーとなります。
+ <li>どうにか、IEで動き始めました。<a href="iehowto.html">サンプルと、書式説明、制限についての技術的考察、修正が必要な項目などについて</a>をお読みください。
+</ul>
+<p>
+
+<!-- ジオリンクアイコン -->
+<CENTER>
+<A HREF="/"><IMG SRC="/pictures/gc_icon.gif" BORDER=0 ALIGN=CENTER alt="GeoCities Japan" target=_top></A>
+</CENTER>
+<!-- ここまでがジオリンクアイコン -->
+<br>
+<a href="index.html">戻る</a>
+<br>
+copyright(c) 2000-2006 arton, Under GPL
+</body>
+</html>

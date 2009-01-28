@@ -1,0 +1,99 @@
+<html>
+<head>
+<script language="RubyScript">
+@obj = Array.new
+
+def resize
+  Window.resizeTo 900, 400
+end
+
+def connectWMI(wql, host, uid, pwd)
+  locator = WIN32OLE.new("WbemScripting.SWbemLocator.1")
+  if host.empty?
+    service = locator.ConnectServer
+  else
+    service = locator.ConnectServer host, "root/cimv2", uid, pwd
+  end
+  service.ExecQuery(wql)
+end
+
+def showinst
+  tbl = Window.tbl
+  while tbl.rows.length > 1
+    tbl.deleteRow 1
+  end
+  set = connectWMI "select * from Win32_Product",
+	Window.host.value, Window.uid.value, Window.pwd.value
+  idx = 0
+  @obj.clear
+  set.each do |ins|
+    @obj << ins
+    tr = tbl.insertRow -1
+    td = tr.insertCell -1
+    td.innerText = ins.description
+    td = tr.insertCell -1
+    dat = ins.installdate
+    td.innerText = "#{dat[0,4]}/#{dat[4,2]}/#{dat[6,2]}"
+    td = tr.insertCell -1
+    case ins.installstate
+    when 5
+      state = "Installed"
+    when 2
+      state = "Absent"
+    when 1
+      state = "Advertised"
+    when -1
+      state = "Unknown Package"
+    when -2
+      state = "Invalid Argument"
+    else
+      state = "Bad Configuration"
+    end
+    td.innerText = state
+    td = tr.insertCell -1
+    td.innerText = ins.vendor
+    td = tr.insertCell -1
+    td.innerText = ins.version
+    td = tr.insertCell -1
+    td.innerHTML = "<input type='button' value='削除'>"
+    td = tr.insertCell -1
+    td.style.display = "none"
+    td.innerHTML = idx.to_s
+    idx += 1
+  end
+end
+
+def tblclick
+  elem = Window.event.srcElement
+  return unless elem.tagName == "INPUT"
+  td = elem.parentElement
+  td = td.nextSibling
+  o = @obj[td.innerText.to_i]
+  o.uninstall
+  showinst #refresh
+end
+
+def clear
+  Window.host.value = ""
+  Window.uid.value = ""
+  Window.pwd.value = ""
+end
+</script>
+</head>
+<body onload="resize" language="RubyScript">
+<center><h1>インストール情報</h1></center>
+コンピュータ:<input type="text" id="host">
+ユーザー名:<input type="text" id="uid">
+パスワード:<input type="password", id="pwd">
+<input type="button" id="go" onclick="showinst" 
+      value="実行" language="RubyScript">
+<input type="button" id="clr" onclick="clear" 
+      value="クリア" language="RubyScript">
+<hr>
+<table id="tbl" border="2" onclick="tblclick">
+ <tr>
+  <th>製品名</th><th>インストール日付</th><th>状態</th><th>ベンダー</th><th>バージョン</th>
+ </tr>
+</table>
+</body>
+</html>

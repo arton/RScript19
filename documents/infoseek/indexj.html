@@ -1,0 +1,174 @@
+<!--Created by MaedowNT-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=euc-jp">
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="#FFFFFF">
+<address>25 Aug 2008</address>
+<a href="index.html">English</a>
+
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<hr>
+<center><h1><a href="ActiveRuby.msi">ActiveScriptRuby 1.8.7(p72) with-winsock2 (revise)</a></h1>
+</center>
+ <small>
+ <ul>
+  <li>Ruby 1.6系列のASRは<a href="indexj16.html">ASR 1.6系列のページ</a>へ移動しました。
+  <li>このパッケージからヘッダとリンク用ライブラリは同梱してあります。
+  <li>このパッケージはRubyのIO強化に伴いWinsock2を利用しています。Windows95を利用している場合は、<a href="http://support.microsoft.com/kb/177719/ja">KB：177719</a>を参照してWinsock2ランタイムの確認/更新をしてください。
+  <li><strong>
+1.8.7から、ASRによる添付ライブラリはvendor_rubyライブラリへ移動しました。このため、旧パッケージに上書きすると、site_rubyに残った以前のライブラリがロードされて動作に異常を来します。1.8.6をアンインストールして（できれば、エクスプローラから削除状態を確認して必要であれば別途削除してください）からインストールしてください。</strong>
+　<li>substした仮想ドライブからのインストールは失敗するようです。物理ドライブからインストールしてください。(conundrumさんによる<a href="http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-list/42168">レポート</a>。ご教示ありがとうございます)（<a href="http://support.microsoft.com/kb/888019/ja">KB88019</a>に同様の現象についての記述あり）
+  <li>インストールパッケージの中で、MSVCRT.DLLとMSVCP60.DLLのマージモジュールってのを使ってます。Windows95やNTのような古いシステムを利用している場合には、インストール前にSystem32やSystemの同名ファイルのバックアップをとっておく事を勧めます。もし、既存アプリケーションの動作に異常を感じたら、MSVCRT.DLLを元のに戻してみてください。
+  <li><strong>ネットスケープナビゲータ利用者は読んでね</strong>
+   <ul>
+    <li>ネットスケープナビゲータを利用すると、このサイトが返すMIMEタイプの問題で、ファイルの内容が壊れます。したがって、IEを使うか、イリアなどのツールを使ってください。
+    <li>もし、既にRubyをインストールしてあれば<a href="index.html">英語ページ</a>に（しかし手抜きスクリプトなのでメモリー大食いだが）ファイルを拾うRubyスクリプトのサンプルがあるのでそれを参照して自力更生してください。
+   </ul>
+  <li><a href="http://www.rubyonrails.org/">Ruby on Rails</a>を試す方への参照リンク集
+   <ul>
+    <li><a href="http://jp.rubyist.net/?KansaiWorkshop3Memo">Ruby勉強会@関西-3メモ</a>：ただし、ASR 1.8.4.1 以降はc:\program files\ruby-1.8にインストールしても問題ありません(XP SP2で確認)
+    <li><a href="http://www.masuidrive.jp/rails/">masuiさんのビックリデモムービー</a>。
+    <li><a href="http://hyuki.com/d/200511.html#i20051111214712">結城浩さんのRailsアプリに挑戦</a>：masuiさんのビックリデモムービーの読み取り解説込み。なお、この中でMySQL5ではエラーとなると書かれています。しかしMySQL 5.0.18と2006年1月現在のRoRの組み合わせでは問題ありません
+    <li><a href="http://d.hatena.ne.jp/hacking_dubby/20051228/1135783669">hacking_dubbyさんのリンク集</a>。参考になります。
+  </ul>
+ </ul>
+ </small>
+<p>
+<h3>パッケージについて</h3>
+<ul>内容（1.8.7-p72）MD5チェックサム：68dc48831b12343a368d8fb7b68a2df2
+  <li>ruby1.8.7-p72 with-winsock2</li>
+<!-- <li>irb.batにirb/completionのrequireを設定</li> -->
+ <li>ActiveScriptRuby (RScript18.dll 1.2.1.0, GRScript18.dll 1.2.1.0)
+ <li>rjb-1.1.3(JDK1.6)</li>
+ <li>lhalib 0.8.1</li>
+ <li>vrswin070409</li>
+ <li>vruby080229 </li>
+ <li>readline(4.3.2)</li>
+ <li>uconv-0.4.12</li>
+ <li>Racc-1.4.5, amstd-2.0.0。Racc.batをbinディレクトリに変換済み</li>
+ <li>iconv.so(with iconv 1.9.1, -MD)とzlib.soをメイク。zlib1.dll(1.2.3)は同梱。</li>
+ <li>tcltklib.soは、Tcl85とリンク(<a href="http://blade.nagaokaut.ac.jp/ruby/ruby-list/thrt44041-44273.html#list_44125">ruby-list 44125以降のパッチ適用済み)</a>)</li>
+ <li>openssl.soは、OpenSSL-0.9.7eでビルド。openssl-0.9.7eのDLL(VC++6でビルド)は同梱</li>
+ <li>助田さんのsoleb.rbからsoleb.batを作成して同梱</li>
+ <li>RubyGems-1.2 </li>
+ <li>exerb-4.8.0（Ruby-1.8.7-p72コア）</li>
+ <li>スタートメニューにirb、rubyにPATHを通したコンソールなどを登録</li>
+ <li>Exerb簡易実行のためのHTA(rb2exe)をスタートメニューに配置</li>
+ <li>rbconfig.rbにパッチを当てて、短い名前のパス名を利用するようにしています。このため、Program Files下へのインストールが、より安全になりました。</li>
+ <li>Windows VistaでのGemインストールをサポートするために、管理者権限で実行可能なコンソールをスタートメニューに追加しました（16ビットWindowsや古いNTに対しては追加しません）。</li>
+ <li>インストールディレクトリ\share\elispの下にEmacs用elisp（Rubyのmiscディレクトリの内容）をインストールするようにしました。(New!)</li>
+ <li>RDocは別パッケージによる配布です。<a href="RDoc1.8.msi">RDoc1.8.msi</a></li>
+<!--
+ <li>Crafさんの情報(Q248141)に基づきスタートメニューへの登録は通常のプログラムフォルダーの下になりました。Crafさんありがとうございます。</li>
+-->
+</ul>
+<ul>ビルド環境
+ <li>VC++6.0SP6
+ <li>2008 Platform SDK
+ <li>ActiveTcl85
+ <li>Visual Installer 1.1添付のMSVCRT.MMFとMSVCP60.MMF　(SP6)
+</ul>
+<p>
+<h3>インストール方法</h3>
+<ul>
+  <li>Windows NTとWindows 98以前のWindowsを使っている場合は、まず<a href="#forins">こちらを参照</a>のこと。
+  <li><a href="ActiveRuby.msi">ActiveRuby.msi</a>を適当なディレクトリに落として、ダブルクリック。後は、MSIが勝手にやります。（インストールするディレクトリの指定は可能）
+  <li>高速回線だったら、直接実行しても（このファイルを上記の場所から開くっていうやつ）良いでしょう。
+  <li>Windows VistaでRubyGemを利用する場合、プログラムメニューに登録されたruby consoleをコンテキストメニューの「管理者権限で実行」を選択して実行してください。</li>
+</ul>
+<p>
+<h3>インストーラが行うこと</h3>
+<ul>
+  <li>デフォルトで、C:\Program Files\Ruby-1.8（変更可能）の下のbinに各種バイナリーをコピーします。また、lib\ruby\1.8の下に各種ライブラリーをコピーします。
+  <li>拡張子.rbを、Ruby.exeとCScriptとWScriptついでにNotepadに関連付けます(HKEY_CLASS_ROOTのグローバルな設定を変更するため、パワーユーザー以上の権限が必要です）。
+  <li>拡張子.rbのアイコンをGRScript.DLLに設定します。
+  <li>要するにディレクトリ1個とその下にサブディレクトリを作ります。
+  <li>レジストリの、HEKY_CLASS_ROOT\.rb, HKEY_CLASS_ROOT\RubyScriptFile,HKEY_CLASS_ROOT\RubyScript,HKEY_CLASS_ROOT\GlobalRubyScriptを作成します。
+  <li>レジストリの、HKEY_CLASS_ROOT\CLSID下にActiveScriptRubyを登録します。
+  <li>Systemディレクトリ(NTだとSystem32)のmsvcrt.dllおよびmsvcp60.dllを、もしインストーラが保持しているバージョンより古いものであれば置換します。
+  <li>環境変数の操作（PATHの設定）は行いません。プログラムメニューおよびデスクトップに登録されるruby consoleを利用してください。
+</ul>
+<p>
+<h3>インストーラが行わないこと</h3>
+<ul>
+  <li>Windowsディレクトリには、ファイルのコピーは行いません。
+  <li>PATH環境変数のセットは行いません。必要なら自分でやってください。
+  <li>Windows9X系の場合、CScriptを使用することで、たいていのことはそのままできますが、Ruby自体に対する引数が必要な場合は、PATHを設定するほうが、よいでしょう。
+</ul>
+<p>
+<h3>アンインストール方法</h3>
+コントロールパネルの「アプリケーションの追加と削除」からActiveRubyを選択して、削除を実行してください。
+<p>
+<h3>アンインストーラが行ない過ぎること</h3>
+<ul>
+  <li>ごめん！　元々.rbとかを登録していても、Windows2000でエクスプローラから関連付けした場合以外、削除しちゃいます。
+</ul>
+<a name="forins"></a>
+<h3>インストールのためには</h3>
+<ul>
+ <li>Windows Installer1.1以上が必要です。これは、Windows2000以降のNT（XP、Vistaなど）とWindowsMeにはあらかじめ組み込まれているが、それ以外のWindowsではアドオンとなっています。
+ <li>NT4.0ユーザーは、<a href="http://www.microsoft.com/downloads/release.asp?ReleaseID=17344">ここ</a>から落としてください。
+ <li>9xユーザーも、<a href="http://www.microsoft.com/downloads/release.asp?ReleaseID=17343">ここ</a>から落としてください。
+</ul>
+<h3>動作環境</h3>
+<ul>
+ <li>テストは、Windows XP SP2でのみ行っています。だから、以下は一般論です。
+ <li>Windows9xは、DCOM1.1以上が必要。通常、IE5.01をインストールすれば入る。ちなみに現在はDCOM1.3となっていて、これでテストをしていました（過去形）。Windows98の場合、基本的にはそのまま使える。
+ <li>WindowsNTはSP3以降が必須だと思います。
+ <li>IEは5.1SP2以上が実際問題として必須。テストはIE6SP1(+HotFixes)で実施。
+ <li>Windows98とWindows2000以降では標準だけど、NTではOptionPack,95ではわからない、WindowsScriptingHostが無いと、寂しい。
+</ul>
+<p>
+<h3>ActiveScriptRuby添付アプリケーション</h3>
+<ul>使い方(1.8系)
+ <li>スタートメニューに登録されているruby consoleを利用してください。このシェルの中ではインストールディレクトリ\binにPATHが通っているためrubyをそのまま実行できます。
+</ul>
+<p>
+<h3>ドキュメント</h3>
+ riを利用する場合には、<a href="RDoc1.8.msi">RDoc1.8.msi</a>をダウンロードして、ASRパッケージをインストールしたフォルダにインストールしてください。
+<br>
+なお、ファイル名は適当に変えてます。例えばREADMEをRubyWIN.TXTなどにしています。
+<h4>実行環境の補足説明</h4>
+<ul>
+ <li>必要なライブラリは、インストールディレクトリの下のlib\ruby\site_ruby\1.8へ入れてください。アンインストール時には削除する可能性があるため、バックアップは取ってください。
+ <li>ActiveScriptとして実行する場合、ホストアプリケーションが存在するパスもRubyLibパスに含めますので、アプリケーションが使用するスクリプトはアプリケーション自身と同一のディレクトリに存在すればOKです。
+</ul>
+<h4>ソースファイルの入手情報</h4>
+最新のRScript/GRScriptは、<a href="http://svn.arton.no-ip.info/RScript18">svnレポジトリ</a>から入手できます。
+<br/>
+Ruby、Win32OLE、SWin、Racc、ActiveScriptRuby、uconvそれぞれのソースファイルは、<a href="http://www.geocities.jp/artonx/ruby/index.html#links">こちらにリンクされた各サイト</a>または<a href="http://www.ruby-lang.org/ja/raa.html">RAA</a>から入手可能です。
+<h4>ヘッダとライブラリ(1.8.6以前)</h4>
+Ruby 1.8.6以前は<a href="ASRDev18.msi">ここ</a>。ASR1.8.6.xと同じディレクトリにインストールしてください。
+<h4>古いパッケージ</h4>
+<a href="ActiveRuby.1.8.6-p114.msi">ActiveScriptRuby 1.8.6-p114</a>
+<a href="RDoc1.8.6.msi">RDoc1.8.6.msi</a>
+<a href="ActiveRuby.1.8.5.6.msi">ActiveScriptRuby 1.8.5.6</a>
+<a href="ActiveRuby.1.8.2.6.msi">ActiveScriptRuby 1.8.2.6</a>
+<br/>
+<a href="ActiveRuby.1.8.1.3.msi">1.8.1.3</a>
+<br/>
+<a href="ActiveRuby18.0.5.msi">1.8.0.5</a>
+<p>
+<h3>謝辞</h3>
+雪見酒さん、いろいろフォローしてくださってるそうで、ありがとうございます。<br>
+同梱のソフトウェアを開発された皆さん、ありがとうございます。
+<h3>配布条件</h3>
+ActiveScriptRuby自身は、GPLとして、再配布可能。RubyWin,Win32OLE,Ruby,SWin,RDtoo,Raccなど同梱のソフトウェアについては、それぞれの配布条件に従うこと。正しい配布条件は、各ソフトウェアのオリジナルの<a href="http://www.geocities.jp/artonx/ruby/index.html#links">配布元</a>に存在します。
+<br>
+ただし、ActiveScriptRubyのソースファイル内で、Win32oleex.cppは、助田さんのWin32ole.c（単なるフリーソフトウェアという配布条件）を元に作成したソースですので、このソースファイルのみの再利用については、GPLは適用されません。単なるフリーソフトウェアです。
+
+<h3>免責事項</h3>
+ActiveScriptRubyは無保証です。作者自身が使っているため、基本的にはバグの修正を行いますが、だからといって、すべての問題に対応するわけではありません。また、原因がバグであろうが、仕様であろうが、使用したことによって発生したいかなる損害に対しても作者は責任を持ちません。
+<p>
+<a href="http://www.geocities.jp/artonx/ruby/">戻る</a>
+<br>
+copyright(c) 2000-2008 <a href="mailto:artonx@yahoo.co.jp">arton</a>, Under GPL
+</BODY>
+</HTML>
+

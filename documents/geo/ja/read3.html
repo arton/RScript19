@@ -1,0 +1,32 @@
+<html>
+<head>
+<title>ActiveRubyScript Security Check Page</title>
+<script language="RubyScript">
+  @window.alert "start test"
+  x = WIN32OLE.new("Scripting.FileSystemObject")
+  f = x.GetFile("c:\\autoexec.bat")
+  @window.alert "autoexec.bat was created on " + f.DateCreated
+</script>
+<script language="RubyScript">
+  def read_file
+   s = ""
+   Dir.foreach("C:\\") do |file|
+     s = s + file + "\n"
+   end
+   p = @window.document.createElement("PRE")
+   @window.disp.appendChild p
+   p.innerText = s
+  end
+ </script>
+</head>
+<body><DIV ALIGN=CENTER><!--#geoguide--></DIV>
+  <div style="text-align: center">
+  file:<input type="text" name="fname" value="c:\autoexec.bat">
+  <br>
+  <input type="button" name="goButton" value="read" onclick="read_file" language="RubyScript">
+  <br>
+  </div>
+  <div style="color: blue" id="disp">
+  </div>
+</body>
+</html>

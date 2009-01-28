@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>RD to HTML</title>
+<script language="RubyScript">
+require 'tempfile'
+
+@rb = "c:\\progra~1\\ruby\\bin\\ruby.exe"
+@rd2 = "c:\\progra~1\\ruby\\bin\\rd2.rb"
+@css = "c:\\progra~1\\ruby\\bin\\rubyStyle.css"
+
+def rd_clear
+  @window.document.all("rd_data").value = ""
+  @window.document.all("rdfile").value = ""
+end
+
+def rd_go
+  s = @window.document.all("rd_data").value
+  file = @window.document.all("rdfile").value
+  if s.empty?
+    if file.empty?
+      @window.alert "no contents!"
+      return nil
+    end
+    if FileTest::exist?(file) == false
+      @window.alert "no such file!"
+      return nil
+    end
+    File.open(file, "r") do |f|
+      @window.document.all("rd_data").value = f.read
+    end
+  else
+    tfile = Tempfile.new "rddata"
+    tfile.write s
+    tfile.close
+    file = tfile.path.gsub('/', '\\')
+  end
+  tmp = Tempfile.new "rd2"
+  tmpf = tmp.path.gsub('/', '\\')
+  tmp.close true
+  s = "#{@rb} #{@rd2} \"#{file}\" -o#{tmpf} -r rd/rd2html-lib.rb "
+  if @css.empty? == false
+    s << "--with-css=#{@css} "
+  end
+  system s
+  of = "#{tmpf}.html"
+  if FileTest::exist?(of)
+    @window.open of
+    @window.alert "Done!"
+    File::delete of
+  else
+    @window.alert "Error!"
+  end
+  tfile.close(true) if tfile.nil? == false
+end
+
+</script>
+</head>
+<body>
+RDファイル<input id="rdfile" type="file">
+<br>
+<textarea id="rd_data" rows="30" cols="70"></textarea>
+<br>
+<hr>
+<input id="go" type="button" value="変換!" 
+  onclick="rd_go" language="RubyScript">
+<input id="clr" type="button" value="リセット"
+  onclick="rd_clear" language="RubyScript">
+<p>
+<hr>
+<input id="quit" type="button" value="終了"
+  onclick="@window.close" language="RubyScript">
+</body>
+</html>

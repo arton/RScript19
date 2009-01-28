@@ -1,0 +1,101 @@
+<html>
+<head>
+<script language="RubyScript">
+@timer = nil
+
+def resize
+  Window.resizeTo 700, 500
+end
+
+def connectWMI(wql, host, uid, pwd)
+  locator = WIN32OLE.new("WbemScripting.SWbemLocator.1")
+  sec = locator.security_
+  sec.privileges.add 7
+  if host.empty?
+    service = locator.ConnectServer
+  else
+    service = locator.ConnectServer host, "root/cimv2", uid, pwd
+  end
+  service.ExecNotificationQuery wql
+end
+
+def docheck
+  wql = <<-WQL
+    select * from __InstanceCreationEvent
+      within 3
+    where targetinstance isa 'WIN32_NTLogEvent'
+      and targetinstance.logfile = '#{Window.logfile.value}'
+  WQL
+  @event = connectWMI wql,
+        Window.host.value, Window.uid.value, Window.pwd.value
+  @timer = Window.setTimeout "checkloop", 1000, "RubyScript"
+  Window.statdisp.innerText = "監視中"
+end
+
+def checkloop
+  tbl = Window.tbl
+  while true
+    begin
+      evt = @event.nextevent 500
+    rescue
+      @timer = Window.setTimeout "checkloop", 1000, "RubyScript"
+      return
+    end  
+    log = evt.targetInstance
+    tr = tbl.insertRow -1
+    td = tr.insertCell -1
+    td.innerText = log['type']#　　　←RubyのObjectクラスのメソッド名と重複する場合の書式
+    dt = log.timeGenerated
+    td = tr.insertCell -1
+    td.innerText = "#{dt[0,4]}/#{dt[4,2]}/#{dt[6,2]}"
+    td = tr.insertCell -1
+    td.innerText = "#{dt[8,2]}:#{dt[10,2]}:#{dt[12,2]}"
+    td = tr.insertCell -1
+    td.innerText = log.message
+    td = tr.insertCell -1
+    td.innerText = log.sourceName
+  end
+end
+
+def clear
+  unless @timer.nil?
+    Window.clearTimeout @timer
+    @timer = nil
+  end
+  Window.statdisp.innerText = "停止中"
+  Window.host.value = ""
+  Window.uid.value = ""
+  Window.pwd.value = ""
+  tbl = Window.tbl
+  while tbl.rows.length > 1
+    tbl.deleteRow 1
+  end
+end
+</script>
+</head>
+<body onload="resize" language="RubyScript">
+<center><h1>イベントログ監視</h1></center>
+コンピュータ:<input type="text" id="host">
+ユーザー名:<input type="text" id="uid">
+パスワード:<input type="password", id="pwd">
+<br>
+<center>
+<select id="logfile">
+ <option selected value="Application">アプリケーション
+ <option value="Security">セキュリティ
+ <option value="System">システム
+</select>
+<input type="button" id="go" onclick="docheck" 
+      value="実行" language="RubyScript">
+<input type="button" id="clr" onclick="clear" 
+      value="クリア" language="RubyScript">
+</center>
+<hr>
+<center><h2 id="statdisp">停止中</h2></center>
+<table id="tbl" border="2">
+ <tr>
+  <th>タイプ</th><th>日付</th><th>時刻</th><th>メッセージ</th><th>ソース</th>
+ </tr>
+</table>
+</body>
+</html>

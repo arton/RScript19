@@ -1,0 +1,77 @@
+<html>
+<head>
+<script language="RubyScript">
+def resize
+  Window.resizeTo 720, 400
+end
+
+def connectWMI(wql, host, uid, pwd)
+  locator = WIN32OLE.new("WbemScripting.SWbemLocator.1")
+  if host.empty?
+    service = locator.ConnectServer
+  else
+    service = locator.ConnectServer host, "root/cimv2", uid, pwd
+  end
+  service.ExecQuery(wql)
+end
+
+def kbno(qid, desc)
+  if qid =~ /^KB(\d+)/
+    $1
+  elsif qid =~ /^Q(\d+)/
+    $1
+  elsif desc =~ /KB(\d+)/
+    $1
+  elsif desc =~ /kb\/(\d+)/
+    $1
+  else
+    nil
+  end
+end
+
+def showfix
+  tbl = Window.tbl
+  while tbl.rows.length > 1
+    tbl.deleteRow 1
+  end
+  set = connectWMI "select * from Win32_QuickFixEngineering",
+	Window.host.value, Window.uid.value, Window.pwd.value
+  set.each do |fix|
+    tr = tbl.insertRow -1
+    td = tr.insertCell -1
+    kbno = kbno(fix.HotFixID, fix.Description)
+    if kbno
+      td.innerHTML = 
+        "<a href='http://support.microsoft.com/kb/#{kbno}/ja'>#{fix.HotFixID}</a>"
+    else
+      td.innerText = fix.HotFixID
+    end
+    td = tr.insertCell -1
+    td.innerText = fix.Description
+  end
+end
+
+def clear
+  Window.host.value = ""
+  Window.uid.value = ""
+  Window.pwd.value = ""
+end
+</script>
+</head>
+<body onload="resize" language="RubyScript">
+<center><h1>ホットフィックス情報</h1></center>
+コンピュータ:<input type="text" id="host">
+ユーザー名:<input type="text" id="uid">
+パスワード:<input type="password", id="pwd">
+<input type="button" id="go" onclick="showfix" 
+      value="実行" language="RubyScript">
+<input type="button" id="clr" onclick="clear" 
+      value="クリア" language="RubyScript">
+<hr>
+<table id="tbl" border="2">
+ <tr>
+  <th>ホットフィックスID</th><th>説明</th>
+ </tr>
+</table>
+</body>
+</html>

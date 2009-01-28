@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
+<HTML>
+<HEAD>
+<TITLE>COM Meets Ruby</TITLE>
+</HEAD>
+<body bgcolor="#FFFFFF">
+
+<address>15 Aug 2008</address>
+<a href="indexj.html">Japanese</a>
+<br/>
+<center>
+Hand in hand is the only way to learn, always right way to learn.
+</center>
+<hr>
+<center><h1><a href="ActiveRuby.msi">ActiveScriptRuby 1.8.7(p72) with-winsock2</a></h1>
+<h2>Ruby 1.8.7-p72 headers, binaries, libraries(new!), VRuby080229, VRSWin070409, UConv 0.4.12, Racc 1.4.5, amstd 2.0.0, exerb 4.8.0(new!), rjb 1.1.3(JDK1.6), lhalib 0.8.1, RubyGems 1.2.0(new!), RScript 1.2.1.0, GRScript 1.2.1.0, zlib.so and zlib1.dll(1.2.3), readline.so and readline.dll(v4.3.2 win32port by Mr. eban Watanabe ), OpenSSL 0.9.7e</h2>
+<h2><a href="RDoc1.8.msi">RDoc 1.8.7 </a></h2>
+<pre>
+If you are currently using Windows95, before installing it, consider <a href="http://support.microsoft.com/kb/177719/">KB:177719</a>.
+</pre>
+</center>
+<center><h1><a href="168/ActiveRuby.msi">ActiveScriptRuby 1.6.8.3</a></h1>
+<h2>Ruby 1.6.8-p36, Win32OLE 0.5.3, RScript 1.0.9.6 GRScript 1.0.9.6<br/>
+RubyWin 0.0.4.3 VRSWin030421 VRuby030421 Racc 1.4.3 RDtool 0.6.11 <br/>
+dRuby 1.3.9 BigFloat 1.2.1 OptionParser 0.10.1 forwardable 1.1 <br/>
+uconv 0.4.11 rubyunit 0.5.5
+</h2>
+<h3>New feature of RScript/GRScript 1.2.1 is ...</h3>
+</center>
+<ol>
+<li>Now you can connect to any url type of object with ASR.
+ <pre>
+  account = WIN32OLE.connect('WinNT://domain/account')
+  loginProfiles = WIN32OLE.connect("winmgmts:").InstancesOf ("Win32_NetworkLoginProfile")
+ </pre>
+</li>
+<li>Now ASR support named arguments as original WIN32OLE.</li>
+</ol>
+<ol>ASR's new features since 1.1.0
+<li>Now you can write global member without object name (but need parenthesis, case sensitive for method call)
+ <pre>
+ Ok:  &lt;input type="button" onclick="alert('hello')" language="RubyScript"&gt;
+ Bad:  &lt;input type="button" onclick="Alert('hello')" language="RubyScript"&gt;
+ </pre>
+<li>support global member's attributes as global variable. ($ + CaseSensitive name)
+ <pre>$Attribute = 'foo'
+<li>Some bugs are fixed, WSF are usable with GlobalRubyScript (not RubyScript)
+</ol>
+<center>
+<h3>changes RScript 1.1.0.0 -&gt 1.1.1.0</h3>
+</center>
+<ol>
+  <li>see <a href="http://arton.no-ip.info/collabo/backyard/?HowToSetSiteInfoToMsXml">how to handle IObjectWithSite</a>.
+</ol>
+<h3>changes RScript 1.0.9.4 -&gt 1.0.9.5</h3>
+</center>
+<ol>
+  <li>Fix "AddNamed item doesn't release" bug.
+  <li>Cause, I only checked AddRef/Release pair, and forgot Proxy/Stub's RefCount.
+</ol>
+<center>
+<p>
+The previous major version is &nbsp;
+<a href="ActiveRuby.1.8.6-p114.msi">ActiveScriptRuby 1.8.6-p114</a>
+<br/>
+<a href="ActiveRuby.1.8.5.6.msi">ActiveScriptRuby 1.8.5.6</a>
+<br/>
+<a href="ActiveRuby.1.8.4.5.msi">ActiveScriptRuby 1.8.4.5</a>
+<br/>
+<a href="ActiveRuby.1.8.2.6.msi">ActiveScriptRuby 1.8.2.6</a>
+<br/>
+<a href="ActiveRuby.1.8.1.3.msi">ActiveScriptRuby 1.8.1.3</a>
+<br/>
+<a href="ActiveRuby18.0.5.msi">ActiveScriptRuby 1.8.0.5</a>
+<br/>
+<a href="ActiveRuby.1.6.6.1.msi">ActiveScriptRuby 1.6.6.1</a>
+<br/>
+<a href="ActiveRuby.1.6.5.7.msi">ActiveScriptRuby 1.6.5.7</a>
+<br/>
+<a href="ActiveRuby.1.6.4.8.msi">ActiveScriptRuby 1.6.4.8</a>
+</center>
+
+<h3>note</h3>
+<ul><strong>Attension Netscape users !!</strong>
+ <li>freeweb doesn't undersand msi's MIME type.
+ <li>That means that the content variable is 'text/plain'.
+ <li>So Netscape Navigator will insert Cariage Returns before every 0x0a.
+ <li>Use IE or Create Ruby Script to fetch the package (grin).
+ <pre>
+require 'net/http'
+Net::HTTP.start('arton.hp.infoseek.co.jp', 80) do |h|
+  begin
+    r, d = h.get '/ActiveRuby.msi'
+    File.open('ActiveRuby.msi', 'wb') do |f|
+      f.write d
+    end
+  rescue
+    puts 'You are unlucky...'
+  end
+end
+ </pre>
+</ul>
+
+<h2>ActiveScriptRuby Installation Procedure</h2>
+<ol>
+ <li>If you are currently using Windows2000 or WindowsXP, then skip to the next.
+   <ul>for NT and 9x users.
+    <li>You need Microsoft Windows Installer Update.</li>
+    <a href="http://www.microsoft.com/msdownload/platformsdk/instmsi.htm">Download from here</a>.
+   </ul>
+ <li>If you have prior version of ActiveScriptRuby MSI package, make sure, please delete it before installing new one. Using Controlpanel App-install applet.</li>
+ <li><a href="ActiveRuby.msi">Download All-In-One package from here</a>(about 2.5M).</li>
+   <ul>Package information.
+    <li>This package contains the latest ActiveScriptRuby (RScript.dll and GRScript.dll).</li>
+    <li>This package also contains Ruby(MSWin)1.6.6 binary and Win32OLE binary.</li>
+    <li>And Ruby tcltklib complied with Tcl84.</li>
+    <li>And RubyWin for Window Environment (It's also from Mr. Suketa).</li>
+    <li>Sorry for non-Japanese readers, this package includes only Japanes version of the reference manual. You can get English version from <a href="http://www.ruby-lang.org/en/doc.html">ruby home page</a>.</li>
+   </ul>
+ <li>Then, double-click ActiveScript.MSI from Explorer.</li>
+ <li>Now, you are ready to start program with Ruby !</li>
+</ol>
+
+<h2>ActiveScriptRuby Uninstallation Procedure</h2>
+<ol>
+ <li>Setting-ControlPanel-Application... you may find "ActiveRuby".</li>
+ <li>Click "Delete"</li>
+ <li>Done.</li>
+</ol>
+
+<h2>Ruby-1.8.6-p36 RDoc for ri</h2>
+<a href="RDoc1.8.6.msi">Download from here</a>.
+<br/>
+This installer package contains Ruby-1.8.6 RDoc.
+
+<h2>Ruby-1.8.6 mswin32 headers and libraries</h2>
+<a href="ASRDev18.msi">Download from here</a>.
+<br/>
+This installer package contains required headers and libraries to create Ruby-extended library or to create your own Ruby-embeded application.
+
+<h2>Ruby-1.6.8 mswin32 headers and libraries</h2>
+<a href="ASRDev.msi">Download from here</a>.
+<br/>
+This installer package contains required headers and libraries to create Ruby-extended library or to create your own Ruby-embeded application.
+<br/>
+<p>
+<h3>Previous Version of mswin32 headers and libraries</h3>
+The previous versions are <a href="ASRDev184.msi">ASRDev 1.8.4</a> <a href="ASRDev.1.6.6.msi">ASRDev 1.6.6</a> and <a href="ASRDev.1.6.5.msi">ASRDev 1.6.5</a>.
+</p>
+<h3>Some Pakcage Information</h3>
+This package contains tcltkutl.dll (Ruby's Expansion Library). It was built with Tcl84.
+<br/>
+This package was build with MSVC++6SP6 and Visual Installer 1.1 with SP6 Merge Modules.
+<p>
+<h3>Sources</h3>
+<a href="http://www.ruby-lang.org/en/">Ruby home page</a>
+<br/>
+<a href="http://homepage1.nifty.com/markey/index_e.html">Win32OLE and RubyWin</a> by Mr.Suketa
+<br/>
+You may get ActiveScriptRuby Soruces from <a href="http://svn.arton.no-ip.info/RScript18">Subversion repositry</a>.
+<br/>
+Another sources (for example Racc, RDtool etc...) is found on <a href="http://raa.ruby-lang.org/">RAA</a>.
+<hr>
+<h3>Disclaimer Notice</h3>
+
+ THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR
+ IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ WARRANTIES OF MERCHANTIBILITY AND FITNESS FOR A PARTICULAR
+ PURPOSE.
+
+<p>
+<a href="http://www.geocities.jp/artonx/ruby/main.html">Back to the main page</a>
+<p>
+<address>copyright © 2000-2008 <a href="mailto:artonx@yahoo.co.jp">arton</a> under GPL</address>
+<br/>
+</body>
+</html>
