@@ -48,6 +48,13 @@ void CScrError::CreateErrorBase(VALUE v)
 	VALUE bt = rb_funcall(v, rb_intern("backtrace"), 0);
         if (!NIL_P(bt))
         {
+#if defined(_DEBUG)
+            for (int i = 0; i < RARRAY_LEN(bt); i++)
+            {
+                VALUE e = rb_ary_entry(bt, i);
+                ATLTRACE("%hs\n", StringValuePtr(e));
+            }
+#endif
             bt = rb_ary_entry(bt, 0);
             m_strBacktrace = StringValuePtr(bt);
             ATLTRACE("bt=%d, %hs\n", FIX2INT(rb_funcall(bt, rb_intern("size"), 0)), m_strBacktrace.c_str());
