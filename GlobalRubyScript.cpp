@@ -34,10 +34,11 @@ void CGlobalRubyScript::FinalRelease()
 	if (m_pRubyObject)
 	{
 		m_pRubyObject->ClearEngine();
+                CloseHandle(m_hThread);
+	        CRScriptCore::FinalRelease();
+	        ruby_finalize();
+                m_pRubyObject = NULL;
 	}
-	CloseHandle(m_hThread);
-	CRScriptCore::FinalRelease();
-	ruby_finalize();
 }
 
 void CGlobalRubyScript::MakeScope()
@@ -184,7 +185,9 @@ HRESULT CGlobalRubyScript::ParseText(int StartLine, LPCSTR pstrCode, LPCOLESTR p
 				*p = '/';
 		}
 		int state(0);
-		rb_load_protect(rb_str_new2(ps), 0, &state);
+                VALUE path = rb_str_new2(ps);
+                rb_enc_associate(path, rb_locale_encoding());
+		rb_load_protect(path, 0, &state);
 		if (state)
 		{
 			RaiseError(StartLine, pstrCode);
