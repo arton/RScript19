@@ -90,6 +90,10 @@ void CRScriptCore::InitializeEnvironment()
 		{
 			rb_eval_string("# encoding: cp932");
 		}
+#else
+            VALUE enc = rb_enc_from_encoding(rb_locale_encoding());
+            rb_enc_set_default_external(enc);
+            rb_enc_set_default_internal(enc);
 #endif
 		rb_require("win32ole");
 		VALUE v = rb_eval_string("WIN32OLE");
