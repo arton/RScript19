@@ -2,14 +2,14 @@
 <job>
 <reference object="Scripting.FileSystemObject"/>
 <script language="GlobalRubyScript">
-
   require 'test/unit'
+
   class TestGRscript < Test::Unit::TestCase
     def setup
     end
 
     def test_constantiate
-      assert_equal('Windows Script Host', Globals.wsh.Name)
+      assert_equal('Windows Script Host', WSH.name)
     end
 
     def test_globalize
@@ -56,8 +56,6 @@
       assert_equal(3, obj.Args(:param2 => 5, :param1 => 18))
     end
   end
-  exit Test::Unit::AutoRunner.run
-
 </script>
 </job>
 </package>
