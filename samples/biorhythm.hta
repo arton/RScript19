@@ -32,8 +32,7 @@
 -->
 <script language="RubyScript">
 include Math
-require "date.rb"
-require "parsedate.rb"
+require "date"
 def printHeader(doc, y, m, d, p, w)
   doc.write "--- Biorhythm ---<br>"
   doc.write sprintf("The birthday %04d.%02d.%02d is a %s<br>", y, m, d, w)
@@ -49,10 +48,6 @@ def getPosition(z)
   return phys, emot, geist
 end
 
-def parsedate(s)
-  ParseDate::parsedate(s).values_at(0, 1, 2, 3)
-end
-
 def name_of_week(date)
   Date::DAYNAMES[date.wday]
 end
@@ -61,7 +56,7 @@ end
 #
 def main()
     begin
-        bd = Date.new(*parsedate(@window.bday.value))
+        bd = Date.parse("#{@window.bday.value[0..3]}-#{@window.bday.value[4..5]}-#{@window.bday.value[6..7]}")
     rescue
         @window.alert "BAD Input Birthday !!"
         return nil

@@ -1,6 +1,6 @@
-; GRScript.def : モジュール パラメータを宣言します。
+; GRScript.def : 
 
-LIBRARY      "GRScript18.DLL"
+LIBRARY      "GRScript19.DLL"
 
 EXPORTS
 	DllCanUnloadNow     @1 PRIVATE

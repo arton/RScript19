@@ -127,9 +127,10 @@ public:
 private:
 	UINT m_uiQuitTimer;
 	VALUE m_valList;
+        ID m_idEach;
+        ID m_idEachLine;
 	ID m_idSize;
 	ID m_idMethods;
-	ID m_idMethodDefined;
 	ID m_idDelete;
 	OleList m_listOle;
 	static CRubyWrapper* s_pWrapper;
@@ -142,6 +143,7 @@ private:
 	void GetValue(IRubyEngine *pengine, VALUE, VARIANT*, IActiveScriptError**);
 	void GetEnum(IRubyEngine *pengine, VALUE, VARIANT*, IActiveScriptError**);
 	static VALUE add_item(VALUE item, VALUE ary);
+	static VALUE add_lineitem(VALUE i, VALUE ary, int argc, VALUE *argv);
 	static VALUE InvokeRuby(VALUE pParam);
 	static VALUE val2var(VALUE pParam);
 	//

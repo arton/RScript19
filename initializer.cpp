@@ -169,6 +169,12 @@ CInitializer::CInitializer()
 {
 }
 
+#if defined(_DEBUG)
+#define THREAD_INIT_TIMER 100000
+#else
+#define THREAD_INIT_TIMER 10000
+#endif
+
 void CInitializer::InitNew()
 {
 	if (m_fInit) return;
@@ -184,7 +190,7 @@ void CInitializer::InitNew()
 	long h = (long)_beginthreadex(NULL, 0, RubyWrapper, &hEvt, 0, reinterpret_cast<UINT*>(&m_dwRubyThread));
 	if (h != -1)
 	{
-		DWORD dw = WaitForSingleObject(hEvt, 10000);
+		DWORD dw = WaitForSingleObject(hEvt, THREAD_INIT_TIMER);
 		ATLTRACE(_T("Wait = %08X\n"), dw);
 		CRubyWrapper::GetCWrapper()->SetHandle((HANDLE)h);
 	}

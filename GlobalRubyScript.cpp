@@ -1,5 +1,5 @@
 /*
- *  Copyright(c) 2000 arton
+ *  Copyright(c) 2000, 2009 arton
  *
  *  You may distribute under the terms of either the GNU General Public
  *  License
@@ -164,13 +164,14 @@ HRESULT CGlobalRubyScript::ParseText(int StartLine, LPCSTR pstrCode, LPCOLESTR p
 	HRESULT hr = S_OK;
 	TCHAR szScriptFile[_MAX_PATH], szTempPath[_MAX_PATH + 4];
 	GetTempPath(_MAX_PATH, szTempPath);
-	GetTempFileName(szTempPath, "RSC", 0, szScriptFile);
-	lstrcat(szScriptFile, ".rb");
+	GetTempFileName(szTempPath, _T("RSC"), 0, szScriptFile);
+	lstrcat(szScriptFile, _T(".rb"));
 	EnterScript();
 	TraceOn();
 	try
 	{
 		DWORD dw;
+                USES_CONVERSION;
 		HANDLE h = CreateFile(szScriptFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 
 			FILE_ATTRIBUTE_NORMAL, NULL);
 		WriteFile(h, pstrCode, strlen(pstrCode), &dw, NULL);
@@ -202,9 +203,10 @@ HRESULT CGlobalRubyScript::ParseText(int StartLine, LPCSTR pstrCode, LPCOLESTR p
 }
 void CGlobalRubyScript::RaiseError(int StartLine, LPCSTR pstrCode)
 {
-	if (!NIL_P(ruby_errinfo) && rb_obj_is_kind_of(ruby_errinfo, rb_eSystemExit) == Qfalse)
+	VALUE errinfo = rb_errinfo();
+	if (!NIL_P(errinfo) && rb_obj_is_kind_of(errinfo, rb_eSystemExit) == Qfalse)
 	{
-		CScrError* pError = new CScrError(ruby_errinfo, pstrCode, StartLine - 1);
+		CScrError* pError = new CScrError(errinfo, pstrCode, StartLine - 1);
 		OnScriptError(pError);
 	}
 }
@@ -334,16 +336,15 @@ void CGlobalRubyScript::FillArgs(IUnknown* pUnk)
 void CGlobalRubyScript::ExpandArg(BSTR str, std::list<std::string>& list)
 {
 	USES_CONVERSION;
-
-	LPSTR p = W2A(str);
-	if (wcschr(str, L'?') || wcschr(str, L'*'))
+        char* p = W2A(str);
+	if (str && (wcschr(str, L'?') || wcschr(str, L'*')))
 	{
-		WIN32_FIND_DATA fdata;
+		WIN32_FIND_DATAA fdata;
 		HANDLE h = FindFirstFileA(p, &fdata);
 		if (h != INVALID_HANDLE_VALUE)
 		{
 			int l = -1;
-			for (LPSTR pn = p; *pn; pn = CharNextA(pn))
+			for (char* pn = p; *pn; pn = CharNextA(pn))
 			{
 				if (*pn == '\\')
 				{
@@ -351,7 +352,7 @@ void CGlobalRubyScript::ExpandArg(BSTR str, std::list<std::string>& list)
 				}
 			}
 			l++;
-			char* buff = reinterpret_cast<char*>(_alloca(l + sizeof(fdata.cFileName) + 4));
+			char* buff = reinterpret_cast<char*>(_alloca(l * sizeof(char) + sizeof(fdata.cFileName) + 4));
 			do
 			{
 				if (l > 0)
@@ -359,7 +360,7 @@ void CGlobalRubyScript::ExpandArg(BSTR str, std::list<std::string>& list)
 				strcpy(buff + l, fdata.cFileName);
 				list.push_back(buff);
 			}
-			while (FindNextFile(h, &fdata));
+			while (FindNextFileA(h, &fdata));
 			FindClose(h);
 			return;
 		}

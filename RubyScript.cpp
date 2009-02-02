@@ -637,7 +637,7 @@ void CRubyScript::MakeScope()
 	if (m_valueModule == Qnil)
 	{
 		m_pWrapper->rb_module_new(Qnil, &m_valueModule);
-		wsprintf(sz, "X%08X", m_valueModule);
+		wsprintfA(sz, "X%08X", m_valueModule);
 		m_pWrapper->RegisterObject(reinterpret_cast<LPBYTE>(sz), m_valueModule);
 	}
 }

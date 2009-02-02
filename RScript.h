@@ -2,9 +2,9 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Wed Nov 15 13:20:26 2006
+/* at Tue Feb 03 01:26:02 2009
  */
-/* Compiler settings for C:\home\arton\projects\RScript18\trunk\RScript.idl:
+/* Compiler settings for C:\home\arton\projects\RScript19\trunk\RScript.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
     error checks: allocation ref bounds_check enum stub_data 
 */

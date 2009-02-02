@@ -72,11 +72,12 @@ void CRScriptCore::InitializeEnvironment()
 	int stacktop;
 	s_pStackTop = reinterpret_cast<LPBYTE>(&stacktop);
 #endif
-	LPSTR psz = AllocLibPath();
-    static int dummyargc(0);
+	LPTSTR psz = AllocLibPath();
+	static int dummyargc(0);
 	static char** vec;
 	NtInitialize(&dummyargc, &vec);
 	ruby_init();
+        ruby_script("ActiveScriptRuby");
 	if (psz)
 	{
 		ruby_init_loadpath();
@@ -84,10 +85,12 @@ void CRScriptCore::InitializeEnvironment()
 	}
 	try
 	{
-		if (GetACP() == _KANJI_CP)
+#if defined(USE_MAGIC_COMMENT)
+            if (GetACP() == _KANJI_CP)
 		{
-			rb_eval_string("$KCODE='SJIS'");
+			rb_eval_string("# encoding: cp932");
 		}
+#endif
 		rb_require("win32ole");
 		VALUE v = rb_eval_string("WIN32OLE");
 		// override original constructor
@@ -157,10 +160,10 @@ void CRScriptCore::TraceOff()
 
 VALUE __cdecl CRScriptCore::trace_hook(VALUE self, VALUE event, VALUE file, VALUE line, VALUE id, VALUE binding, VALUE klass)
 {
-	ATLTRACE(_T("trace:event=%s, file=%s, line=%d, binding=%08X Thread=%08X\n"), RSTRING(event)->ptr, RSTRING(file)->ptr, NUM2INT(line), binding, GetCurrentThreadId());
+	ATLTRACE(_T("trace:event=%s, file=%s, line=%d, binding=%08X Thread=%08X\n"), RSTRING_PTR(event), RSTRING_PTR(file), NUM2INT(line), binding, GetCurrentThreadId());
 	if (!s_fRaiseException)
 	{
-		if (strcmp(RSTRING(event)->ptr, "raise") == 0)
+		if (strcmp(RSTRING_PTR(event), "raise") == 0)
 		{
 			s_lastline = NUM2INT(line);
 			s_fRaiseException = true;
@@ -234,7 +237,7 @@ void CRScriptCore::DefineGlobalProperties(LPCSTR pObjName)
 #else
 	VALUE a = rb_eval_string(p);
 #endif
-	for (int i = 0; i < RARRAY(a)->len; i++)
+	for (int i = 0; i < RARRAY_LEN(a); i++)
 	{
 		VALUE name = rb_ary_entry(a, i);
 		char* prop = StringValueCStr(name);
@@ -250,7 +253,7 @@ void CRScriptCore::DefineGlobalProperties(LPCSTR pObjName)
 VALUE __cdecl CRScriptCore::GlobalGetter(ID id)
 {
 	static char getter[] = "%c_asr_default_object.%s";
-	char* name = rb_id2name(id);
+	const char* name = rb_id2name(id);
 	char* p = reinterpret_cast<char*>(alloca(strlen(name) + sizeof(getter) + 8));
 	int cb = sprintf(p, getter, prefix, name + 1);
 #if defined(__IRubyEngine_INTERFACE_DEFINED__)
@@ -263,7 +266,7 @@ VALUE __cdecl CRScriptCore::GlobalGetter(ID id)
 void __cdecl CRScriptCore::GlobalSetter(VALUE val, ID id, VALUE* var)
 {
 	static char object[] = "%c_asr_default_object";
-	char* name = rb_id2name(id);
+	const char* name = rb_id2name(id);
 	char* p = reinterpret_cast<char*>(alloca(sizeof(object) + 4));
 	int cb = sprintf(p, object, prefix);
 #if defined(__IRubyEngine_INTERFACE_DEFINED__)
@@ -295,7 +298,7 @@ void CRScriptCore::DefineGlobalMethods(LPCSTR pObjName)
 		return;
 	}
 	ID name = rb_intern("name");
-	for (int i = 0; i < RARRAY(a)->len; i++)
+	for (int i = 0; i < RARRAY_LEN(a); i++)
 	{
 		VALUE o = rb_ary_entry(a, i);
 		VALUE propname = rb_funcall(o, name, 0);
@@ -741,7 +744,7 @@ HRESULT CRScriptCore::LoadTypeLib(
 	for (int i = 0; !found; i++)
 	{
 		DWORD szbuff = sizeof(buff);
-		if (RegEnumKeyEx(hTypeLib, i, buff, &szbuff, NULL, NULL, NULL, &ft) != ERROR_SUCCESS)
+		if (RegEnumKeyExA(hTypeLib, i, buff, &szbuff, NULL, NULL, NULL, &ft) != ERROR_SUCCESS)
 		{
 			break;
 		}
@@ -1091,9 +1094,9 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::ParseScriptText(
             /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo)
 {
 	if (!m_pSite) return E_UNEXPECTED;
-
-	ATLTRACE(_T("ParseScriptText: %ls\n"), pstrCode);
-
+#if 0
+	ATLTRACE(_T("ParseScriptText: %*ls\n"), 128, pstrCode);
+#endif
 	int len = wcslen(pstrCode);
 	LPSTR psz = new char[len * 2 + 1];
 	int cb = WideCharToMultiByte(GetACP(), 0, pstrCode, len, psz, len * 2 + 1, NULL, NULL);
@@ -1288,7 +1291,7 @@ void CRScriptCore::CopyNamedItem(ItemMap& map)
 	}
 }
 
-LPSTR CRScriptCore::AllocLibPath()
+LPTSTR CRScriptCore::AllocLibPath()
 {
 	const int LIBCNT = 5;
 	LPTSTR apszLibPath[] = {
@@ -1332,8 +1335,8 @@ LPSTR CRScriptCore::AllocLibPath()
 			LPTSTR plib = reinterpret_cast<LPTSTR>(_alloca((cblib + 8) * sizeof(TCHAR)));
 			GetEnvironmentVariable(_T("RUBYLIB"), plib + 1, cblib + 1);
 			for (int i = 1; i < cblib + 1; i++)
-				if (*(plib + i) == '\\') *(plib + i) = '/';
-			*plib = ';';
+				if (*(plib + i) == _T('\\')) *(plib + i) = _T('/');
+			*plib = _T(';');
 			lstrcat(psz, plib);
 		}
 		SetEnvironmentVariable(_T("RUBYLIB"), psz);

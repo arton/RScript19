@@ -56,6 +56,7 @@ public:
 	);
 
 private:
+        void CreateErrorBase(VALUE v);
 	int GetErrorLine();
 	void SetSource(LPCSTR);
 	LONG m_lRefCount;

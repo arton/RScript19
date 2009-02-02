@@ -1,5 +1,5 @@
 ;*
-;*  Copyright(c) 2000, 2003 arton
+;*  Copyright(c) 2000, 2003, 2009 arton
 ;*
 ;*  You may distribute under the terms of either the GNU General Public
 ;*  License
@@ -7,7 +7,7 @@
 
 
 
-LIBRARY      "RScript18.DLL"
+LIBRARY      "RScript19.DLL"
 
 EXPORTS
 	DllCanUnloadNow     @1 PRIVATE

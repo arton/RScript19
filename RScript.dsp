@@ -47,7 +47,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "C:\HOME\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\HOME\RUBY\lib\ruby\1.8\i386-mswin32\win32" /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1" /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1\i386-mswin32" /D "_DEBUG" /D "_MBCS" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /GZ /c
 # ADD MTL /Oicf
 # ADD BASE RSC /l 0x411 /d "_DEBUG"
 # ADD RSC /l 0x411 /d "_DEBUG"
@@ -56,11 +56,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 msvcrt-ruby18.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /debug /machine:I386 /out:"Debug/RScript18.dll" /pdbtype:sept /libpath:"C:\home\ruby\lib" /libpath:"c:\home\ruby\lib"
+# ADD LINK32 msvcrt-ruby191.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /debug /machine:I386 /out:"Debug/RScript19.dll" /pdbtype:sept /libpath:"C:\home\ruby\lib" /libpath:"c:\home\ruby-1.9\usr\lib"
 # Begin Custom Build - Registering
 OutDir=.\Debug
-TargetPath=.\Debug\RScript18.dll
-InputPath=.\Debug\RScript18.dll
+TargetPath=.\Debug\RScript19.dll
+InputPath=.\Debug\RScript19.dll
 SOURCE="$(InputPath)"
 
 "$(OutDir)\regsvr32.trg" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -83,7 +83,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MTd /W3 /Gm /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_USRDLL" /D "_UNICODE" /Yu"stdafx.h" /FD /GZ /c
-# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "D:\RUBY\lib\ruby\1.8\i386-mswin32" /I "D:\RUBY\lib\ruby\1.8\i386-mswin32\win32" /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /D "_DEBUG" /D "_UNICODE" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /GZ /c
+# ADD CPP /nologo /MTd /W3 /Gm /GX /ZI /Od /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1" /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1\i386-mswin32" /D "_DEBUG" /D "_UNICODE" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /Yu"stdafx.h" /FD /GZ /c
 # ADD MTL /Oicf
 # ADD BASE RSC /l 0x411 /d "_DEBUG"
 # ADD RSC /l 0x411 /d "_DEBUG"
@@ -92,17 +92,19 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 msvcrt-ruby18.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /debug /machine:I386 /out:"DebugU/RScript18.dll" /pdbtype:sept /libpath:"d:\ruby\lib" /libpath:"c:\home\ruby\lib"
+# ADD LINK32 msvcrt-ruby191.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /debug /machine:I386 /out:"DebugU/RScript19.dll" /pdbtype:sept /libpath:"d:\ruby\lib" /libpath:"c:\home\ruby-1.9\usr\lib"
 # Begin Custom Build - Registering
 OutDir=.\DebugU
-TargetPath=.\DebugU\RScript18.dll
-InputPath=.\DebugU\RScript18.dll
+TargetPath=.\DebugU\RScript19.dll
+InputPath=.\DebugU\RScript19.dll
 SOURCE="$(InputPath)"
 
 "$(OutDir)\regsvr32.trg" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	if "%OS%"=="" goto NOTNT 
 	if not "%OS%"=="Windows_NT" goto NOTNT 
-	regsvr32 /s /c "$(TargetPath)" 
+	copy "$(TargetPath)" "c:\home\ruby-1.9\usr\bin" 
+	copy "$(OutDir)\*.pdb" "c:\home\ruby-1.9\usr\bin" 
+	regsvr32 /s /c "c:\home\ruby-1.9\usr\bin\RScript19.dll" 
 	echo regsvr32 exec. time > "$(OutDir)\regsvr32.trg" 
 	goto end 
 	:NOTNT 
@@ -125,7 +127,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "_ATL_DLL" /D "_ATL_MIN_CRT" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MD /W3 /GX /O1 /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /I "C:\home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /D "NDEBUG" /D "_MBCS" /D "_ATL_DLL" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MD /W3 /GX /O1 /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1" /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1\i386-mswin32" /D "NDEBUG" /D "_MBCS" /D "_ATL_DLL" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /c
 # ADD MTL /Oicf
 # ADD BASE RSC /l 0x411 /d "NDEBUG"
 # ADD RSC /l 0x411 /d "NDEBUG"
@@ -134,11 +136,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 msvcrt-ruby18.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /machine:I386 /out:"ReleaseMinSize/RScript18.dll" /libpath:"C:\home\ruby\lib" /libpath:"c:\home\ruby\lib"
+# ADD LINK32 msvcrt-ruby191.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /machine:I386 /out:"ReleaseMinSize/RScript19.dll" /libpath:"C:\home\ruby\lib" /libpath:"c:\home\ruby-1.9\usr\lib"
 # Begin Custom Build - Registering
 OutDir=.\ReleaseMinSize
-TargetPath=.\ReleaseMinSize\RScript18.dll
-InputPath=.\ReleaseMinSize\RScript18.dll
+TargetPath=.\ReleaseMinSize\RScript19.dll
+InputPath=.\ReleaseMinSize\RScript19.dll
 SOURCE="$(InputPath)"
 
 "$(OutDir)\regsvr32.trg" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -161,7 +163,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "_ATL_STATIC_REGISTRY" /D "_ATL_MIN_CRT" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /G6 /MD /W3 /GX /Zi /O1 /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /I "C:\home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /D "NDEBUG" /D "_MBCS" /D "_ATL_STATIC_REGISTRY" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /G6 /MD /W3 /GX /Zi /O1 /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1" /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1\i386-mswin32" /D "NDEBUG" /D "_MBCS" /D "_ATL_STATIC_REGISTRY" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /c
 # ADD MTL /Oicf
 # ADD BASE RSC /l 0x411 /d "NDEBUG"
 # ADD RSC /l 0x411 /d "NDEBUG"
@@ -170,11 +172,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 msvcrt-ruby18.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /debug /machine:I386 /out:"ReleaseMinDependency/RScript18.dll" /libpath:"C:\Home\ruby\lib" /libpath:"c:\home\ruby\lib"
+# ADD LINK32 msvcrt-ruby191.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /debug /machine:I386 /out:"ReleaseMinDependency/RScript19.dll" /libpath:"C:\Home\ruby\lib" /libpath:"c:\home\ruby-1.9\usr\lib"
 # Begin Custom Build - Registering
 OutDir=.\ReleaseMinDependency
-TargetPath=.\ReleaseMinDependency\RScript18.dll
-InputPath=.\ReleaseMinDependency\RScript18.dll
+TargetPath=.\ReleaseMinDependency\RScript19.dll
+InputPath=.\ReleaseMinDependency\RScript19.dll
 SOURCE="$(InputPath)"
 
 "$(OutDir)\regsvr32.trg" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -197,7 +199,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "_UNICODE" /D "_ATL_DLL" /D "_ATL_MIN_CRT" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O1 /I "D:\RUBY\lib\ruby\1.8\i386-mswin32" /I "D:\RUBY\lib\ruby\1.8\i386-mswin32\win32" /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /D "NDEBUG" /D "_UNICODE" /D "_ATL_DLL" /D "_ATL_MIN_CRT" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O1 /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1" /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1\i386-mswin32" /D "NDEBUG" /D "_UNICODE" /D "_ATL_DLL" /D "_ATL_MIN_CRT" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /Yu"stdafx.h" /FD /c
 # ADD MTL /Oicf
 # ADD BASE RSC /l 0x411 /d "NDEBUG"
 # ADD RSC /l 0x411 /d "NDEBUG"
@@ -206,11 +208,11 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 msvcrt-ruby18.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /machine:I386 /out:"ReleaseUMinSize/RScript18.dll" /libpath:"d:\ruby\lib" /libpath:"c:\home\ruby\lib"
+# ADD LINK32 msvcrt-ruby191.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /machine:I386 /out:"ReleaseUMinSize/RScript19.dll" /libpath:"d:\ruby\lib" /libpath:"c:\home\ruby-1.9\usr\lib"
 # Begin Custom Build - Registering
 OutDir=.\ReleaseUMinSize
-TargetPath=.\ReleaseUMinSize\RScript18.dll
-InputPath=.\ReleaseUMinSize\RScript18.dll
+TargetPath=.\ReleaseUMinSize\RScript19.dll
+InputPath=.\ReleaseUMinSize\RScript19.dll
 SOURCE="$(InputPath)"
 
 "$(OutDir)\regsvr32.trg" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
@@ -239,7 +241,7 @@ SOURCE="$(InputPath)"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /MT /W3 /O1 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "_UNICODE" /D "_ATL_STATIC_REGISTRY" /D "_ATL_MIN_CRT" /Yu"stdafx.h" /FD /c
-# ADD CPP /nologo /MT /W3 /GX /O1 /I "D:\RUBY\lib\ruby\1.8\i386-mswin32" /I "D:\RUBY\lib\ruby\1.8\i386-mswin32\win32" /I "C:\Home\RUBY\lib\ruby\1.8\i386-mswin32" /I "C:\home\RUBY\lib\ruby\1.8\i386-mswin32\win32" /D "NDEBUG" /D "_UNICODE" /D "_ATL_STATIC_REGISTRY" /D "_ATL_MIN_CRT" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /D "MBCS" /Yu"stdafx.h" /FD /c
+# ADD CPP /nologo /MT /W3 /GX /O1 /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1" /I "C:\Home\RUBY-1.9\usr\include\ruby-1.9.1\i386-mswin32" /D "NDEBUG" /D "_UNICODE" /D "_ATL_STATIC_REGISTRY" /D "TARGET_IS_NT40_OR_LATER" /D "WIN32" /D "_WINDOWS" /D "_USRDLL" /D "_MERGE_PROXYSTUB" /D "IMPORT" /D "NT" /Yu"stdafx.h" /FD /c
 # ADD MTL /Oicf
 # ADD BASE RSC /l 0x411 /d "NDEBUG"
 # ADD RSC /l 0x411 /d "NDEBUG"
@@ -248,17 +250,18 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 msvcrt-ruby18.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /machine:I386 /out:"ReleaseUMinDependency/RScript18.dll" /libpath:"d:\ruby\lib" /libpath:"c:\home\ruby\lib"
+# ADD LINK32 msvcrt-ruby191.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib /nologo /version:1.0 /subsystem:windows /dll /machine:I386 /out:"ReleaseUMinDependency/RScript19.dll" /libpath:"d:\ruby\lib" /libpath:"c:\home\ruby-1.9\usr\lib"
 # Begin Custom Build - Registering
 OutDir=.\ReleaseUMinDependency
-TargetPath=.\ReleaseUMinDependency\RScript18.dll
-InputPath=.\ReleaseUMinDependency\RScript18.dll
+TargetPath=.\ReleaseUMinDependency\RScript19.dll
+InputPath=.\ReleaseUMinDependency\RScript19.dll
 SOURCE="$(InputPath)"
 
 "$(OutDir)\regsvr32.trg" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
 	if "%OS%"=="" goto NOTNT 
 	if not "%OS%"=="Windows_NT" goto NOTNT 
-	regsvr32 /s /c "$(TargetPath)" 
+	copy "$(TargetPath)" c:\home\ruby-1.9\usr\bin 
+	regsvr32 /s /c "c:\home\ruby-1.9\usr\bin\RScript19.dll" 
 	echo regsvr32 exec. time > "$(OutDir)\regsvr32.trg" 
 	goto end 
 	:NOTNT 

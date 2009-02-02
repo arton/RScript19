@@ -425,9 +425,10 @@ void CRubyObject::GetEnum(VALUE val, VARIANT* pVarResult, IActiveScriptError* pE
 IActiveScriptError* CRubyObject::FetchErrorInfo()
 {
 	IActiveScriptError* pResult = NULL;
-	if (!NIL_P(ruby_errinfo))
+        VALUE errinfo = rb_errinfo();
+	if (!NIL_P(errinfo))
 	{
-		pResult = new CScrError(ruby_errinfo);
+		pResult = new CScrError(errinfo);
 	}
 	return pResult;
 }

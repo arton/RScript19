@@ -29,8 +29,9 @@ HRESULT CRubyWrapper::FinalConstruct()
 	{
 		m_idSize = ::rb_intern("size");
 		m_idMethods = ::rb_intern("methods");
-		m_idMethodDefined = ::rb_intern("method_defined?");
 		m_idDelete = ::rb_intern("delete");
+                m_idEach = ::rb_intern("each");
+                m_idEachLine = ::rb_intern("each_line");
 		m_valList = rb_hash_new();
 		rb_global_variable(&m_valList);
 	}
@@ -151,23 +152,16 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::SearchMethod(
 	if (m_fTracing)
 		CRScriptCore::TraceOff();
 	HRESULT hr = S_OK;
-#if 0
-	VALUE obj = rb_funcall(val, m_idMethodDefined, 1, rb_str_new2(reinterpret_cast<char*>(pName)));
-	if (obj == Qtrue)
-	{
-		*pDispID = ::rb_intern(reinterpret_cast<char*>(pName));
-	}
-	else
-	{
-		*pDispID = DISPID_UNKNOWN;
-	}
-#else
 	VALUE obj = rb_funcall(val, m_idMethods, 0);
 	int imax = FIX2INT(rb_funcall(obj, m_idSize, 0));
 	*(pDispID) = DISPID_UNKNOWN;
 	for (int j = 0; j < imax; j++)
 	{
 		VALUE v = rb_ary_entry(obj, j);
+                if (SYMBOL_P(v))
+                {
+			v = rb_sym_to_s(v);
+                }
 		char* pmname = StringValuePtr(v);
 		if (stricmp(reinterpret_cast<char*>(pName), pmname) == 0)
 		{
@@ -179,7 +173,6 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::SearchMethod(
 	{
 		hr = DISP_E_UNKNOWNNAME;
 	}
-#endif
 	if (m_fTracing)
 		CRScriptCore::TraceOn();
 	return hr;
@@ -237,10 +230,10 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::rb_funcall_with_string2(
 			CRScriptCore::TraceOn();
 		}
 		ATLTRACE(_T(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> enter instance_eval\n"));
-		int savesafe = ruby_safe_level;
-		ruby_safe_level = 0;
+		int savesafe = rb_safe_level();
+                rb_set_safe_level(0);
 		VALUE val = rb_protect(safe_funcall, (VALUE)&valArgs[0], &sstat);
-		ruby_safe_level = savesafe;
+                rb_set_safe_level(savesafe);
 		ATLTRACE(_T("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leave instance_eval\n"));
 		if (sstat)
 		{
@@ -412,12 +405,13 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::DefineConstant(
 IActiveScriptError* CRubyWrapper::FetchErrorInfo(LPCSTR pscript)
 {
 	IActiveScriptError* pResult = NULL;
-	if (!NIL_P(ruby_errinfo))
+        VALUE errinfo = rb_errinfo();
+	if (!NIL_P(errinfo))
 	{
 		if (pscript)
-			pResult = new CScrError(ruby_errinfo, pscript);
+			pResult = new CScrError(errinfo, pscript);
 		else
-			pResult = new CScrError(ruby_errinfo);
+			pResult = new CScrError(errinfo);
 	}
 	return pResult;
 }
@@ -474,6 +468,12 @@ VALUE CRubyWrapper::add_item(VALUE item, VALUE ary)
 	return Qnil;
 }
 
+VALUE CRubyWrapper::add_lineitem(VALUE i, VALUE ary, int argc, VALUE *argv)
+{
+	rb_ary_push(ary, *argv);
+	return Qnil;
+}
+
 VALUE CRubyWrapper::InvokeRuby(unsigned long Param)
 {
 	SInvokeParam* pParam = (SInvokeParam*)Param;
@@ -486,7 +486,18 @@ VALUE CRubyWrapper::InvokeRuby(unsigned long Param)
 		{
 			rb_ary_push(ary, pParam->val[i]);
 		}
-		rb_iterate(rb_each, pParam->module, (VALUE(*)(...))add_item, ary);
+                if (rb_respond_to(pParam->module, GetCWrapper()->m_idEach))
+                {
+                    rb_iterate(rb_each, pParam->module, (VALUE(*)(...))add_item, ary);
+                }
+                else if (rb_respond_to(pParam->module, GetCWrapper()->m_idEachLine))
+                {
+                    rb_block_call(pParam->module, GetCWrapper()->m_idEachLine, 0, NULL, (VALUE(*)(...))add_lineitem, ary);
+                }
+                else
+                {
+                    rb_raise(rb_eTypeError, "can't enumerate %s", rb_obj_classname(pParam->module));
+                }
 		v = ary;
 	}
 	else

@@ -20,19 +20,7 @@
 CScrError::CScrError(VALUE v, LPCSTR src, int offset) :
 	m_lRefCount(1), m_nLine(0)
 {
-	VALUE msg = rb_funcall(v, rb_intern("message"), 0);
-	m_strMessage = StringValuePtr(msg);
-	int pos = m_strMessage.rfind(" for ");
-	if (pos != std::string::npos)
-	{
-		m_strMessage.erase(pos);
-	}
-	ATLTRACE(_T("Create Error Object For %hs\n"), m_strMessage.c_str());
-	VALUE bt = rb_funcall(v, rb_intern("backtrace"), 0);
-	bt = rb_ary_entry(bt, 0);
-	m_strBacktrace = StringValuePtr(bt);
-	ATLTRACE("bt=%d, %hs\n", FIX2INT(rb_funcall(bt, rb_intern("size"), 0)), m_strBacktrace.c_str());
-	m_nLine = GetErrorLine();
+	CreateErrorBase(v);        
 	if (m_nLine > 0)
 	{
 		SetSource(src);
@@ -43,20 +31,32 @@ CScrError::CScrError(VALUE v, LPCSTR src, int offset) :
 CScrError::CScrError(VALUE v) : 
 	m_lRefCount(1), m_nLine(0)
 {
-	VALUE msg = rb_funcall(v, rb_intern("message"), 0);
-	m_strMessage = StringValuePtr(msg);
-	ATLTRACE(_T("Create Error Object For %hs\n"), m_strMessage.c_str());
-	VALUE bt = rb_funcall(v, rb_intern("backtrace"), 0);
-	bt = rb_ary_entry(bt, 0);
-	m_strBacktrace = StringValuePtr(bt);
-	ATLTRACE("bt=%d, %hs\n", FIX2INT(rb_funcall(bt, rb_intern("size"), 0)), m_strBacktrace.c_str());
-	m_nLine = GetErrorLine();
+	CreateErrorBase(v);        
 }
 
 CScrError::CScrError(LPCSTR psz) :
 	m_lRefCount(1),
 	m_strMessage(psz), m_nLine(0)
 {
+}
+
+void CScrError::CreateErrorBase(VALUE v)
+{
+	VALUE msg = rb_funcall(v, rb_intern("message"), 0);
+	m_strMessage = StringValuePtr(msg);
+	ATLTRACE(_T("Create Error Object For %hs\n"), m_strMessage.c_str());
+	VALUE bt = rb_funcall(v, rb_intern("backtrace"), 0);
+        if (!NIL_P(bt))
+        {
+            bt = rb_ary_entry(bt, 0);
+            m_strBacktrace = StringValuePtr(bt);
+            ATLTRACE("bt=%d, %hs\n", FIX2INT(rb_funcall(bt, rb_intern("size"), 0)), m_strBacktrace.c_str());
+        }
+        else
+        {
+            m_strBacktrace = "";
+        }
+	m_nLine = GetErrorLine();
 }
 
 int CScrError::GetErrorLine()

@@ -186,7 +186,7 @@ void CRScriptCore::ole_val2variant(VALUE val, VARIANT* var, IRubyEngine* pEngine
         val1 = val;
         i = 0;
         while(TYPE(val1) == T_ARRAY) {
-            psab[i].cElements = RARRAY(val1)->len;
+            psab[i].cElements = RARRAY_LEN(val1);
             psab[i].lLbound = 0;
             pub[i] = psab[i].cElements;
             pid[i] = 0;
@@ -707,7 +707,7 @@ VALUE __cdecl CRScriptCore::fole_s_new(int argc, VALUE* argv, VALUE self)
 
 VALUE __cdecl CRScriptCore::fole_s_connect(VALUE self, VALUE svr_name)
 {
-	if (ruby_safe_level >= 3)
+	if (rb_safe_level() >= 3)
 	{
 		rb_raise(rb_eSecurityError, "Connecting ActiveX is disallowed.");
 	}
@@ -1220,7 +1220,7 @@ VALUE CRScriptCore::foleex_each(VALUE self)
 VALUE CRScriptCore::foleex_missing(int argc, VALUE* argv, VALUE self)
 {
     ID id;
-    char* mname;
+    const char* mname;
     int n;
     id = rb_to_id(argv[0]);
     mname = rb_id2name(id);
