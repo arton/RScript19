@@ -32,6 +32,9 @@ extern CComModule _Module;
 #include <list>
 
 #include "ruby.h"
+extern "C" {
+#include "ruby/encoding.h"
+}
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Visual C++ 
