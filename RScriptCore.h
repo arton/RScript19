@@ -260,9 +260,6 @@ END_COM_MAP()
 	static void InitializeEnvironment();
 	virtual VALUE GetModuleValue();
 protected:
-	static LPTSTR GetLibPath(HMODULE, LPTSTR);
-	static LPTSTR AllocLibPath();
-	//
 	inline long GetCookie() const { return m_lCookie; }
 	HRESULT Connect();
 	void ConnectEvents();

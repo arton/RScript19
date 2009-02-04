@@ -72,17 +72,12 @@ void CRScriptCore::InitializeEnvironment()
 	int stacktop;
 	s_pStackTop = reinterpret_cast<LPBYTE>(&stacktop);
 #endif
-	LPTSTR psz = AllocLibPath();
 	static int dummyargc(0);
 	static char** vec;
-	NtInitialize(&dummyargc, &vec);
+	ruby_sysinit(&dummyargc, &vec);
 	ruby_init();
         ruby_script("ActiveScriptRuby");
-	if (psz)
-	{
-		ruby_init_loadpath();
-		delete[] psz;
-	}
+        ruby_init_loadpath();
 	try
 	{
 #if defined(USE_MAGIC_COMMENT)
@@ -1293,92 +1288,6 @@ void CRScriptCore::CopyNamedItem(ItemMap& map)
 	{
 		m_mapItem.insert(ItemMap::value_type((*it).first, new CItemHolder));
 	}
-}
-
-LPTSTR CRScriptCore::AllocLibPath()
-{
-	const int LIBCNT = 5;
-	LPTSTR apszLibPath[] = {
-		_T(RUBY_LIB),
-		_T(RUBY_SITE_LIB),
-		_T(RUBY_SITE_LIB2),
-		_T(RUBY_ARCHLIB),
-		_T(RUBY_SITE_ARCHLIB),
-	};
-	USES_CONVERSION;
-	TCHAR szPath[LIBCNT][_MAX_PATH * 8];
-	TCHAR szTempPath[_MAX_PATH];
-	int len(0);
-	for (int i = 0; i < LIBCNT; i++)
-	{
-		szPath[i][0] = _T('\0');
-		if (GetLibPath(_Module.GetModuleInstance(), szPath[i]))
-		{
-			lstrcat(szPath[i], apszLibPath[i]);
-			len += lstrlen(szPath[i]) + 1;
-		}
-	}
-	LPTSTR p2 = GetLibPath(NULL, szTempPath);
-	if (p2) len += lstrlen(p2) + 1;
-	int cblib = GetEnvironmentVariable(_T("RUBYLIB"), NULL, 0);
-	if (cblib) len += cblib + 8;
-
-	if (len)
-	{
-		LPTSTR psz = new TCHAR[len];
-		LPTSTR p = psz;
-		for (int i = 0; i < LIBCNT; i++)
-		{
-			if (szPath[i][0])
-				p += wsprintf(p, _T("%s;"), szPath[i]);
-		}
-		if (p2)
-			lstrcat(p, p2);
-		if (cblib)
-		{
-			LPTSTR plib = reinterpret_cast<LPTSTR>(_alloca((cblib + 8) * sizeof(TCHAR)));
-			GetEnvironmentVariable(_T("RUBYLIB"), plib + 1, cblib + 1);
-			for (int i = 1; i < cblib + 1; i++)
-				if (*(plib + i) == _T('\\')) *(plib + i) = _T('/');
-			*plib = _T(';');
-			lstrcat(psz, plib);
-		}
-		SetEnvironmentVariable(_T("RUBYLIB"), psz);
-		return psz;
-	}
-
-	return NULL;
-}
-
-LPTSTR CRScriptCore::GetLibPath(HMODULE h, LPTSTR p)
-{
-	DWORD dw = GetModuleFileName(h, p, _MAX_PATH);
-	if (dw)
-	{
-		p = _tcslwr(p);
-		for (int i = dw - 1; i; i--)
-		{
-			if (*(p + i) == _T('\\'))
-			{
-				*(p + i) = _T('\0');
-				break;
-			}
-		}
-		if (_tcscmp(_T("\\bin"), p + i - 4) == 0)
-		{
-			i -= 4;
-			*(p + i) = _T('\0');
-		}
-		for (; i >= 0; i--)
-		{
-			if (*(p + i) == _T('\\'))
-			{
-				*(p + i) = _T('/');
-			}
-		}
-		return p;
-	}
-	return NULL;
 }
 
 void CRScriptCore::ForceChangeThreadContext()
