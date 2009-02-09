@@ -78,23 +78,14 @@ void CRScriptCore::InitializeEnvironment()
 	ruby_init();
         ruby_script("ActiveScriptRuby");
         ruby_init_loadpath();
+	rb_enc_find_index("encdb");
 	try
 	{
-#if defined(USE_MAGIC_COMMENT)
-            if (GetACP() == _KANJI_CP)
-		{
-			rb_eval_string("# encoding: cp932");
-		}
-#else
-            VALUE enc = rb_enc_from_encoding(rb_locale_encoding());
-            rb_enc_set_default_external(enc);
-            rb_enc_set_default_internal(enc);
-#endif
 		rb_require("win32ole");
 		VALUE v = rb_eval_string("WIN32OLE");
 		// override original constructor
 		rb_define_singleton_method(v, "new", reinterpret_cast<VALUE(*)(...)>(fole_s_new), -1);
-	    rb_define_singleton_method(v, "connect", reinterpret_cast<VALUE(*)(...)>(fole_s_connect), 1);
+		rb_define_singleton_method(v, "connect", reinterpret_cast<VALUE(*)(...)>(fole_s_connect), 1);
 		rb_define_singleton_method(v, "attach", reinterpret_cast<VALUE(*)(...)>(foleex_attach), 2);
 		rb_define_method(v, "__release", reinterpret_cast<VALUE(*)(...)>(foleex_release), 0);
 		rb_define_method(v, "method_missing", reinterpret_cast<VALUE(*)(...)>(foleex_missing), -1);

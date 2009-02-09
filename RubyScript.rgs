@@ -1,6 +1,6 @@
 HKCR
 {
-	RubyScript.1 = s 'RubyScript Language (module)'
+	RubyScript.1.9 = s 'RubyScript Language (module)'
 	{
 		CLSID = s '{5DBEF578-E278-11D3-8E7A-0000F45A3C05}'
 		OLEScript = s ''
@@ -8,7 +8,7 @@ HKCR
 	RubyScript = s 'RubyScript Language (module)'
 	{
 		CLSID = s '{5DBEF578-E278-11D3-8E7A-0000F45A3C05}'
-		CurVer = s 'RubyScript.1'
+		CurVer = s 'RubyScript.1.9'
 		OLEScript = s ''
 	}
 	NoRemove CLSID

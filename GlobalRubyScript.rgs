@@ -22,7 +22,7 @@ HKCR
 		}
 	}
 
-	GlobalRubyScript.1 = s 'RubyScript Language (global)'
+	GlobalRubyScript.1.9 = s 'RubyScript Language (global)'
 	{
 		CLSID = s '{0AC0D358-E866-11D3-8E82-0000F45A3C05}'
 		OLEScript = s ''
@@ -30,7 +30,7 @@ HKCR
 	GlobalRubyScript = s 'RubyScript Language (global)'
 	{
 		CLSID = s '{0AC0D358-E866-11D3-8E82-0000F45A3C05}'
-		CurVer = s 'GlobalRubyScript.1'
+		CurVer = s 'GlobalRubyScript.1.9'
 		OLEScript = s ''
 	}
 	NoRemove CLSID
