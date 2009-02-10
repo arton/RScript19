@@ -41,6 +41,7 @@
 #include "RubyWrapper.h"
 
 #include "dlldatax.h"
+#include "Rubyize.h"
 
 #ifdef _MERGE_PROXYSTUB
 extern "C" HINSTANCE hProxyDll;
@@ -52,6 +53,7 @@ CComModule _Module;
 
 BEGIN_OBJECT_MAP(ObjectMap)
 OBJECT_ENTRY(CLSID_RubyScript, CRubyScript)
+OBJECT_ENTRY(CLSID_Rubyize, CRubyize)
 END_OBJECT_MAP()
 
 /////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,5 @@
 /*
- *  Copyright(c) 2000 arton
+ *  Copyright(c) 2000, 2009 arton
  *
  *  You may distribute under the terms of either the GNU General Public
  *  License
@@ -183,6 +183,8 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::SearchClass(
             /* [string][in] */ unsigned char __RPC_FAR *pName,
             /* [out] */ unsigned long __RPC_FAR *pval)
 {
+    try
+    {
 	VALUE val = rb_eval_string(reinterpret_cast<char*>(pName));
 	int tp = TYPE(val);
 	if (tp == T_OBJECT || tp == T_CLASS || tp == T_ICLASS || tp == T_MODULE)
@@ -192,8 +194,14 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::SearchClass(
 	else
 	{
 		*pval = Qnil;
-	}
-	return S_OK;
+        }
+        return S_OK;
+    }
+    catch (...)
+    {
+        *pval = Qnil;
+    }
+    return DISP_E_EXCEPTION;
 }
 
 // Not generic, only for eval under val (module_eval or instance_eval)

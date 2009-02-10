@@ -323,6 +323,10 @@ SOURCE=.\RScriptCore.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\Rubyize.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\RubyObject.cpp
 # End Source File
 # Begin Source File
@@ -383,6 +387,10 @@ SOURCE=.\RScriptCore.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Rubyize.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RubyObject.h
 # End Source File
 # Begin Source File
@@ -416,6 +424,10 @@ SOURCE=.\GlobalRubyScript.rgs
 # Begin Source File
 
 SOURCE=.\icon1.ico
+# End Source File
+# Begin Source File
+
+SOURCE=.\Rubyize.rgs
 # End Source File
 # Begin Source File
 

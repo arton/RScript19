@@ -15,7 +15,7 @@ HKCR
 	{
 		ForceRemove {5DBEF578-E278-11D3-8E7A-0000F45A3C05} = s 'RubyScript Language (module)'
 		{
-			ProgID = s 'RubyScript.1'
+			ProgID = s 'RubyScript.1.9'
 			OLEScript = s ''
 			'Implemented Categories' = s ''
 			{
