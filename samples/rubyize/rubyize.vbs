@@ -1,4 +1,6 @@
 Set ruby = CreateObject("ruby.object")
+WSH.echo ruby.Version
+WSH.echo ruby.RubyVersion
 Set intobj = ruby.rubyize(5)
 WSH.echo "Integer:"
 WSH.echo intobj.next
