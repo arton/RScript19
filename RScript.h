@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Mon Feb 09 22:08:20 2009
+/* at Wed Feb 11 13:54:22 2009
  */
 /* Compiler settings for C:\home\arton\projects\RScript19\trunk\RScript.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
@@ -55,6 +55,12 @@ typedef interface IRubyScript IRubyScript;
 #endif 	/* __IRubyScript_FWD_DEFINED__ */
 
 
+#ifndef __IRubyize_FWD_DEFINED__
+#define __IRubyize_FWD_DEFINED__
+typedef interface IRubyize IRubyize;
+#endif 	/* __IRubyize_FWD_DEFINED__ */
+
+
 #ifndef __RubyScript_FWD_DEFINED__
 #define __RubyScript_FWD_DEFINED__
 
@@ -77,6 +83,18 @@ typedef struct RubyWrapper RubyWrapper;
 #endif /* __cplusplus */
 
 #endif 	/* __RubyWrapper_FWD_DEFINED__ */
+
+
+#ifndef __Rubyize_FWD_DEFINED__
+#define __Rubyize_FWD_DEFINED__
+
+#ifdef __cplusplus
+typedef class Rubyize Rubyize;
+#else
+typedef struct Rubyize Rubyize;
+#endif /* __cplusplus */
+
+#endif 	/* __Rubyize_FWD_DEFINED__ */
 
 
 /* header files for imported files */
@@ -975,11 +993,215 @@ EXTERN_C const IID IID_IRubyScript;
 #endif 	/* __IRubyScript_INTERFACE_DEFINED__ */
 
 
+#ifndef __IRubyize_INTERFACE_DEFINED__
+#define __IRubyize_INTERFACE_DEFINED__
+
+/* interface IRubyize */
+/* [unique][helpstring][dual][uuid][object] */ 
+
+
+EXTERN_C const IID IID_IRubyize;
+
+#if defined(__cplusplus) && !defined(CINTERFACE)
+    
+    MIDL_INTERFACE("0A4CBEBD-C46B-4A7C-A1E2-AD474C330C7A")
+    IRubyize : public IDispatch
+    {
+    public:
+        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_Version( 
+            /* [retval][out] */ BSTR __RPC_FAR *pVersion) = 0;
+        
+        virtual /* [propget][id] */ HRESULT STDMETHODCALLTYPE get_RubyVersion( 
+            /* [retval][out] */ BSTR __RPC_FAR *pVersion) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE rubyize( 
+            /* [in] */ VARIANT val,
+            /* [retval][out] */ VARIANT __RPC_FAR *pObj) = 0;
+        
+        virtual /* [id] */ HRESULT STDMETHODCALLTYPE erubyize( 
+            /* [in] */ BSTR script,
+            /* [retval][out] */ VARIANT __RPC_FAR *pObj) = 0;
+        
+    };
+    
+#else 	/* C style interface */
+
+    typedef struct IRubyizeVtbl
+    {
+        BEGIN_INTERFACE
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *QueryInterface )( 
+            IRubyize __RPC_FAR * This,
+            /* [in] */ REFIID riid,
+            /* [iid_is][out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
+        
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *AddRef )( 
+            IRubyize __RPC_FAR * This);
+        
+        ULONG ( STDMETHODCALLTYPE __RPC_FAR *Release )( 
+            IRubyize __RPC_FAR * This);
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfoCount )( 
+            IRubyize __RPC_FAR * This,
+            /* [out] */ UINT __RPC_FAR *pctinfo);
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetTypeInfo )( 
+            IRubyize __RPC_FAR * This,
+            /* [in] */ UINT iTInfo,
+            /* [in] */ LCID lcid,
+            /* [out] */ ITypeInfo __RPC_FAR *__RPC_FAR *ppTInfo);
+        
+        HRESULT ( STDMETHODCALLTYPE __RPC_FAR *GetIDsOfNames )( 
+            IRubyize __RPC_FAR * This,
+            /* [in] */ REFIID riid,
+            /* [size_is][in] */ LPOLESTR __RPC_FAR *rgszNames,
+            /* [in] */ UINT cNames,
+            /* [in] */ LCID lcid,
+            /* [size_is][out] */ DISPID __RPC_FAR *rgDispId);
+        
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *Invoke )( 
+            IRubyize __RPC_FAR * This,
+            /* [in] */ DISPID dispIdMember,
+            /* [in] */ REFIID riid,
+            /* [in] */ LCID lcid,
+            /* [in] */ WORD wFlags,
+            /* [out][in] */ DISPPARAMS __RPC_FAR *pDispParams,
+            /* [out] */ VARIANT __RPC_FAR *pVarResult,
+            /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo,
+            /* [out] */ UINT __RPC_FAR *puArgErr);
+        
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *get_Version )( 
+            IRubyize __RPC_FAR * This,
+            /* [retval][out] */ BSTR __RPC_FAR *pVersion);
+        
+        /* [propget][id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *get_RubyVersion )( 
+            IRubyize __RPC_FAR * This,
+            /* [retval][out] */ BSTR __RPC_FAR *pVersion);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *rubyize )( 
+            IRubyize __RPC_FAR * This,
+            /* [in] */ VARIANT val,
+            /* [retval][out] */ VARIANT __RPC_FAR *pObj);
+        
+        /* [id] */ HRESULT ( STDMETHODCALLTYPE __RPC_FAR *erubyize )( 
+            IRubyize __RPC_FAR * This,
+            /* [in] */ BSTR script,
+            /* [retval][out] */ VARIANT __RPC_FAR *pObj);
+        
+        END_INTERFACE
+    } IRubyizeVtbl;
+
+    interface IRubyize
+    {
+        CONST_VTBL struct IRubyizeVtbl __RPC_FAR *lpVtbl;
+    };
+
+    
+
+#ifdef COBJMACROS
+
+
+#define IRubyize_QueryInterface(This,riid,ppvObject)	\
+    (This)->lpVtbl -> QueryInterface(This,riid,ppvObject)
+
+#define IRubyize_AddRef(This)	\
+    (This)->lpVtbl -> AddRef(This)
+
+#define IRubyize_Release(This)	\
+    (This)->lpVtbl -> Release(This)
+
+
+#define IRubyize_GetTypeInfoCount(This,pctinfo)	\
+    (This)->lpVtbl -> GetTypeInfoCount(This,pctinfo)
+
+#define IRubyize_GetTypeInfo(This,iTInfo,lcid,ppTInfo)	\
+    (This)->lpVtbl -> GetTypeInfo(This,iTInfo,lcid,ppTInfo)
+
+#define IRubyize_GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)	\
+    (This)->lpVtbl -> GetIDsOfNames(This,riid,rgszNames,cNames,lcid,rgDispId)
+
+#define IRubyize_Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)	\
+    (This)->lpVtbl -> Invoke(This,dispIdMember,riid,lcid,wFlags,pDispParams,pVarResult,pExcepInfo,puArgErr)
+
+
+#define IRubyize_get_Version(This,pVersion)	\
+    (This)->lpVtbl -> get_Version(This,pVersion)
+
+#define IRubyize_get_RubyVersion(This,pVersion)	\
+    (This)->lpVtbl -> get_RubyVersion(This,pVersion)
+
+#define IRubyize_rubyize(This,val,pObj)	\
+    (This)->lpVtbl -> rubyize(This,val,pObj)
+
+#define IRubyize_erubyize(This,script,pObj)	\
+    (This)->lpVtbl -> erubyize(This,script,pObj)
+
+#endif /* COBJMACROS */
+
+
+#endif 	/* C style interface */
+
+
+
+/* [propget][id] */ HRESULT STDMETHODCALLTYPE IRubyize_get_Version_Proxy( 
+    IRubyize __RPC_FAR * This,
+    /* [retval][out] */ BSTR __RPC_FAR *pVersion);
+
+
+void __RPC_STUB IRubyize_get_Version_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [propget][id] */ HRESULT STDMETHODCALLTYPE IRubyize_get_RubyVersion_Proxy( 
+    IRubyize __RPC_FAR * This,
+    /* [retval][out] */ BSTR __RPC_FAR *pVersion);
+
+
+void __RPC_STUB IRubyize_get_RubyVersion_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id] */ HRESULT STDMETHODCALLTYPE IRubyize_rubyize_Proxy( 
+    IRubyize __RPC_FAR * This,
+    /* [in] */ VARIANT val,
+    /* [retval][out] */ VARIANT __RPC_FAR *pObj);
+
+
+void __RPC_STUB IRubyize_rubyize_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+/* [id] */ HRESULT STDMETHODCALLTYPE IRubyize_erubyize_Proxy( 
+    IRubyize __RPC_FAR * This,
+    /* [in] */ BSTR script,
+    /* [retval][out] */ VARIANT __RPC_FAR *pObj);
+
+
+void __RPC_STUB IRubyize_erubyize_Stub(
+    IRpcStubBuffer *This,
+    IRpcChannelBuffer *_pRpcChannelBuffer,
+    PRPC_MESSAGE _pRpcMessage,
+    DWORD *_pdwStubPhase);
+
+
+
+#endif 	/* __IRubyize_INTERFACE_DEFINED__ */
+
+
 EXTERN_C const CLSID CLSID_RubyScript;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("5DBEF578-E278-11D3-8E7A-0000F45A3C05")
+class DECLSPEC_UUID("067BEC55-61A2-4cb3-A029-3BC4E18469CE")
 RubyScript;
 #endif
 
@@ -989,6 +1211,14 @@ EXTERN_C const CLSID CLSID_RubyWrapper;
 
 class DECLSPEC_UUID("66D56EE2-0249-11D4-8EA4-0000F45A3C05")
 RubyWrapper;
+#endif
+
+EXTERN_C const CLSID CLSID_Rubyize;
+
+#ifdef __cplusplus
+
+class DECLSPEC_UUID("6CB14BDE-8273-4551-810D-9809AD559228")
+Rubyize;
 #endif
 #endif /* __RSCRIPTLib_LIBRARY_DEFINED__ */
 

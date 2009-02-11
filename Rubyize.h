@@ -74,7 +74,10 @@ END_COM_MAP()
 
 // IRubyize
 public:
-    HRESULT STDMETHODCALLTYPE get_VERSION( 
+    HRESULT STDMETHODCALLTYPE get_Version( 
+            /* [retval][out] */ BSTR __RPC_FAR *pVersion);
+
+    HRESULT STDMETHODCALLTYPE get_RubyVersion( 
             /* [retval][out] */ BSTR __RPC_FAR *pVersion);
 
     HRESULT STDMETHODCALLTYPE rubyize( 
@@ -87,7 +90,7 @@ public:
 
 private:
     CComObject<CRubyScript>* m_pRubyScript;
-    HRESULT Call(LPCOLESTR method, VARIANT& arg, VARIANT* pResult);
+    HRESULT Call(LPCOLESTR method, int cargs, VARIANT* args, VARIANT* pResult);
 };
 
 #endif //__RUBYIZE_H_

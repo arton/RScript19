@@ -58,8 +58,8 @@ interface IRubyWrapper : IUnknown
 
 [
 	uuid(5DBEF569-E278-11D3-8E7A-0000F45A3C05),
-	version(1.0),
-	helpstring("RScript 1.0")
+	version(1.9),
+	helpstring("RScript 1.9")
 ]
 library RSCRIPTLib
 {
@@ -86,19 +86,19 @@ library RSCRIPTLib
 	]
 	interface IRubyize : IDispatch
 	{
-		[id(1), propget] HRESULT VERSION([out, retval]BSTR* pVersion);
+		[id(1), propget] HRESULT Version([out, retval]BSTR* pVersion);
+		[id(2), propget] HRESULT RubyVersion([out, retval]BSTR* pVersion);
 		[id(10)] HRESULT rubyize([in]VARIANT val, [out, retval]VARIANT* pObj);
 		[id(11)] HRESULT erubyize([in]BSTR script, [out, retval]VARIANT* pObj);
 	};
 
 	[
-		uuid(5DBEF578-E278-11D3-8E7A-0000F45A3C05),
+		uuid(067BEC55-61A2-4cb3-A029-3BC4E18469CE),
 		helpstring("RubyScript Language (module)")
 	]
 	coclass RubyScript
 	{
 		[default] interface IActiveScript;
-		interface IRubyize;
 	};
 
 	[

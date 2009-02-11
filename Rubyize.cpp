@@ -11,7 +11,7 @@
 #include "RScript.h"
 #include "Rubyize.h"
 
-#define RUBYIZE_VERSION L"1.9.0"
+#define RUBYIZE_VERSION L"1.9.1"
 #define RUBYIZE NULL
 /////////////////////////////////////////////////////////////////////////////
 // CRubyize
@@ -35,6 +35,9 @@ HRESULT CRubyize::FinalConstruct()
                 L"def erubyize(str)\n"
                 L"  ActiveScriptRuby.rubyize true\n"
                 L"  eval str\n"
+                L"end\n"
+                L"def ruby_version\n"
+                L"  %|#{RUBY_VERSION}-p#{RUBY_PATCHLEVEL}|\n"
                 L"end\n",
                 RUBYIZE,
                 NULL,
@@ -114,7 +117,7 @@ HRESULT STDMETHODCALLTYPE CRubyize::OnLeaveScript( void)
     return S_OK;
 }
 
-HRESULT STDMETHODCALLTYPE CRubyize::get_VERSION( 
+HRESULT STDMETHODCALLTYPE CRubyize::get_Version( 
             /* [retval][out] */ BSTR __RPC_FAR *pVersion)
 {
     if (!pVersion) return E_POINTER;
@@ -122,7 +125,33 @@ HRESULT STDMETHODCALLTYPE CRubyize::get_VERSION(
     return S_OK;
 }
 
-HRESULT CRubyize::Call(LPCOLESTR method, VARIANT& arg, VARIANT* pResult)
+HRESULT STDMETHODCALLTYPE CRubyize::get_RubyVersion( 
+            /* [retval][out] */ BSTR __RPC_FAR *pVersion)
+{
+    if (!pVersion) return E_POINTER;
+    VARIANT v;
+    VariantInit(&v);
+    HRESULT hr = Call(L"ruby_version", 0, NULL, &v);
+    if (hr == S_OK)
+    {
+        if (v.vt == VT_BSTR)
+        {
+            *pVersion = SysAllocString(v.bstrVal);
+        }
+        else if (v.vt == (VT_BSTR | VT_BYREF))
+        {
+            *pVersion = SysAllocString(*v.pbstrVal);
+        }
+        else
+        {
+            *pVersion = NULL;
+        }
+        VariantClear(&v);
+    }
+    return hr;
+}
+
+HRESULT CRubyize::Call(LPCOLESTR method, int cargs, VARIANT* args, VARIANT* pResult)
 {
     CComPtr<IDispatch> pdisp;
     HRESULT hr = m_pRubyScript->GetScriptDispatch(RUBYIZE, &pdisp);
@@ -132,7 +161,7 @@ HRESULT CRubyize::Call(LPCOLESTR method, VARIANT& arg, VARIANT* pResult)
         hr = pdisp->GetIDsOfNames(IID_NULL, const_cast<LPOLESTR*>(&method), 1, LOCALE_SYSTEM_DEFAULT, dispid);
         if (hr == S_OK)
         {
-            DISPPARAMS params = { &arg, NULL, 1, 0 };
+            DISPPARAMS params = { args, NULL, cargs, 0 };
             unsigned int aerr;
             hr = pdisp->Invoke(dispid[0], IID_NULL, LOCALE_SYSTEM_DEFAULT, DISPATCH_METHOD,
                 &params, pResult, NULL, &aerr);
@@ -146,7 +175,7 @@ HRESULT STDMETHODCALLTYPE CRubyize::rubyize(
             /* [retval][out] */ VARIANT __RPC_FAR *pObj)
 {
     if (!pObj) return E_POINTER;
-    return Call(L"rubyize", val, pObj);
+    return Call(L"rubyize", 1, &val, pObj);
 }
         
 HRESULT STDMETHODCALLTYPE CRubyize::erubyize( 
@@ -157,7 +186,7 @@ HRESULT STDMETHODCALLTYPE CRubyize::erubyize(
     VARIANT v;
     v.vt = VT_BSTR;
     v.bstrVal = script;
-    return Call(L"erubyize", v, pObj);
+    return Call(L"erubyize", 1, &v, pObj);
 }
 
 STDMETHODIMP CRubyize::InterfaceSupportsErrorInfo(REFIID riid)

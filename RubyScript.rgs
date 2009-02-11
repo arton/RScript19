@@ -2,18 +2,18 @@ HKCR
 {
 	RubyScript.1.9 = s 'RubyScript Language (module)'
 	{
-		CLSID = s '{5DBEF578-E278-11D3-8E7A-0000F45A3C05}'
+		CLSID = s '{067BEC55-61A2-4cb3-A029-3BC4E18469CE}'
 		OLEScript = s ''
 	}
 	RubyScript = s 'RubyScript Language (module)'
 	{
-		CLSID = s '{5DBEF578-E278-11D3-8E7A-0000F45A3C05}'
+		CLSID = s '{067BEC55-61A2-4cb3-A029-3BC4E18469CE}'
 		CurVer = s 'RubyScript.1.9'
 		OLEScript = s ''
 	}
 	NoRemove CLSID
 	{
-		ForceRemove {5DBEF578-E278-11D3-8E7A-0000F45A3C05} = s 'RubyScript Language (module)'
+		ForceRemove {067BEC55-61A2-4cb3-A029-3BC4E18469CE} = s 'RubyScript Language (module)'
 		{
 			ProgID = s 'RubyScript.1.9'
 			OLEScript = s ''
