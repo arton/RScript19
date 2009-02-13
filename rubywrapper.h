@@ -67,6 +67,10 @@ END_COM_MAP()
 
 	inline void SetHandle(HANDLE h) { m_hThread = h; }
 	inline HANDLE GetHandle() const { return m_hThread; }
+
+        static ID s_idInstanceEval;
+        static ID s_idModuleEval;
+
 // IRubyWrapper
 public:
 	HRESULT STDMETHODCALLTYPE rb_intern( 

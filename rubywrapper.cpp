@@ -21,6 +21,8 @@
 GIT _init_git;
 CRubyWrapper* CRubyWrapper::s_pWrapper = NULL;
 GIP(IRubyWrapper) CRubyWrapper::s_gip;
+ID CRubyWrapper::s_idInstanceEval;
+ID CRubyWrapper::s_idModuleEval;
 
 HRESULT CRubyWrapper::FinalConstruct()
 {
@@ -32,6 +34,8 @@ HRESULT CRubyWrapper::FinalConstruct()
 		m_idDelete = ::rb_intern("delete");
                 m_idEach = ::rb_intern("each");
                 m_idEachLine = ::rb_intern("each_line");
+                s_idInstanceEval = ::rb_intern("instance_eval");
+                s_idModuleEval = ::rb_intern("module_eval");
 		m_valList = rb_hash_new();
 		rb_global_variable(&m_valList);
 	}
@@ -135,11 +139,20 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::rb_module_new(
 	}
 	return S_OK;
 }
-        
+
 static VALUE safe_funcall(VALUE Args)
 {
 	VALUE* pArgs = (VALUE*)Args;
+        if (*(pArgs + 1)  == CRubyWrapper::s_idInstanceEval)
+        {
+            return rb_obj_instance_eval(3, pArgs + 2, *pArgs);
+        }
+        else if (*(pArgs + 1) == CRubyWrapper::s_idModuleEval)
+        {
+            return rb_mod_module_eval(3, pArgs + 2, *pArgs);
+        }
 	return rb_funcall2(*pArgs, *(pArgs + 1), 3, pArgs + 2);
+
 }
 
 HRESULT STDMETHODCALLTYPE CRubyWrapper::SearchMethod( 
@@ -224,11 +237,11 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::rb_funcall_with_string2(
 	ATLTRACE(_T("Wrapper::rb_funcall2 in Thread:%08X\n"), GetCurrentThreadId());
 	int sstat(0);
 	VALUE valArgs[5];
-	valArgs[0] = val;
-	valArgs[1] = id;
-	valArgs[2] = rb_str_new((char*)pstr, cb);
-	valArgs[3] = rb_str_new("ActiveScriptRuby", 16);
-	valArgs[4] = INT2NUM(line);
+        valArgs[0] = val;
+        valArgs[1] = id;
+        valArgs[2] = rb_str_new((char*)pstr, cb);
+        valArgs[3] = rb_str_new("ActiveScriptRuby", 16);
+        valArgs[4] = INT2NUM(line);
 	HRESULT hr = S_OK;
 	try
 	{
@@ -240,7 +253,7 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::rb_funcall_with_string2(
 		ATLTRACE(_T(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> enter instance_eval\n"));
 		int savesafe = rb_safe_level();
                 rb_set_safe_level(0);
-		VALUE val = rb_protect(safe_funcall, (VALUE)&valArgs[0], &sstat);
+		VALUE val = rb_protect(safe_funcall, (VALUE)valArgs, &sstat);
                 rb_set_safe_level(savesafe);
 		ATLTRACE(_T("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< leave instance_eval\n"));
 		if (sstat)
