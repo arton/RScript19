@@ -1,6 +1,6 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Developer Studio generated include file.
-// Used by RScript.rc
+// Used by GRScript.rc
 //
 #define IDI_ICON1                       1
 #define IDS_PROJNAME                    100

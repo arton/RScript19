@@ -28,8 +28,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,2,1,1
- PRODUCTVERSION 1,2,1,1
+ FILEVERSION 1,9,1,0
+ PRODUCTVERSION 1,9,1,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -47,15 +47,15 @@ BEGIN
             VALUE "Comments", "ActiveScript Wrapper for Program Language Ruby\0"
             VALUE "CompanyName", "It's Freetime Software\0"
             VALUE "FileDescription", "RScript Module\0"
-            VALUE "FileVersion", "1, 2, 1, 1\0"
+            VALUE "FileVersion", "1, 9, 1, 0\0"
             VALUE "InternalName", "RScript\0"
-            VALUE "LegalCopyright", "Copyright (c) 2000-2004, 2006 arton, Freely Distrubutal under GPL.\0"
+            VALUE "LegalCopyright", "Copyright (c) 2000-2004, 2006, 2009 arton, Freely Distrubutal under GPL.\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OLESelfRegister", "\0"
             VALUE "OriginalFilename", "RScript.DLL\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "RScript Module\0"
-            VALUE "ProductVersion", "1, 2, 1, 1\0"
+            VALUE "ProductVersion", "1, 9, 1, 0\0"
             VALUE "SpecialBuild", "\0"
         END
     END

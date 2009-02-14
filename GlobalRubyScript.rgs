@@ -24,20 +24,20 @@ HKCR
 
 	GlobalRubyScript.1.9 = s 'RubyScript Language (global)'
 	{
-		CLSID = s '{0AC0D358-E866-11D3-8E82-0000F45A3C05}'
+		CLSID = s '{0A383007-32FE-4ec0-97D6-59892ECD5413}
 		OLEScript = s ''
 	}
 	GlobalRubyScript = s 'RubyScript Language (global)'
 	{
-		CLSID = s '{0AC0D358-E866-11D3-8E82-0000F45A3C05}'
+		CLSID = s '{0A383007-32FE-4ec0-97D6-59892ECD5413}
 		CurVer = s 'GlobalRubyScript.1.9'
 		OLEScript = s ''
 	}
 	NoRemove CLSID
 	{
-		ForceRemove {0AC0D358-E866-11D3-8E82-0000F45A3C05} = s 'RubyScript Language (global)'
+		ForceRemove {0A383007-32FE-4ec0-97D6-59892ECD5413} = s 'RubyScript Language (1.9.1 global)'
 		{
-			ProgID = s 'GlobalRubyScript.1'
+			ProgID = s 'GlobalRubyScript.1.9'
 			OLEScript = s ''
 			'Implemented Categories' = s ''
 			{
@@ -49,7 +49,7 @@ HKCR
 			{
 				val ThreadingModel = s 'Both'
 			}
-			'TypeLib' = s '{5DBEF569-E278-11D3-8E7A-0000F45A3C05}'
+			'TypeLib' = s '{474067DF-D9CE-4324-9D3F-E81F8E011AD1}'
 		}
 	}
 }

@@ -57,7 +57,7 @@ interface IRubyWrapper : IUnknown
 };
 
 [
-	uuid(5DBEF569-E278-11D3-8E7A-0000F45A3C05),
+	uuid(2369F037-7118-4b5f-890E-2A8DD6BB10AE),
 	version(1.9),
 	helpstring("RScript 1.9")
 ]
@@ -102,7 +102,7 @@ library RSCRIPTLib
 	};
 
 	[
-		uuid(66D56EE2-0249-11D4-8EA4-0000F45A3C05),
+		uuid(38DBE621-054C-4a2e-A993-2B05CECFCB71),
 		helpstring("RubyWrapper Class"),
 		noncreatable
 	]

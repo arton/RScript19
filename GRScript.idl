@@ -1,5 +1,5 @@
 /*
- *  Copyright(c) 2000 arton
+ *  Copyright(c) 2000, 2009 arton
  *
  *  You may distribute under the terms of either the GNU General Public
  *  License
@@ -11,7 +11,7 @@ import "ocidl.idl";
 import "activscp.idl";
 
 [
-	uuid(C9A96A27-0247-11D4-8EA4-0000F45A3C05),
+	uuid(474067DF-D9CE-4324-9D3F-E81F8E011AD1),
 	version(1.0),
 	helpstring("Global Ruby Script 1.0")
 ]
@@ -32,7 +32,7 @@ library GRSCRIPTLib
 	};
 
 	[
-		uuid(0AC0D358-E866-11D3-8E82-0000F45A3C05),
+		uuid(0A383007-32FE-4ec0-97D6-59892ECD5413),
 		helpstring("RubyScript Language (global)")
 	]
 	coclass GlobalRubyScript

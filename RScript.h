@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Wed Feb 11 13:54:22 2009
+/* at Sat Feb 14 23:49:36 2009
  */
 /* Compiler settings for C:\home\arton\projects\RScript19\trunk\RScript.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
@@ -1209,7 +1209,7 @@ EXTERN_C const CLSID CLSID_RubyWrapper;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("66D56EE2-0249-11D4-8EA4-0000F45A3C05")
+class DECLSPEC_UUID("38DBE621-054C-4a2e-A993-2B05CECFCB71")
 RubyWrapper;
 #endif
 

@@ -11,7 +11,7 @@ HKCR
 	}
 	NoRemove CLSID
 	{
-		ForceRemove {6CB14BDE-8273-4551-810D-9809AD559228} = s 'Rubyize Class'
+		ForceRemove {6CB14BDE-8273-4551-810D-9809AD559228} = s 'Rubyize Class (1.9.1)'
 		{
 			ProgID = s 'ruby.object.1.9'
 			VersionIndependentProgID = s 'ruby.object'
@@ -20,7 +20,7 @@ HKCR
 			{
 				val ThreadingModel = s 'Apartment'
 			}
-			'TypeLib' = s '{5DBEF569-E278-11D3-8E7A-0000F45A3C05}'
+			'TypeLib' = s '{2369F037-7118-4b5f-890E-2A8DD6BB10AE}'
 		}
 	}
 }

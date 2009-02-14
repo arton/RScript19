@@ -2,7 +2,7 @@
 
 
 /* File created by MIDL compiler version 5.01.0164 */
-/* at Mon Feb 09 22:08:58 2009
+/* at Sat Feb 14 23:47:48 2009
  */
 /* Compiler settings for C:\home\arton\projects\RScript19\trunk\GRScript.idl:
     Oicf (OptLev=i2), W1, Zp8, env=Win32, ms_ext, c_ext
@@ -136,7 +136,7 @@ EXTERN_C const CLSID CLSID_GlobalRubyScript;
 
 #ifdef __cplusplus
 
-class DECLSPEC_UUID("0AC0D358-E866-11D3-8E82-0000F45A3C05")
+class DECLSPEC_UUID("0A383007-32FE-4ec0-97D6-59892ECD5413")
 GlobalRubyScript;
 #endif
 #endif /* __GRSCRIPTLib_LIBRARY_DEFINED__ */
