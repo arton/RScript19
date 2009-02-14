@@ -223,7 +223,8 @@ void CRScriptCore::DefineGlobalProperties(LPCSTR pObjName)
 	char* p = reinterpret_cast<LPSTR>(alloca(alloclen + 1));
 	int cb = sprintf(p, merge, prefix, pObjName, prefix, pObjName);
 #if defined(__IRubyEngine_INTERFACE_DEFINED__)
-	VALUE a = rb_funcall(GetModuleValue(), s_idInstanceEval, 3, rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1));
+        VALUE args[] = { rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1) };
+        VALUE a = rb_obj_instance_eval(3, args, GetModuleValue());
 #else
 	VALUE a = rb_eval_string(p);
 #endif
@@ -307,7 +308,8 @@ void CRScriptCore::DefineGlobalMethods(LPCSTR pObjName)
 		int cb = sprintf(p, methoddef, prop, prefix, pObjName, prop);
 #endif
 #if defined(__IRubyEngine_INTERFACE_DEFINED__)
-		rb_funcall(GetModuleValue(), s_idInstanceEval, 3, rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1));
+                VALUE args[] = { rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1) };
+                rb_obj_instance_eval(3, args, GetModuleValue());
 #else
 		rb_eval_string(p);
 #endif
@@ -320,7 +322,8 @@ VALUE CRScriptCore::eval_string(char* p, int cb)
 {
 	VALUE module = Qnil;
 	CRubyWrapper::GetCWrapper()->GetCurrentEngine()->GetModule(&module);
-	return rb_funcall(module, s_idInstanceEval, 3, rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1));
+        VALUE args[] = { rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1) };
+        return rb_obj_instance_eval(3, args, module);
 }
 #endif
 VALUE __cdecl CRScriptCore::funcall(VALUE v[])
@@ -830,20 +833,6 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::GetScriptDispatch(
 	if (!pstrItemName)
 	{
 		if ((*ppdisp = GetGlobalDispatch()) != NULL)
-		{
-			(*ppdisp)->AddRef();
-		}
-	}
-	else if (m_strGlobalObjectName == pstrItemName)
-	{
-		ItemMapIter it = m_mapItem.find(pstrItemName);
-		IDispatch* pDisp = NULL;
-		if (it != m_mapItem.end())
-		{
-			pDisp = (*it).second->GetDispatch(m_pSite, const_cast<LPOLESTR>(pstrItemName), (m_dwThreadID == GetCurrentThreadId()));
-			pDisp->Release();	// Already AddRefed
-		}
-		if ((*ppdisp = GetOuterDispatch(pDisp)) != NULL)
 		{
 			(*ppdisp)->AddRef();
 		}

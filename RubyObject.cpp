@@ -49,10 +49,10 @@ CRubyObject::CRubyObject(IRubyEngine* pengine, VALUE val, bool fRubyObject, IDis
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
 	char sz[24];
 	wsprintfA(sz, "%08X%08X", pengine, val);
-    IRubyWrapper* pWrapper = CRubyWrapper::GetWrapper();
+        IRubyWrapper* pWrapper = CRubyWrapper::GetWrapper();
 	pWrapper->RegisterObject(reinterpret_cast<LPBYTE>(sz), val);
 	pWrapper->Release();
-    HRESULT hr = CoCreateFreeThreadedMarshaler(this, &m_pUnkMarshaler.p);
+        HRESULT hr = CoCreateFreeThreadedMarshaler(this, &m_pUnkMarshaler.p);
 	ATLTRACE(_T("CRubyObject::CreateFreeThreadMarshaler Result = %08X\n"), hr);
 #endif
 	m_mapMethods["self"] = DISPID_VALUE;
@@ -63,7 +63,7 @@ CRubyObject::~CRubyObject()
 	ATLTRACE(_T("Destroy RubyObject\n"));
 	if (m_pDisp.p)
 		  m_pDisp.Release();
-	if (m_fRubyObject == false && m_pEngine)
+	if (!m_fRubyObject && m_pEngine)
 		m_pEngine->ClearModuleObject();
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
 	char sz[24];
@@ -147,7 +147,7 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
 		IRubyEngine* pEngine = CRubyWrapper::GetCWrapper()->GetCurrentEngine();
 		ATLTRACE(_T("GetIDsOfNames MyEngine:%08X, pEngine:%08X, RubyObject:%d, Name=%s\n"), m_pEngine, pEngine, m_fRubyObject, OLE2T(*(rgszNames + i)));
-		if (pEngine == m_pEngine && m_fRubyObject == false)
+		if (pEngine == m_pEngine && !m_fRubyObject)
 		{
 			*(rgDispId + i) = DISPID_UNKNOWN;
 			hr = DISP_E_UNKNOWNNAME;
