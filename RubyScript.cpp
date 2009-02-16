@@ -700,15 +700,16 @@ void CRubyScript::AddNamedItem(LPCOLESTR pstrName)
 	while (hr == RPC_E_CALL_REJECTED);
 	if (m_strGlobalObjectName == pstrName)
 	{
-		do
-		{
-			hr = m_pWrapper->DefineGlobalObject(this);
-			if (hr == RPC_E_CALL_REJECTED)
-			{
-				ForceChangeThreadContext();
-			}
-		}
-		while (hr == RPC_E_CALL_REJECTED);
+            HRESULT hr;
+            do
+            {
+                hr = m_pWrapper->DefineGlobalObject(this);
+                if (hr == RPC_E_CALL_REJECTED)
+                {
+                    ForceChangeThreadContext();
+                }
+            }
+            while (hr == RPC_E_CALL_REJECTED);
 	}
 	ATLTRACE(_("Leave AddNamedItem For %s\n"), pName);
 	VariantClear(&v);
@@ -719,7 +720,7 @@ void CRubyScript::AddNamedItem(LPCOLESTR pstrName)
 	}
 	LeaveScript();
 }
-        
+
 IDispatch* CRubyScript::GetOuterDispatch(IDispatch* pDisp)
 {
 	if (!m_pModuleObject)

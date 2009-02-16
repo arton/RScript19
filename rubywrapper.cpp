@@ -128,11 +128,26 @@ HRESULT STDMETHODCALLTYPE CRubyWrapper::rb_intern(
 	return S_OK;
 }
         
+static VALUE method_missing(int argc, VALUE* argv, VALUE self)
+{
+    ID id = rb_to_id(*argv);
+#if defined(_DEBUG)
+    ATLTRACE(_T("missing %hs\n"), rb_id2name(id));
+#endif
+    VALUE obj = rb_ivar_get(self, ::rb_intern("@_asr_default_object"));
+    if (obj != Qnil)
+    {
+        return rb_funcall2(obj, id, argc - 1, argv + 1);
+    }
+    return Qnil;
+}
+
 HRESULT STDMETHODCALLTYPE CRubyWrapper::rb_module_new( 
             /* [in] */ unsigned long parent,
             /* [out] */ unsigned long __RPC_FAR *p)
 {
 	*p = ::rb_module_new();
+        ::rb_define_singleton_method(*p, "method_missing", reinterpret_cast<VALUE(*)(...)>(method_missing), -1);
 	if (parent != Qnil)
 	{
 		rb_extend_object(*p, parent);

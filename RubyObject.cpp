@@ -247,7 +247,7 @@ HRESULT STDMETHODCALLTYPE CRubyObject::Invoke(
 			if (hr == RPC_E_CALL_REJECTED) 
 			{
 				CRScriptCore::ForceChangeThreadContext();
-				Sleep(100);
+			 	Sleep(100);
 			}
 		}
 		while (hr == RPC_E_CALL_REJECTED);

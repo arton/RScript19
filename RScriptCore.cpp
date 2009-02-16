@@ -819,7 +819,7 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::AddTypeLib(
 		pInfo->ReleaseTypeAttr(pattr);
 		pInfo->Release();
 	}
-return S_OK;
+        return S_OK;
 //	m_listTypeLib.push_back(pLib);
 }
 
