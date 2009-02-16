@@ -56,6 +56,7 @@ CRubyObject::CRubyObject(IRubyEngine* pengine, VALUE val, bool fRubyObject, IDis
 	ATLTRACE(_T("CRubyObject::CreateFreeThreadMarshaler Result = %08X\n"), hr);
 #endif
 	m_mapMethods["self"] = DISPID_VALUE;
+        m_pDisp.p = pDisp;
 }
 
 CRubyObject::~CRubyObject()
@@ -134,6 +135,11 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 		/* [size_is][out] */ DISPID __RPC_FAR *rgDispId)
 {
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
+        if (!m_fRubyObject && m_pDisp.p)
+        {
+                HRESULT hr = m_pDisp->GetIDsOfNames(riid, rgszNames, cNames, lcid, rgDispId);
+                if (hr == S_OK) return hr;
+        }
 	IRubyWrapper* p = CRubyWrapper::GetWrapper();
 #else
 	int stacktop;
@@ -147,18 +153,8 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
 		IRubyEngine* pEngine = CRubyWrapper::GetCWrapper()->GetCurrentEngine();
 		ATLTRACE(_T("GetIDsOfNames MyEngine:%08X, pEngine:%08X, RubyObject:%d, Name=%s\n"), m_pEngine, pEngine, m_fRubyObject, OLE2T(*(rgszNames + i)));
-		if (pEngine == m_pEngine && !m_fRubyObject)
-		{
-			*(rgDispId + i) = DISPID_UNKNOWN;
-			hr = DISP_E_UNKNOWNNAME;
-			continue;
-		}
 #endif
-#ifdef TENER_FOR_VBER
-		LPSTR psz = CharLowerA(W2A(*(rgszNames + i)));
-#else
 		LPSTR psz = W2A(*(rgszNames + i));
-#endif
 		RubyMethodMapIter it = m_mapMethods.find(psz);
 		if (it != m_mapMethods.end())
 		{
@@ -189,6 +185,10 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 			for (int j = 0; j < imax; j++)
 			{
 				VALUE v = rb_ary_entry(obj, j);
+                                if (SYMBOL_P(v))
+                                {
+                                    v = rb_sym_to_s(v);
+                                }
 				char* pmname = StringValuePtr(v);
 				ATLTRACE(_T("Kernel Func=%s\n"), pmname);
 				if (stricmp(psz, pmname) == 0)
@@ -232,7 +232,19 @@ HRESULT STDMETHODCALLTYPE CRubyObject::Invoke(
 	IActiveScriptError* pError = NULL;
 	HRESULT hr = S_OK;
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
-	if (dispIdMember == DISPID_VALUE && wFlags == DISPATCH_METHOD)
+	if (!m_fRubyObject)
+	{
+               if (m_pDisp.p)
+               {
+                   hr = m_pDisp->Invoke(dispIdMember, riid, lcid, wFlags, pDispParams, pVarResult, pExcepInfo, puArgErr);
+                   if (hr == S_OK)
+                   {
+                       return hr;
+                   }
+               }
+        }
+
+        if (dispIdMember == DISPID_VALUE && wFlags == DISPATCH_METHOD)
 	{
 		dispIdMember = rb_intern("call");
 	}

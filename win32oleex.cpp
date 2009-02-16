@@ -842,6 +842,7 @@ VALUE CRScriptCore::fole_propertyput(VALUE self, VALUE property, VALUE value)
 	{
 		BSTR bstr = SysAllocString(A2W(StringValuePtr(property)));
 		hr = pole->pDispatchEx->GetDispID(bstr, fdexNameCaseSensitive, &dispID);
+                ATLTRACE(_T("win32ole propput call %ls, id=%x, result=%x\n"), bstr, dispID, hr);
 		SysFreeString(bstr);
 	}
 	else
@@ -1016,6 +1017,7 @@ VALUE CRScriptCore::ole_invoke(int argc, VALUE* argv, VALUE self, WORD wFlags)
 		ATLTRACE(_T("Invoke DispatchEx %08\n"), pole->pDispatchEx);
 		BSTR bstr = SysAllocString(pwMethodName);
 		hr = pole->pDispatchEx->GetDispID(bstr, fdexNameCaseSensitive, &DispID);
+                ATLTRACE(_T("win32ole invoke call %ls, id=%x, result=%x\n"), bstr, DispID, hr);
 		SysFreeString(bstr);
 	}
 	else

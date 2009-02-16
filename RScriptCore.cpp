@@ -830,12 +830,20 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::GetScriptDispatch(
 	if (!ppdisp) return E_POINTER;
 	*ppdisp = NULL;
 	ATLTRACE(_T("GetScriptDispatch for %ls\n"), (pstrItemName) ? pstrItemName : L"GLOBALNAMESPACE");
-	if (!pstrItemName)
-	{
-		if ((*ppdisp = GetGlobalDispatch()) != NULL)
+	if (!pstrItemName || m_strGlobalObjectName == pstrItemName)
+        {
+		IDispatch* pDisp = NULL;
+		ItemMapIter it = m_mapItem.find(pstrItemName);
+		if (it != m_mapItem.end())
 		{
-			(*ppdisp)->AddRef();
-		}
+			pDisp = (*it).second->GetDispatch(m_pSite, const_cast<LPOLESTR>(pstrItemName), (m_dwThreadID == GetCurrentThreadId()));
+                        pDisp->AddRef();
+                }
+		if ((*ppdisp = GetOuterDispatch(pDisp)) == NULL)
+                {
+                    return S_FALSE;
+                }
+                (*ppdisp)->AddRef();
 	}
 	else
 	{

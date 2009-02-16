@@ -698,19 +698,6 @@ void CRubyScript::AddNamedItem(LPCOLESTR pstrName)
 		}
 	}
 	while (hr == RPC_E_CALL_REJECTED);
-	if (m_strGlobalObjectName == pstrName)
-	{
-            HRESULT hr;
-            do
-            {
-                hr = m_pWrapper->DefineGlobalObject(this);
-                if (hr == RPC_E_CALL_REJECTED)
-                {
-                    ForceChangeThreadContext();
-                }
-            }
-            while (hr == RPC_E_CALL_REJECTED);
-	}
 	ATLTRACE(_("Leave AddNamedItem For %s\n"), pName);
 	VariantClear(&v);
 	if (hr == S_OK && pError)
@@ -734,13 +721,7 @@ IDispatch* CRubyScript::GetOuterDispatch(IDispatch* pDisp)
 
 IDispatch* CRubyScript::GetGlobalDispatch()
 {
-#ifdef FAKE_PERSISTENT
-	if (!m_pRubyObject)
-		m_pRubyObject = new CRubyObject(this, rb_mKernel, false);
-	return m_pRubyObject;
-#else
 	return GetOuterDispatch(NULL);
-#endif
 }
 
 VALUE CRubyScript::GetModuleValue()
