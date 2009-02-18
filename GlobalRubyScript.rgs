@@ -22,20 +22,20 @@ HKCR
 		}
 	}
 
-	GlobalRubyScript.1.9 = s 'RubyScript Language (global)'
+	GlobalRubyScript.1.9 = s 'RubyScript Language (1.9.1 global)'
 	{
-		CLSID = s '{0A383007-32FE-4ec0-97D6-59892ECD5413}
+		CLSID = s '{0A383007-32FE-4EC0-97D6-59892ECD5413}'
 		OLEScript = s ''
 	}
-	GlobalRubyScript = s 'RubyScript Language (global)'
+	GlobalRubyScript = s 'RubyScript Language (1.9.1 global)'
 	{
-		CLSID = s '{0A383007-32FE-4ec0-97D6-59892ECD5413}
+		CLSID = s '{0A383007-32FE-4EC0-97D6-59892ECD5413}'
 		CurVer = s 'GlobalRubyScript.1.9'
 		OLEScript = s ''
 	}
 	NoRemove CLSID
 	{
-		ForceRemove {0A383007-32FE-4ec0-97D6-59892ECD5413} = s 'RubyScript Language (1.9.1 global)'
+		ForceRemove {0A383007-32FE-4EC0-97D6-59892ECD5413} = s 'RubyScript Language (1.9.1 global)'
 		{
 			ProgID = s 'GlobalRubyScript.1.9'
 			OLEScript = s ''
