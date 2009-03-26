@@ -833,7 +833,7 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::GetScriptDispatch(
 	if (!pstrItemName || m_strGlobalObjectName == pstrItemName)
         {
 		IDispatch* pDisp = NULL;
-		ItemMapIter it = m_mapItem.find(pstrItemName);
+                ItemMapIter it = (pstrItemName) ? m_mapItem.find(pstrItemName) : m_mapItem.end();
 		if (it != m_mapItem.end())
 		{
 			pDisp = (*it).second->GetDispatch(m_pSite, const_cast<LPOLESTR>(pstrItemName), (m_dwThreadID == GetCurrentThreadId()));
