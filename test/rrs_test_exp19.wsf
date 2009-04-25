@@ -1,0 +1,66 @@
+<package>
+<job>
+<reference object="Scripting.FileSystemObject"/>
+<script language="RubyScript.1.9">
+  failed = 0
+  # test constantiate
+  assertions = 1
+  if 'Windows Script Host' != Globals.WSH.name
+    failed += 1
+  end
+  # test globalize
+  assertions += 1
+  unless /^\d+\.\d+$/.match(@WSH.Version)
+    failed += 1
+  end
+  # test adding typelib
+  assertions += 1
+  unless 1 == ForReading
+    failed += 1
+  end
+
+  # test moniker
+  assertions += 1
+  begin
+    WIN32OLE.connect('WinNT://localhost/foobar')
+    failed += 1
+  rescue WIN32OLERuntimeError => e
+    unless e.message.index('OLE server')
+      failed += 1
+    end
+  end
+
+  # named arg
+  assertions += 1
+  loc = WIN32OLE.new('WbemScripting.SWbemLocator.1')
+  begin
+    loc.connectServer('strserver' => 'localhost')
+  rescue WIN32OLERuntimeError => e
+    failed += 1
+  end    
+
+  assertions += 1
+  obj = WIN32OLE.new('TestObject.Win32OleTestObj')
+  if obj.optArgs(1, 2, 3) != 6 || obj.optArgs(1, 2) != 3
+    failed += 1
+  end    
+
+  assertions += 1
+  if obj.varargs(6) != 6 || obj.varargs(1, 2, 3, 4, 5, 6, 7, 8, 9) != 45
+    failed += 1
+  end    
+
+  assertions += 1
+  if obj.Args('param2' => 5, 'param1' => 18) != 3
+    failed += 1
+  end    
+
+  assertions += 1
+     if obj.Args(:param2 => 5, :param1 => 18) != 3
+    failed += 1
+  end    
+
+  WSH.echo "#{assertions} assertions, #{failed} failures"
+</script>
+</job>
+</package>

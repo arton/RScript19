@@ -65,7 +65,7 @@ CRScriptCore::CRScriptCore()
 
 }
 
-static char* asr_argv[] = {"ActiveScriptRuby", NULL};
+static char* asr_argv[] = {"ActiveScriptRuby", "-e", ";", NULL};
 
 void CRScriptCore::InitializeEnvironment()
 {
@@ -79,7 +79,7 @@ void CRScriptCore::InitializeEnvironment()
         char** pargv;
 	ruby_sysinit(&dummyargc, &pargv);
 	ruby_init();
-        ruby_process_options(1, asr_argv);
+        ruby_process_options(3, asr_argv);
 	try
 	{
 		rb_require("win32ole");

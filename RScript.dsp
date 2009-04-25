@@ -438,5 +438,9 @@ SOURCE=.\RubyScript.rgs
 SOURCE=.\RubyWrapper.rgs
 # End Source File
 # End Group
+# Begin Source File
+
+SOURCE=".\debug-setting.txt"
+# End Source File
 # End Target
 # End Project
