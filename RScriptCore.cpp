@@ -61,9 +61,11 @@ CRScriptCore::CRScriptCore()
 {
 	ATLTRACE(_("ScriptCore Creation in Thread:%08X\n"), GetCurrentThreadId());
 	m_pUnkMarshaler = NULL;
+        CInitializer::GetInstance().InitNew();
 
-	CInitializer::GetInstance().InitNew();
 }
+
+static char* asr_argv[] = {"ActiveScriptRuby", NULL};
 
 void CRScriptCore::InitializeEnvironment()
 {
@@ -72,13 +74,12 @@ void CRScriptCore::InitializeEnvironment()
 	int stacktop;
 	s_pStackTop = reinterpret_cast<LPBYTE>(&stacktop);
 #endif
-	static int dummyargc(0);
-	static char** vec;
-	ruby_sysinit(&dummyargc, &vec);
+        int dummyargc(1);
+        char* dummyargv[] = {"dummy", NULL };
+        char** pargv;
+	ruby_sysinit(&dummyargc, &pargv);
 	ruby_init();
-        ruby_script("ActiveScriptRuby");
-        ruby_init_loadpath();
-	rb_enc_find_index("encdb");
+        ruby_process_options(1, asr_argv);
 	try
 	{
 		rb_require("win32ole");

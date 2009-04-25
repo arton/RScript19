@@ -28,8 +28,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,9,1,1
- PRODUCTVERSION 1,9,1,1
+ FILEVERSION 1,9,1,2
+ PRODUCTVERSION 1,9,1,2
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -47,7 +47,7 @@ BEGIN
             VALUE "Comments", "WSH Ruby Engine\0"
             VALUE "CompanyName", "It's Freetime Software\0"
             VALUE "FileDescription", "GRScript Module\0"
-            VALUE "FileVersion", "1, 9, 1, 1\0"
+            VALUE "FileVersion", "1, 9, 1, 2\0"
             VALUE "InternalName", "GRScript\0"
             VALUE "LegalCopyright", "Copyright (c) 2000-2003, 2006, 2009 arton under GPL.\0"
             VALUE "LegalTrademarks", "\0"
@@ -55,7 +55,7 @@ BEGIN
             VALUE "OriginalFilename", "GRScript.DLL\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "GlobalActiveRubyScript Module\0"
-            VALUE "ProductVersion", "1, 9, 1, 1\0"
+            VALUE "ProductVersion", "1, 9, 1, 2\0"
             VALUE "SpecialBuild", "\0"
         END
     END
