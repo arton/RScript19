@@ -141,11 +141,12 @@ HRESULT STDMETHODCALLTYPE CRubyScript::SetScriptSite(
 				(BYTE *)NULL, 0, PUAF_DEFAULT, 0);
 			if (dwPolicy == URLPOLICY_JAVA_HIGH)
 			{
-				m_dwSecurityLevel = 3;
+				m_dwSecurityLevel = 4;
+				return E_FAIL;
 			}
 			else if (dwPolicy == URLPOLICY_JAVA_MEDIUM)
 			{
-				m_dwSecurityLevel = 3;
+				m_dwSecurityLevel = 4;
 			}
 			else
 			{
