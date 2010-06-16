@@ -166,6 +166,7 @@ HRESULT CGlobalRubyScript::ParseText(int StartLine, LPCSTR pstrCode, LPCOLESTR p
 	TCHAR szScriptFile[_MAX_PATH], szTempPath[_MAX_PATH + 4];
 	GetTempPath(_MAX_PATH, szTempPath);
 	GetTempFileName(szTempPath, _T("RSC"), 0, szScriptFile);
+    DeleteFile(szScriptFile);
 	lstrcat(szScriptFile, _T(".rb"));
 	EnterScript();
 	TraceOn();
