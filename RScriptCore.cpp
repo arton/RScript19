@@ -498,9 +498,13 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::SetInterfaceSafetyOptions( REFIID riid, 
 HRESULT STDMETHODCALLTYPE CRScriptCore::GetInterfaceSafetyOptions( REFIID riid, DWORD* pdwSupportedOptions, DWORD* pdwEnabledOptions )
 {
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
+ #ifdef SUPPORT_IE_EMBED
 	*pdwEnabledOptions = m_dwSafety;
 	*pdwSupportedOptions = INTERFACESAFE_FOR_UNTRUSTED_CALLER | INTERFACESAFE_FOR_UNTRUSTED_DATA
 		| INTERFACE_USES_DISPEX | INTERFACE_USES_SECURITY_MANAGER;
+ #else
+	*pdwEnabledOptions = m_dwSafety = 0;
+ #endif
 #else
 	*pdwEnabledOptions = m_dwSafety = 0;
 #endif
