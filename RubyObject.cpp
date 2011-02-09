@@ -116,7 +116,7 @@ ULONG  STDMETHODCALLTYPE CRubyObject::Release()
 HRESULT STDMETHODCALLTYPE CRubyObject::GetTypeInfoCount( 
 		/* [out] */ UINT __RPC_FAR *pctinfo)
 {
-	ATLTRACENOTIMPL(CRubyObject::GetTypeInfoCount);
+	ATLTRACENOTIMPL(_T("CRubyObject::GetTypeInfoCount"));
 }
         
 HRESULT STDMETHODCALLTYPE CRubyObject::GetTypeInfo( 
@@ -179,23 +179,12 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 			while (h == RPC_E_CALL_REJECTED);
 			ATLTRACE(_T("Result of CRubyObject::SearchMethod = %08X\n"), h);
 #else
-			VALUE obj = rb_funcall(m_valueKlass, (m_valueKlass == rb_mKernel) ? m_idPrivMethods : m_idMethods, 0);
-			int imax = FIX2INT(rb_funcall(obj, m_idSize, 0));
-			*(rgDispId + i) = DISPID_UNKNOWN;
-			for (int j = 0; j < imax; j++)
+			VALUE obj = rb_funcall(m_valueKlass, m_idMethods, 0);
+			*(rgDispId + i) = searchMethod(obj, psz);
+			if (*(rgDispId + i) == DISPID_UNKNOWN && m_valueKlass == rb_mKernel)
 			{
-				VALUE v = rb_ary_entry(obj, j);
-                                if (SYMBOL_P(v))
-                                {
-                                    v = rb_sym_to_s(v);
-                                }
-				char* pmname = StringValuePtr(v);
-				ATLTRACE(_T("Kernel Func=%s\n"), pmname);
-				if (stricmp(psz, pmname) == 0)
-				{
-					*(rgDispId + i) = ::rb_intern(pmname);
-					break;
-				}
+				VALUE obj = rb_funcall(m_valueKlass, m_idPrivMethods, 0);
+				*(rgDispId + i) = searchMethod(obj, psz);
 			}
 #endif
 			if (*(rgDispId + i) == DISPID_UNKNOWN)
@@ -211,6 +200,26 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 	p->Release();
 #endif
 	return hr;
+}
+
+DISPID CRubyObject::searchMethod(VALUE obj, LPCSTR psz)
+{
+	int imax = FIX2INT(rb_funcall(obj, m_idSize, 0));
+	for (int j = 0; j < imax; j++)
+	{
+		VALUE v = rb_ary_entry(obj, j);
+		if (SYMBOL_P(v))
+		{
+			v = rb_sym_to_s(v);
+		}
+		char* pmname = StringValuePtr(v);
+		ATLTRACE(_T("Kernel Func=%s\n"), pmname);
+		if (stricmp(psz, pmname) == 0)
+		{
+			return ::rb_intern(pmname);
+		}
+	}
+	return DISPID_UNKNOWN;
 }
         
 HRESULT STDMETHODCALLTYPE CRubyObject::Invoke( 

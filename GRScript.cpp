@@ -11,12 +11,14 @@
 #include "GRScript.h"
 #include "GRScript_i.c"
 #include "GlobalRubyScript.h"
+#include "Rubyize.h"
 
 DEFINE_GUID(SID_GetCaller, 0x4717cc40, 0xbcb9, 0x11d0, 0x93, 0x36, 0x0, 0xa0, 0xc9, 0xd, 0xca, 0xa9);
 
 CComModule _Module;
 
 BEGIN_OBJECT_MAP(ObjectMap)
+OBJECT_ENTRY(CLSID_SimpleRubyize, CRubyize)
 OBJECT_ENTRY(CLSID_GlobalRubyScript, CGlobalRubyScript)
 END_OBJECT_MAP()
 

@@ -56,10 +56,13 @@ void CScrError::CreateErrorBase(VALUE v)
             }
 #endif
             bt = rb_ary_entry(bt, 0);
-            m_strBacktrace = StringValuePtr(bt);
-            ATLTRACE("bt=%d, %hs\n", FIX2INT(rb_funcall(bt, rb_intern("size"), 0)), m_strBacktrace.c_str());
+			if (!NIL_P(bt))
+			{
+				m_strBacktrace = StringValuePtr(bt);
+				ATLTRACE("bt=%d, %hs\n", FIX2INT(rb_funcall(bt, rb_intern("size"), 0)), m_strBacktrace.c_str());
+			}
         }
-        else
+        if (NIL_P(bt))
         {
             m_strBacktrace = "";
         }
@@ -87,7 +90,7 @@ int CScrError::GetErrorLine()
 
 void CScrError::SetSource(LPCSTR p)
 {
-	LPSTR p2;
+	LPCSTR p2;
 	for (int i = 0; i < m_nLine; i++)
 	{
 		p2 = strchr(p, '\n');

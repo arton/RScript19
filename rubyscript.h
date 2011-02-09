@@ -135,7 +135,7 @@ protected:
 		m_pWrapper->rb_intern(reinterpret_cast<unsigned char*>(p), &id);
 		return (ID)id;
 	}
-	inline setModule(VALUE v) { m_valueModule = v; }
+	inline void setModule(VALUE v) { m_valueModule = v; }
 	bool m_fRubyize;
 private:
 	GIP(IActiveScriptSite) m_pGippedSite;

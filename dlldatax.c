@@ -4,10 +4,9 @@
 
 #define REGISTER_PROXY_DLL //DllRegisterServer、他
 
-#define _WIN32_WINNT 0x0400	//WinNT 4.0 または DCOM をサポートした Win95 用
+#define _WIN32_WINNT 0x0500	//WinNT 4.0 または DCOM をサポートした Win95 用
 #define USE_STUBLESS_PROXY	//MIDL のオプションで /Oicf を指定した場合のみ定義
 
-#pragma comment(lib, "rpcndr.lib")
 #pragma comment(lib, "rpcns4.lib")
 #pragma comment(lib, "rpcrt4.lib")
 

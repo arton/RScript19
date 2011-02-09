@@ -1057,7 +1057,7 @@ VALUE CRScriptCore::ole_invoke(int argc, VALUE* argv, VALUE self, WORD wFlags)
         }
         if(FAILED(hr)) {
             /* clear dispatch parameters */
-            for(i = 0; i < op.dp.cArgs; i++ ) {
+            for(int i = 0; i < op.dp.cArgs; i++ ) {
                 VariantClear(&op.dp.rgvarg[i]);
             }
             ole_raise(hr, s_valueWIN32OLERuntimeError, 
@@ -1124,7 +1124,7 @@ VALUE CRScriptCore::ole_invoke(int argc, VALUE* argv, VALUE self, WORD wFlags)
                 memset(&excepinfo, 0, sizeof(EXCEPINFO));
 				hr = invoke(pole, DispID, lcid, wFlags, NULL, excepinfo, argErr, op);
             }
-            for(i = cNamedArgs; i < op.dp.cArgs; i++) {
+            for(int i = cNamedArgs; i < op.dp.cArgs; i++) {
                 int n = op.dp.cArgs - i + cNamedArgs - 1;
                 VariantClear(&op.dp.rgvarg[n]);
             }
@@ -1140,7 +1140,7 @@ VALUE CRScriptCore::ole_invoke(int argc, VALUE* argv, VALUE self, WORD wFlags)
                 memset(&excepinfo, 0, sizeof(EXCEPINFO));
                 VariantInit(&result);
 				hr = invoke(pole, DispID, lcid, wFlags, &result, excepinfo, argErr, op);
-                for(i = cNamedArgs; i < op.dp.cArgs; i++) {
+                for(int i = cNamedArgs; i < op.dp.cArgs; i++) {
                     int n = op.dp.cArgs - i + cNamedArgs - 1;
                     VariantClear(&op.dp.rgvarg[n]);
                 }

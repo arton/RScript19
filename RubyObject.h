@@ -79,11 +79,15 @@ public:
             /* [out] */ EXCEPINFO __RPC_FAR *pei,
             /* [unique][in] */ IServiceProvider __RPC_FAR *pspCaller)
 	{
+#ifdef __IRubyWrapper_INTERFACE_DEFINED__
 		if (pspCaller)
 			m_pEngine->RegisterServiceProvider(pspCaller);
+#endif
 		HRESULT hr = Invoke(id, IID_NULL, lcid, wFlags, pdp, pvarRes, pei, NULL);
+#ifdef __IRubyWrapper_INTERFACE_DEFINED__
 		if (pspCaller)
 			m_pEngine->UnregisterServiceProvider();
+#endif
 		return hr;
 	}
         
@@ -143,6 +147,7 @@ private:
 	ID m_idMethodDefined;
 	ID m_idMethods, m_idPrivMethods;
 	ID m_idSize;
+	DISPID searchMethod(VALUE obj, LPCSTR psz);
 	static VALUE add_item(VALUE item, VALUE ary);
 	static VALUE InvokeRuby(VALUE Param);
 	static VALUE val2var(VALUE Param);

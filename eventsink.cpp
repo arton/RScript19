@@ -227,6 +227,7 @@ STDMETHODIMP CEventSink::Invoke(
 	if (it == m_mapIvk.end()) return DISP_E_MEMBERNOTFOUND;
 
 	std::string& str = (*it).second.GetCode();
+#ifdef __IRubyWrapper_INTERFACE_DEFINED__
 	CRScriptCore* pEngine = m_pEngine;
 	m_pEngine->EnterScript();
 	HRESULT hr = m_pEngine->Invoke(m_pEngine->GetModuleValue(), (*it).second.GetStartLine(), str.length(), str.c_str(), pVarResult, pExcepInfo);
@@ -236,6 +237,10 @@ STDMETHODIMP CEventSink::Invoke(
 		m_pEngine->LeaveScript();
 	}
 	return hr;
+#else
+	_ASSERT("can't handle eventsink callback");
+	return E_NOTIMPL;
+#endif
 }
 
 HRESULT STDMETHODCALLTYPE CEventSink::GetDispID( 
@@ -267,8 +272,10 @@ HRESULT STDMETHODCALLTYPE CEventSink::InvokeEx(
             /* [out] */ EXCEPINFO __RPC_FAR *pei,
             /* [unique][in] */ IServiceProvider __RPC_FAR *pspCaller)
 {
+#ifdef __IRubyWrapper_INTERFACE_DEFINED__
 	if (pspCaller)
 		m_pEngine->PushServiceProvider(pspCaller);
+#endif
 	HRESULT hr = Invoke(id, IID_NULL, lcid, wFlags, pdp, pvarRes, pei, NULL);
 	if (hr == DISP_E_MEMBERNOTFOUND)
 	{
@@ -281,8 +288,10 @@ HRESULT STDMETHODCALLTYPE CEventSink::InvokeEx(
 		}
 #endif
 	}
+#ifdef __IRubyWrapper_INTERFACE_DEFINED__
 	if (pspCaller)
 		m_pEngine->PopServiceProvider();
+#endif
 	return hr;
 }
 

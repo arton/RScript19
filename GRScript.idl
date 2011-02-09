@@ -32,11 +32,34 @@ library GRSCRIPTLib
 	};
 
 	[
+		object,
+		uuid(0A4CBEBD-C46B-4A7C-A1E2-AD474C330C7A),
+		dual,
+		helpstring("rubyize other scripting object"),
+		pointer_default(unique)
+	]
+	interface IRubyize : IDispatch
+	{
+		[id(1), propget] HRESULT Version([out, retval]BSTR* pVersion);
+		[id(2), propget] HRESULT RubyVersion([out, retval]BSTR* pVersion);
+		[id(10)] HRESULT rubyize([in]VARIANT val, [out, retval]VARIANT* pObj);
+		[id(11)] HRESULT erubyize([in]BSTR script, [out, retval]VARIANT* pObj);
+	};
+
+	[
 		uuid(0A383007-32FE-4ec0-97D6-59892ECD5413),
 		helpstring("RubyScript Language (global)")
 	]
 	coclass GlobalRubyScript
 	{
 		[default] interface IGlobalRubyScript;
+	};
+	[
+		uuid(63F6DE8D-85DF-4635-B8BF-04CE3EC5D2CC),
+		helpstring("Rubyize Class")
+	]
+	coclass SimpleRubyize
+	{
+		[default] interface IRubyize;
 	};
 };

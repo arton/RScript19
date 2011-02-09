@@ -11,16 +11,28 @@
 #define __RUBYIZE_H_
 
 #include "resource.h"
+#ifndef __IRubyWrapper_INTERFACE_DEFINED__
+#include "GlobalRubyScript.h"
+#else
 #include "rubyscript.h"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // CRubyize
 class ATL_NO_VTABLE CRubyize : 
 	public CComObjectRootEx<CComSingleThreadModel>,
+#ifndef __IRubyWrapper_INTERFACE_DEFINED__
+	public CComCoClass<CRubyize, &CLSID_SimpleRubyize>,
+#else
 	public CComCoClass<CRubyize, &CLSID_Rubyize>,
+#endif
 	public ISupportErrorInfo,
         public IActiveScriptSite,
+#ifndef __IRubyWrapper_INTERFACE_DEFINED__
+	public IDispatchImpl<IRubyize, &IID_IRubyize, &LIBID_GRSCRIPTLib>
+#else
 	public IDispatchImpl<IRubyize, &IID_IRubyize, &LIBID_RSCRIPTLib>
+#endif
 {
 public:
 	CRubyize()
@@ -89,7 +101,11 @@ public:
             /* [retval][out] */ VARIANT __RPC_FAR *pObj);
 
 private:
+#ifndef __IRubyWrapper_INTERFACE_DEFINED__
+	CComObject<CGlobalRubyScript>* m_pRubyScript;
+#else
     CComObject<CRubyScript>* m_pRubyScript;
+#endif
     HRESULT Call(LPCOLESTR method, int cargs, VARIANT* args, VARIANT* pResult);
 };
 

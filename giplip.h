@@ -136,7 +136,7 @@ class LocalInterfacePointer
 {
 // prevent missuse
     LocalInterfacePointer(const LocalInterfacePointer&);
-    operator = (const LocalInterfacePointer&);
+    void operator = (const LocalInterfacePointer&);
 
 // temp imported pointer
     Itf *m_pItf;

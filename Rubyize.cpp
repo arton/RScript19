@@ -8,7 +8,11 @@
  */
 
 #include "stdafx.h"
+#ifndef __IRubyWrapper_INTERFACE_DEFINED__
+#include "GRScript.h"
+#else
 #include "RScript.h"
+#endif
 #include "Rubyize.h"
 
 #define RUBYIZE_VERSION L"1.9.1"
@@ -17,7 +21,11 @@
 // CRubyize
 HRESULT CRubyize::FinalConstruct()
 {
+#ifndef __IRubyWrapper_INTERFACE_DEFINED__
+    HRESULT hr = CComObject<CGlobalRubyScript>::CreateInstance(&m_pRubyScript);
+#else
     HRESULT hr = CComObject<CRubyScript>::CreateInstance(&m_pRubyScript);
+#endif
     if (hr == S_OK)
     {
         m_pRubyScript->AddRef();
