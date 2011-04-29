@@ -462,7 +462,7 @@ VALUE CRScriptCore::ole_createWin32OleEx(IUnknown* pUnk, IRubyEngine* pEngine, I
 #ifdef __IRubyWrapper_INTERFACE_DEFINED__
 	_ASSERT(pEngine);
 	VALUE module;
-	pEngine->GetModule(&module);
+	pEngine->GetModule((DWORD*)&module);
 	CRubyWrapper* pWrapper = CRubyWrapper::GetCWrapper();
 	IDispatchEx* pDispEx;
 	if (pProv && pUnk->QueryInterface(IID_IDispatchEx, (void**)&pDispEx) == S_OK)
@@ -542,14 +542,14 @@ VALUE CRScriptCore::ole_excepinfo2msg(EXCEPINFO* pExInfo)
     }
     error_msg = rb_str_new2(error_code);
     if(pSource != NULL) {
-        rb_str_cat(error_msg, pSource, strlen(pSource));
+        rb_str_cat(error_msg, pSource, (long)strlen(pSource));
     }
     else {
         rb_str_cat(error_msg, "<Unknown>", 9);
     }
     rb_str_cat(error_msg, "\n    ", 5);
     if(pDescription != NULL) {
-        rb_str_cat(error_msg, pDescription, strlen(pDescription));
+        rb_str_cat(error_msg, pDescription, (long)strlen(pDescription));
     }
     else {
         rb_str_cat(error_msg, "<No Description>", 16);
@@ -684,7 +684,7 @@ VALUE __cdecl CRScriptCore::fole_s_new(int argc, VALUE* argv, VALUE self)
 	if (pEngine)
 	{
 		VALUE module;
-		pEngine->GetModule(&module);
+		pEngine->GetModule((DWORD*)&module);
 		pWrapper->AddOle(module, pole);
 		pole->pEngine = pEngine;
 		if (pDispatchEx)
@@ -795,7 +795,7 @@ VALUE __cdecl CRScriptCore::fole_s_connect(VALUE self, VALUE svr_name)
 	if (pEngine)
 	{
 		VALUE module;
-		pEngine->GetModule(&module);
+		pEngine->GetModule((DWORD*)&module);
 		CRubyWrapper::GetCWrapper()->AddOle(module, pole);
 	}
 #endif	
@@ -1223,7 +1223,7 @@ VALUE CRScriptCore::foleex_missing(int argc, VALUE* argv, VALUE self)
 {
     ID id;
     const char* mname;
-    int n;
+    size_t n;
     id = rb_to_id(argv[0]);
     mname = rb_id2name(id);
     if(!mname) {
@@ -1231,7 +1231,7 @@ VALUE CRScriptCore::foleex_missing(int argc, VALUE* argv, VALUE self)
     }
     n = strlen(mname);
     if(mname[n-1] == '=') {
-        argv[0] = rb_str_new(mname, n-1);
+        argv[0] = rb_str_new(mname, (int)n-1);
         return fole_propertyput(self, argv[0], argv[1]);
     }
     else {

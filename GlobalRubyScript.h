@@ -4,11 +4,13 @@
  *  You may distribute under the terms of either the GNU General Public
  *  License
  *
- *  $Date: 2006-11-15 12:49:36 +0900 (水, 15 11 2006) $
+ *  $Date: 2006-11-15 12:49:36 +0900 (15 11 2006) $
  */
 	
 #ifndef __GLOBALRUBYSCRIPT_H_
 #define __GLOBALRUBYSCRIPT_H_
+
+#ifndef __IRubyEngine_INTERFACE_DEFINED__
 
 #include "resource.h"
 #include "RScriptCore.h"
@@ -72,5 +74,6 @@ private:
 	void ExpandArg(BSTR, std::list<std::string>&);
 	bool m_fArgInitialized;
 };
+#endif
 
 #endif //__GLOBALRUBYSCRIPT_H_

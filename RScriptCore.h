@@ -4,7 +4,7 @@
  *  You may distribute under the terms of either the GNU General Public
  *  License
  *
- *  $Date: 2006-12-02 15:21:54 +0900 (土, 02 12 2006) $
+ *  $Date: 2006-12-02 15:21:54 +0900 (Sat, 02 12 2006) $
  */
 
 #ifndef CRScriptCORE_H
@@ -144,7 +144,11 @@ END_COM_MAP()
             /* [in] */ LPCOLESTR pstrSubItemName,
             /* [in] */ LPCOLESTR pstrEventName,
             /* [in] */ LPCOLESTR pstrDelimiter,
+#if defined(_M_X64)
+			/* [in] */ DWORDLONG dwSourceContextCookie,
+#else
             /* [in] */ DWORD dwSourceContextCookie,
+#endif
             /* [in] */ ULONG ulStartingLineNumber,
             /* [in] */ DWORD dwFlags,
             /* [out] */ BSTR __RPC_FAR *pbstrName,
@@ -155,7 +159,11 @@ END_COM_MAP()
             /* [in] */ LPCOLESTR pstrItemName,
             /* [in] */ IUnknown __RPC_FAR *punkContext,
             /* [in] */ LPCOLESTR pstrDelimiter,
-            /* [in] */ DWORD dwSourceContextCookie,
+#if defined(_M_X64)
+			/* [in] */ DWORDLONG dwSourceContextCookie,
+#else
+			/* [in] */ DWORD dwSourceContextCookie,
+#endif
             /* [in] */ ULONG ulStartingLineNumber,
             /* [in] */ DWORD dwFlags,
             /* [out] */ VARIANT __RPC_FAR *pvarResult,
@@ -169,7 +177,11 @@ END_COM_MAP()
             /* [in] */ LPCOLESTR pstrItemName,
             /* [in] */ IUnknown __RPC_FAR *punkContext,
             /* [in] */ LPCOLESTR pstrDelimiter,
-            /* [in] */ DWORD dwSourceContextCookie,
+#if defined(_M_X64)
+			/* [in] */ DWORDLONG dwSourceContextCookie,
+#else
+			/* [in] */ DWORD dwSourceContextCookie,
+#endif
             /* [in] */ ULONG ulStartingLineNumber,
             /* [in] */ DWORD dwFlags,
             /* [out] */ IDispatch __RPC_FAR *__RPC_FAR *ppdisp);

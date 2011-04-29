@@ -4,7 +4,6 @@
  *  You may distribute under the terms of either the GNU General Public
  *  License
  *
- *  $Date: 2006-12-01 19:42:51 +0900 (金, 01 12 2006) $
  */
 
 #include "stdafx.h"
@@ -78,8 +77,9 @@ void CRScriptCore::InitializeEnvironment()
         char* dummyargv[] = {"dummy", NULL };
         char** pargv;
 	ruby_sysinit(&dummyargc, &pargv);
+	RUBY_INIT_STACK;
 	ruby_init();
-        ruby_process_options(3, asr_argv);
+	ruby_options(3, asr_argv);
 	try
 	{
 		rb_require("win32ole");
@@ -220,7 +220,7 @@ void CRScriptCore::DefineGlobalProperties(LPCSTR pObjName)
 					      "rescue RuntimeError\r\n"
 						     "[]\r\n"
 						  "end\r\n";
-	int alloclen = sizeof(merge) + strlen(pObjName) * 2 + 16;
+	size_t alloclen = sizeof(merge) + strlen(pObjName) * 2 + 16;
 	char* p = reinterpret_cast<LPSTR>(alloca(alloclen + 1));
 	int cb = sprintf(p, merge, prefix, pObjName, prefix, pObjName);
 #if defined(__IRubyEngine_INTERFACE_DEFINED__)
@@ -322,14 +322,14 @@ void CRScriptCore::DefineGlobalMethods(LPCSTR pObjName)
 VALUE CRScriptCore::eval_string(char* p, int cb)
 {
 	VALUE module = Qnil;
-	CRubyWrapper::GetCWrapper()->GetCurrentEngine()->GetModule(&module);
+	CRubyWrapper::GetCWrapper()->GetCurrentEngine()->GetModule((DWORD*)&module);
         VALUE args[] = { rb_str_new(p, cb), rb_str_new("ActiveScriptRuby", 16), INT2NUM(1) };
         return rb_obj_instance_eval(3, args, module);
 }
 #endif
 VALUE __cdecl CRScriptCore::funcall(VALUE v[])
 {
-	return rb_funcall(v[0], v[1], v[2]);
+	return rb_funcall(v[0], v[1], (int)v[2]);
 }
 
 VALUE CRScriptCore::GetOleObject(VALUE self, char* pName)
@@ -951,7 +951,11 @@ void CRScriptCore::InterruptThread(HANDLE h)
 	GetThreadContext(h, &con);
 	FARPROC proc = (FARPROC)&interruptThread;
 	con.ContextFlags = CONTEXT_CONTROL;
+#if !defined(_M_X64)
 	con.Eip = (long)proc;
+#else
+	con.Rip = (DWORD64)proc;
+#endif
 	SetThreadContext(h, &con);
 }
 
@@ -1000,7 +1004,11 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::AddScriptlet(
             /* [in] */ LPCOLESTR pstrSubItemName,
             /* [in] */ LPCOLESTR pstrEventName,
             /* [in] */ LPCOLESTR pstrDelimiter,
+#if defined(_M_X64)
+            /* [in] */ DWORDLONG dwSourceContextCookie,
+#else
             /* [in] */ DWORD dwSourceContextCookie,
+#endif
             /* [in] */ ULONG ulStartingLineNumber,
             /* [in] */ DWORD dwFlags,
             /* [out] */ BSTR __RPC_FAR *pbstrName,
@@ -1059,10 +1067,10 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::AddScriptlet(
 				*pbstrName = bstr.Copy();
 				VARIANT v;
 				VariantInit(&v);
-				int len = wcslen(pstrCode);
+				size_t len = wcslen(pstrCode);
 				LPSTR pScript = new char[len * 2 + bstr.Length() * 2 + 32];
 				int n = sprintf(pScript, "def %s()\r\n  ", W2A(bstr.m_str));
-				int m = WideCharToMultiByte(GetACP(), 0, pstrCode, len, pScript + n, len * 2 + 1, NULL, NULL);
+				size_t m = WideCharToMultiByte(GetACP(), 0, pstrCode, (int)len, pScript + n, (int)len * 2 + 1, NULL, NULL);
 				strcpy(pScript + n + m, "\r\nend\r\n");
 				hr = ParseText(ulStartingLineNumber, pScript, pstrItemName, pexcepinfo, &v, dwFlags);
 				delete[] pScript;
@@ -1079,8 +1087,12 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::ParseScriptText(
             /* [in] */ LPCOLESTR pstrItemName,
             /* [in] */ IUnknown __RPC_FAR *punkContext,
             /* [in] */ LPCOLESTR pstrDelimiter,
+#if defined(_M_X64)
+            /* [in] */ DWORDLONG dwSourceContextCookie,
+#else
             /* [in] */ DWORD dwSourceContextCookie,
-            /* [in] */ ULONG ulStartingLineNumber,
+#endif
+			/* [in] */ ULONG ulStartingLineNumber,
             /* [in] */ DWORD dwFlags,
             /* [out] */ VARIANT __RPC_FAR *pvarResult,
             /* [out] */ EXCEPINFO __RPC_FAR *pExcepInfo)
@@ -1089,9 +1101,9 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::ParseScriptText(
 #if 0
 	ATLTRACE(_T("ParseScriptText: %*ls\n"), 128, pstrCode);
 #endif
-	int len = wcslen(pstrCode);
+	size_t len = wcslen(pstrCode);
 	LPSTR psz = new char[len * 2 + 1];
-	int cb = WideCharToMultiByte(GetACP(), 0, pstrCode, len, psz, len * 2 + 1, NULL, NULL);
+	size_t cb = WideCharToMultiByte(GetACP(), 0, pstrCode, (int)len, psz, (int)len * 2 + 1, NULL, NULL);
 	*(psz + cb) = '\0';
 
 	if ((dwFlags & (SCRIPTTEXT_ISPERSISTENT | SCRIPTTEXT_ISVISIBLE)) == (SCRIPTTEXT_ISPERSISTENT | SCRIPTTEXT_ISVISIBLE)
@@ -1129,7 +1141,11 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::ParseProcedureText(
             /* [in] */ LPCOLESTR pstrItemName,
             /* [in] */ IUnknown __RPC_FAR *punkContext,
             /* [in] */ LPCOLESTR pstrDelimiter,
+#if defined(_M_X64)
+            /* [in] */ DWORDLONG dwSourceContextCookie,
+#else
             /* [in] */ DWORD dwSourceContextCookie,
+#endif
             /* [in] */ ULONG ulStartingLineNumber,
             /* [in] */ DWORD dwFlags,
             /* [out] */ IDispatch __RPC_FAR *__RPC_FAR *ppdisp)
@@ -1147,10 +1163,10 @@ HRESULT STDMETHODCALLTYPE CRScriptCore::ParseProcedureText(
 	LPCSTR ProcName = (pstrProcedureName) ? W2A(pstrProcedureName) : "undef";
 	LPCSTR ItemName = (pstrItemName) ? W2A(pstrItemName) : "unkole";
 
-	int len = wcslen(pstrCode);
+	size_t len = wcslen(pstrCode);
 	LPSTR psz = new char[len * 2 + strlen(ProcName) + strlen(ItemName) + 32];
 	int n = sprintf(psz, "@%s_%s%d = Proc.new {\r\n ", ItemName, ProcName, seqcnt++);
-	int m = WideCharToMultiByte(GetACP(), 0, pstrCode, len, psz + n, len * 2 + 1, NULL, NULL);
+	size_t m = WideCharToMultiByte(GetACP(), 0, pstrCode, (int)len, psz + n, (int)len * 2 + 1, NULL, NULL);
 	strcpy(psz + n + m, "\r\n}");
 	HRESULT hr = ParseText(ulStartingLineNumber, psz, pstrItemName, &excep, &v, dwFlags);
 	if (v.vt == VT_DISPATCH)

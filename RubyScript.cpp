@@ -272,7 +272,7 @@ HRESULT STDMETHODCALLTYPE CRubyScript::Clone(
 		else
 		{
 			VALUE newmod = Qnil;
-			m_pWrapper->rb_module_new(m_valueModule, &newmod);
+			m_pWrapper->rb_module_new(m_valueModule, (DWORD*)&newmod);
 			p->setModule(newmod);
 			p->CopyNamedItem(m_mapItem);
 			p->CopyPersistent(m_nStartLinePersistent, m_strScriptPersistent);
@@ -637,7 +637,7 @@ void CRubyScript::MakeScope()
 	char sz[16];
 	if (m_valueModule == Qnil)
 	{
-		m_pWrapper->rb_module_new(Qnil, &m_valueModule);
+		m_pWrapper->rb_module_new(Qnil, (DWORD*)&m_valueModule);
 		wsprintfA(sz, "X%08X", m_valueModule);
 		m_pWrapper->RegisterObject(reinterpret_cast<LPBYTE>(sz), m_valueModule);
 	}

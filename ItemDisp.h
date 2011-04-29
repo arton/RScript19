@@ -4,7 +4,7 @@
  *  You may distribute under the terms of either the GNU General Public
  *  License
  *
- *  $Date: 2006-11-03 04:23:11 +0900 (金, 03 11 2006) $
+ *  $Date: 2006-11-03 04:23:11 +0900 (Fri, 03 11 2006) $
  */
 
 #ifndef ITEMHOLDER_HEADER

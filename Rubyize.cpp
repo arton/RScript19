@@ -8,6 +8,7 @@
  */
 
 #include "stdafx.h"
+#include "RScript.h"
 #ifndef __IRubyWrapper_INTERFACE_DEFINED__
 #include "GRScript.h"
 #else

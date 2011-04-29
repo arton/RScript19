@@ -4,7 +4,7 @@
  *  You may distribute under the terms of either the GNU General Public
  *  License
  *
- *  $Date: 2006-11-04 17:29:08 +0900 (土, 04 11 2006) $
+ *  $Date: 2006-11-04 17:29:08 +0900 (Sat, 04 11 2006) $
  */
 
 #include "stdafx.h"
@@ -99,7 +99,7 @@ void CScrError::SetSource(LPCSTR p)
 		p = p2 + 1;
 	}
 
-	int len;
+	size_t len;
 	p2 = strchr(p, '\n');
 	if (!p2) 
 	{

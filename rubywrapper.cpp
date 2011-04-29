@@ -510,7 +510,7 @@ VALUE CRubyWrapper::add_lineitem(VALUE i, VALUE ary, int argc, VALUE *argv)
 	return Qnil;
 }
 
-VALUE CRubyWrapper::InvokeRuby(unsigned long Param)
+VALUE CRubyWrapper::InvokeRuby(VALUE Param)
 {
 	SInvokeParam* pParam = (SInvokeParam*)Param;
 	ATLTRACE(_T("CRubyWrapper::InvokeRuby  Thread:%08X\n"), GetCurrentThreadId());
@@ -543,7 +543,7 @@ VALUE CRubyWrapper::InvokeRuby(unsigned long Param)
 	return v;
 }
 
-VALUE CRubyWrapper::val2var(unsigned long Param)
+VALUE CRubyWrapper::val2var(VALUE Param)
 {
 	STypeConvParam* pParam = (STypeConvParam*)Param;
 	CRScriptCore::ole_val2variant(pParam->val, pParam->pvar, pParam->pengine);

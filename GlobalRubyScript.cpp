@@ -176,7 +176,7 @@ HRESULT CGlobalRubyScript::ParseText(int StartLine, LPCSTR pstrCode, LPCOLESTR p
                 USES_CONVERSION;
 		HANDLE h = CreateFile(szScriptFile, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_ALWAYS, 
 			FILE_ATTRIBUTE_NORMAL, NULL);
-		WriteFile(h, pstrCode, strlen(pstrCode), &dw, NULL);
+		WriteFile(h, pstrCode, (DWORD)strlen(pstrCode), &dw, NULL);
 		CloseHandle(h);
 		LPSTR ps = T2A(szScriptFile);
 		for (LPSTR p = ps; *p; p++)
@@ -332,7 +332,7 @@ void CGlobalRubyScript::FillArgs(IUnknown* pUnk)
 		{
 			*pt++ = const_cast<LPSTR>((*it).c_str());
 		}
-		ruby_set_argv(listArgs.size(), argv);
+		ruby_set_argv((int)listArgs.size(), argv);
 		m_fArgInitialized = true;
 	}
 }
@@ -347,7 +347,7 @@ void CGlobalRubyScript::ExpandArg(BSTR str, std::list<std::string>& list)
 		HANDLE h = FindFirstFileA(p, &fdata);
 		if (h != INVALID_HANDLE_VALUE)
 		{
-			int l = -1;
+			size_t l = (size_t)-1;
 			for (char* pn = p; *pn; pn = CharNextA(pn))
 			{
 				if (*pn == '\\')

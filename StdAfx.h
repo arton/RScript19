@@ -4,7 +4,6 @@
  *  You may distribute under the terms of either the GNU General Public
  *  License
  *
- *  $Date: 2006-12-02 15:21:54 +0900 (土, 02 12 2006) $
  */
 
 #if !defined(AFX_STDAFX_H__5DBEF56C_E278_11D3_8E7A_0000F45A3C05__INCLUDED_)

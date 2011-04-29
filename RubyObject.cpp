@@ -158,7 +158,7 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 		RubyMethodMapIter it = m_mapMethods.find(psz);
 		if (it != m_mapMethods.end())
 		{
-			DISPID dispid = (*it).second;
+			DISPID dispid = (DISPID)(*it).second;
 			*(rgDispId + i) = dispid;
 			if (dispid == DISPID_UNKNOWN)
 				hr = DISP_E_UNKNOWNNAME;
@@ -202,6 +202,7 @@ HRESULT STDMETHODCALLTYPE CRubyObject::GetIDsOfNames(
 	return hr;
 }
 
+#if !defined(__IRubyWrapper_INTERFACE_DEFINED__)
 DISPID CRubyObject::searchMethod(VALUE obj, LPCSTR psz)
 {
 	int imax = FIX2INT(rb_funcall(obj, m_idSize, 0));
@@ -214,14 +215,15 @@ DISPID CRubyObject::searchMethod(VALUE obj, LPCSTR psz)
 		}
 		char* pmname = StringValuePtr(v);
 		ATLTRACE(_T("Kernel Func=%s\n"), pmname);
-		if (stricmp(psz, pmname) == 0)
+		if (_stricmp(psz, pmname) == 0)
 		{
-			return ::rb_intern(pmname);
+			return (DISPID)::rb_intern(pmname);
 		}
 	}
 	return DISPID_UNKNOWN;
 }
-        
+#endif
+
 HRESULT STDMETHODCALLTYPE CRubyObject::Invoke( 
 		/* [in] */ DISPID dispIdMember,
 		/* [in] */ REFIID riid,
@@ -367,17 +369,17 @@ DISPID CRubyObject::ConvertDispID(VALUE module, DISPID id, WORD wFlags)
 	{
 		if (wFlags == DISPATCH_METHOD)
 		{
-			id = rb_intern("call");
+			id = (DISPID)rb_intern("call");
 		}
 		else if (wFlags & DISPATCH_PROPERTYGET)
 		{
 			if (rb_respond_to(module, rb_intern("value")) == Qtrue)
 			{
-				id = rb_intern("value");
+				id = (DISPID)rb_intern("value");
 			}
 		    else
 			{
-	         	id = rb_intern("to_s");
+	         	id = (DISPID)rb_intern("to_s");
 			}
 		}
 	}
@@ -482,7 +484,7 @@ VALUE CRubyObject::InvokeRuby(VALUE Param)
 	return v;
 }
 
-VALUE CRubyObject::val2var(unsigned long Param)
+VALUE CRubyObject::val2var(VALUE Param)
 {
 	STypeConvParam* pParam = (STypeConvParam*)Param;
 	CRScriptCore::ole_val2variant(pParam->val, pParam->pvar, pParam->pengine);

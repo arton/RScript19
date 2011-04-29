@@ -6,7 +6,7 @@
  *
  * This header is only for wrapping win32ole.c
  *
- *  $Date: 2006-12-02 15:21:54 +0900 (土, 02 12 2006) $
+ *  $Date: 2006-12-02 15:21:54 +0900 (Sat, 02 12 2006) $
  */
 #ifndef RSCRIPT_WIN32_OLEH
 #define RSCRIPT_WIN32_OLEH
