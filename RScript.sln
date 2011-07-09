@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RScript", "RScript.vcxproj", "{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
+		Release MinDependency|Win32 = Release MinDependency|Win32
+		Release MinDependency|x64 = Release MinDependency|x64
+		Release MinSize|Win32 = Release MinSize|Win32
+		Release MinSize|x64 = Release MinSize|x64
+		Unicode 64 Release Mindependency|Win32 = Unicode 64 Release Mindependency|Win32
+		Unicode 64 Release Mindependency|x64 = Unicode 64 Release Mindependency|x64
+		Unicode Debug|Win32 = Unicode Debug|Win32
+		Unicode Debug|x64 = Unicode Debug|x64
+		Unicode Release MinDependency|Win32 = Unicode Release MinDependency|Win32
+		Unicode Release MinDependency|x64 = Unicode Release MinDependency|x64
+		Unicode Release MinSize|Win32 = Unicode Release MinSize|Win32
+		Unicode Release MinSize|x64 = Unicode Release MinSize|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Debug|Win32.ActiveCfg = Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Debug|Win32.Build.0 = Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Debug|x64.ActiveCfg = Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Debug|x64.Build.0 = Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinDependency|Win32.ActiveCfg = Release MinDependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinDependency|Win32.Build.0 = Release MinDependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinDependency|x64.ActiveCfg = Release MinDependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinDependency|x64.Build.0 = Release MinDependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinSize|Win32.ActiveCfg = Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinSize|Win32.Build.0 = Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinSize|x64.ActiveCfg = Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Release MinSize|x64.Build.0 = Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode 64 Release Mindependency|Win32.ActiveCfg = Unicode 64 Release Mindependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode 64 Release Mindependency|Win32.Build.0 = Unicode 64 Release Mindependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode 64 Release Mindependency|x64.ActiveCfg = Unicode 64 Release Mindependency|x64
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode 64 Release Mindependency|x64.Build.0 = Unicode 64 Release Mindependency|x64
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Debug|Win32.ActiveCfg = Unicode Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Debug|Win32.Build.0 = Unicode Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Debug|x64.ActiveCfg = Unicode Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Debug|x64.Build.0 = Unicode Debug|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinDependency|Win32.ActiveCfg = Unicode Release MinDependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinDependency|Win32.Build.0 = Unicode Release MinDependency|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinDependency|x64.ActiveCfg = Unicode Release MinDependency 64|x64
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinDependency|x64.Build.0 = Unicode Release MinDependency 64|x64
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinSize|Win32.ActiveCfg = Unicode Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinSize|Win32.Build.0 = Unicode Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinSize|x64.ActiveCfg = Unicode Release MinSize|Win32
+		{19333FE6-016E-F5DA-3E7A-7EDA3FB73993}.Unicode Release MinSize|x64.Build.0 = Unicode Release MinSize|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,26 @@
+HKCR
+{
+	rubyize.object.1.9 = s 'Simple Rubyize Class'
+	{
+		CLSID = s '{63F6DE8D-85DF-4635-B8BF-04CE3EC5D2CC}'
+	}
+	rubyize.object = s 'Simple Rubyize Class'
+	{
+		CLSID = s '{63F6DE8D-85DF-4635-B8BF-04CE3EC5D2CC}'
+		CurVer = s 'rubyize.object.1.9'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {63F6DE8D-85DF-4635-B8BF-04CE3EC5D2CC} = s 'Simple Rubyize Class (1.9.1)'
+		{
+			ProgID = s 'rubyize.object.1.9'
+			VersionIndependentProgID = s 'rubyize.object'
+			ForceRemove 'Programmable'
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			'TypeLib' = s '{474067DF-D9CE-4324-9D3F-E81F8E011AD1}'
+		}
+	}
+}

@@ -35,8 +35,8 @@ def reset_path(pn)
       $log.puts "skip -- #{pn}"
       return
     end
-    s.gsub! /^\\usr\\bin\\ruby/, "#{$path}\\ruby"
-    s.gsub! %r|/usr/bin/|, "#{$altpath}/"
+    s.gsub! /^[cC]:\\.+\\ruby/, "#{$path}\\ruby"
+    s.gsub! %r|[cC]:/.+/bin/|, "#{$altpath}/"
     File.open("#{ARGV[0]}\\#{pn}", 'w') do |dst|
       dst.write s
     end
