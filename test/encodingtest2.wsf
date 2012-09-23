@@ -1,0 +1,16 @@
+<package>
+<job>
+<reference object="Scripting.FileSystemObject"/>
+<script language="RubyScript.1.9">
+  failed = 0
+
+  sh = WIN32OLE.new('WScript.Shell')
+  assertions = 1
+  if Encoding.default_external != sh.CurrentDirectory.encoding
+    failed += 1
+  end
+
+  WSH.echo "#{assertions} assertions, #{failed} failures"
+</script>
+</job>
+</package>

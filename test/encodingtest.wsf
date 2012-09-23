@@ -1,0 +1,15 @@
+<package>
+<job>
+<reference object="Scripting.FileSystemObject"/>
+<script language="GlobalRubyScript">
+  require 'test/unit'
+
+  class TestGRScript < Test::Unit::TestCase
+    def test_encoding
+      sh = WIN32OLE.new('WScript.Shell')
+      assert_equal Encoding.default_external, sh.CurrentDirectory.encoding
+    end
+  end
+</script>
+</job>
+</package>
