@@ -1,9 +1,14 @@
+# patch error files
+*.rej
+
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
 *.pdb
+*.tlog
+*.exp
 
 # Compiled Dynamic libraries
 *.so
