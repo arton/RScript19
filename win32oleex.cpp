@@ -374,9 +374,9 @@ VALUE CRScriptCore::ole_variant2val(VARIANT* pvar, IRubyEngine* pEngine, IServic
             pw = *V_BSTRREF(pvar);
         else
             pw = V_BSTR(pvar);
-		if (!pw) p = "";
-		else p = W2A(pw);
-        obj = rb_str_new2(p);
+	if (!pw) p = "";
+        else p = W2A(pw);
+        obj = rb_enc_str_new(p, strlen(p), s_pEncoding);
         break;
     }
 

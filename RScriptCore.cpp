@@ -49,6 +49,8 @@ ID CRScriptCore::s_idInstanceEval(Qnil);
 ID CRScriptCore::s_idModuleEval(Qnil);
 #endif
 
+rb_encoding* CRScriptCore::s_pEncoding = NULL;
+
 CRScriptCore::CRScriptCore()
 		: m_pSite(NULL),
 		  m_state(SCRIPTSTATE_UNINITIALIZED),
@@ -80,6 +82,8 @@ void CRScriptCore::InitializeEnvironment()
 	RUBY_INIT_STACK;
 	ruby_init();
 	ruby_options(3, asr_argv);
+        s_pEncoding = rb_default_internal_encoding();
+        if (!s_pEncoding) s_pEncoding = rb_default_external_encoding();
 	try
 	{
 		rb_require("win32ole");

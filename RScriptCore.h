@@ -323,6 +323,7 @@ protected:
 	static ID s_idInstanceEval;
 	static ID s_idModuleEval;
 #endif
+	static rb_encoding* s_pEncoding;
 };
 
 #endif
