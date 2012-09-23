@@ -8,11 +8,10 @@
  */
 
 #include "stdafx.h"
+#ifdef _MERGE_PROXYSTUB
 #include "RScript.h"
-#ifndef __IRubyWrapper_INTERFACE_DEFINED__
-#include "GRScript.h"
 #else
-#include "RScript.h"
+#include "GRScript.h"
 #endif
 #include "Rubyize.h"
 
